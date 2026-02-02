@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlassChronos Infinity | The Authority on Precision Time</title>
-    <meta name="description" content="GlassChronos Infinity is the premier precision timekeeping suite. Features Atomic World Clock, Scientific Calculator, Pomodoro Timer, and extensive resources on Global Synchronization.">
-    <meta name="keywords" content="Atomic Clock, World Time, NTP, Precision Time, Stopwatch, Pomodoro, Scientific Calculator, Unit Converter, Horology, Time Synchronization, UTC">
+    <title>GlassChronos Infinity | The Global Authority on Precision Time</title>
+    <meta name="description" content="GlassChronos Infinity is the world's premier precision timekeeping suite. Features Atomic World Clock, Scientific Calculator, Pomodoro Focus Tools, and authoritative resources on Global Synchronization and Chronometry.">
+    <meta name="keywords" content="Atomic Clock, World Time, NTP, Precision Time, Stopwatch, Pomodoro, Scientific Calculator, Unit Converter, Horology, Time Synchronization, UTC, GMT">
     <meta name="author" content="GlassChronos">
     <link rel="canonical" href="https://glasschronos.com" />
     
@@ -106,6 +106,12 @@
         
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* SEO CONTENT STYLING */
+        article p { margin-bottom: 1.5rem; line-height: 1.8; color: rgba(255,255,255,0.7); }
+        article h3 { font-size: 1.5rem; color: white; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 500; }
+        article strong { color: white; font-weight: 600; }
+        article ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: rgba(255,255,255,0.7); }
     </style>
 <script type="importmap">
 {
@@ -132,7 +138,7 @@
                 </div>
                 <div class="ml-3 hidden lg:block">
                     <h1 class="text-lg font-bold tracking-tight text-white leading-tight">GlassChronos</h1>
-                    <p class="text-[10px] text-white/40 tracking-widest uppercase font-mono">INFINITY v2.1</p>
+                    <p class="text-[10px] text-white/40 tracking-widest uppercase font-mono">INFINITY v3.0</p>
                 </div>
             </div>
 
@@ -164,7 +170,7 @@
                 
                 <button onclick="router('science')" id="nav-science" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="book-open" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
-                    <span class="ml-3 text-sm hidden lg:block font-medium">Horology Knowledge</span>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Horology Science</span>
                 </button>
                 
                 <button onclick="router('legal')" id="nav-legal" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
@@ -372,38 +378,55 @@
             <!-- VIEW: SCIENCE (SEO CONTENT) -->
             <div id="view-science" class="page-view hidden max-w-4xl mx-auto space-y-12">
                 <div class="glass-panel rounded-3xl p-12">
-                    <h1 class="text-4xl md:text-5xl font-light mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">The Science of Horology</h1>
+                    <h1 class="text-4xl md:text-5xl font-light mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">The Science of Global Timekeeping</h1>
                     
                     <article class="prose prose-invert prose-lg max-w-none text-white/70 leading-relaxed">
                         <p class="mb-6 first-letter:text-5xl first-letter:font-bold first-letter:text-white first-letter:mr-3 first-letter:float-left">
-                            Time is the scaffolding of the universe, a dimension that dictates the rhythm of existence from the spin of an electron to the orbit of galaxies. In our modern digital era, the measurement of time—<strong>Chronometry</strong>—has evolved from sundials and water clocks to the hyper-precise oscillation of Cesium-133 atoms.
+                            Time is the scaffolding of the universe, a dimension that dictates the rhythm of existence from the spin of an electron to the orbit of galaxies. In our modern digital era, the measurement of time—<strong>Chronometry</strong>—has evolved from sundials and water clocks to the hyper-precise oscillation of Cesium-133 atoms. This evolution is not merely technical; it is the foundation of global commerce, navigation, and digital infrastructure.
                         </p>
                         
                         <div class="feature-panel p-6 my-8 rounded-r-xl">
-                             <h4 class="text-white font-bold mb-2 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-400"></i> Expert Insight</h4>
-                             <p class="text-sm">Ideally, a second is defined as exactly 9,192,631,770 oscillations of a Cesium atom. However, gravity affects time (Time Dilation). A clock on Mount Everest runs slightly faster than a clock at sea level due to General Relativity.</p>
+                             <h4 class="text-white font-bold mb-2 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-400"></i> Defining the Second</h4>
+                             <p class="text-sm">Since 1967, the International System of Units (SI) has defined the second as exactly 9,192,631,770 oscillations of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the caesium-133 atom. This atomic definition replaced astronomical observation as the standard.</p>
                         </div>
                         
-                        <h3 class="text-2xl text-white font-medium mt-10 mb-4">1. Atomic Clock Accuracy & UTC</h3>
-                        <p class="mb-4">
-                            At the heart of global synchronization lies <strong>Coordinated Universal Time (UTC)</strong>. Unlike GMT, which is based on the Earth's rotation, UTC is an atomic time scale. It is calculated by averaging the output of over 400 atomic clocks worldwide. 
+                        <h3>1. The Architecture of Coordinated Universal Time (UTC)</h3>
+                        <p>
+                            At the heart of global synchronization lies <strong>Coordinated Universal Time (UTC)</strong>. Unlike Greenwich Mean Time (GMT), which is based on the Earth's rotation (and thus susceptible to slight irregularities caused by tidal friction and geological events), UTC is an atomic time scale. It is calculated by the International Bureau of Weights and Measures (BIPM) in France, which averages the data from over 400 atomic clocks located in laboratories worldwide.
                         </p>
-                        <p class="mb-6">
-                            <strong>GlassChronos Infinity</strong> interfaces with browser-based Performance APIs that sync with your device's internal clock, which in turn syncs via <strong>Network Time Protocol (NTP)</strong> strata servers. This ensures that the time displayed on your dashboard is accurate to within milliseconds of the global standard used by stock exchanges, GPS satellites, and aviation control towers.
+                        <p>
+                            This process creates International Atomic Time (TAI). However, because Earth's rotation is gradually slowing, TAI eventually drifts from solar time. To reconcile this, UTC introduces "leap seconds" to ensure that the sun remains overhead at noon at the Prime Meridian within 0.9 seconds of accuracy.
                         </p>
 
-                        <h3 class="text-2xl text-white font-medium mt-10 mb-4">2. Digital Synchronization Protocols</h3>
-                        <p class="mb-4">
-                            The internet relies on packet-switched networks where latency varies. NTP algorithms estimate the round-trip delay time to a time server and adjust the local clock accordingly. This is critical for cryptography (TLS/SSL certificates), database consistency (Google Spanner's TrueTime), and distributed systems.
+                        <h3>2. Network Time Protocol (NTP) and Digital Sync</h3>
+                        <p>
+                            For the internet to function, servers must agree on the time. The <strong>Network Time Protocol (NTP)</strong> is the networking protocol designed to synchronize the clocks of computers over packet-switched, variable-latency data networks. It uses a hierarchical system of time sources:
+                        </p>
+                        <ul>
+                            <li><strong>Stratum 0:</strong> These are high-precision timekeeping devices such as atomic clocks, GPS satellites, or radio clocks. They are not connected to the network directly but are connected to Stratum 1 computers.</li>
+                            <li><strong>Stratum 1:</strong> These are computers attached to Stratum 0 devices. They act as primary network time servers.</li>
+                            <li><strong>Stratum 2:</strong> These computers send NTP requests to Stratum 1 servers. They act as servers for Stratum 3 devices, and so on.</li>
+                        </ul>
+                        <p>
+                            GlassChronos Infinity interfaces with your browser's Performance API, which is synchronized with your operating system's clock. Your OS, in turn, regularly polls Stratum 2 or Stratum 3 NTP servers to ensure millisecond-level accuracy.
+                        </p>
+
+                        <h3>3. Time Dilation and General Relativity</h3>
+                        <p>
+                            Time is not absolute. As predicted by Albert Einstein's theory of General Relativity, time passes at different rates depending on gravity and velocity. A clock on a GPS satellite, orbiting 20,000 km above Earth, experiences less gravity than a clock on the surface. Consequently, it ticks faster by about 45 microseconds per day. Conversely, its high orbital velocity makes it tick slower by about 7 microseconds per day due to Special Relativity.
+                        </p>
+                        <p>
+                            The net result is that satellite clocks run 38 microseconds faster per day than Earth clocks. Without correcting for this relativistic effect, GPS navigation would drift by kilometers every day. This phenomenon proves that high-precision timekeeping is not just about counting ticks; it is about understanding the fundamental physics of our universe.
+                        </p>
+
+                        <h3>4. The Future: Optical Lattice Clocks</h3>
+                        <p>
+                            While Cesium clocks are accurate to one second in 300 million years, the next generation of timekeepers—<strong>Optical Lattice Clocks</strong>—use Strontium or Ytterbium atoms oscillating at optical frequencies (trillions of times per second). These clocks are so precise that they would not lose a second over the entire age of the universe (13.8 billion years).
+                        </p>
+                        <p>
+                            Such precision will open new frontiers in geodesy, allowing scientists to measure changes in Earth's gravitational potential (geoid) by detecting the time dilation caused by a 1-centimeter difference in altitude. GlassChronos Infinity is dedicated to following these advancements, bringing the spirit of scientific precision to your daily digital experience.
                         </p>
                     </article>
-                </div>
-                
-                 <div class="glass-panel rounded-3xl p-12">
-                    <h2 class="text-3xl font-light mb-6 text-white">Global Standards</h2>
-                    <p class="text-white/70 leading-relaxed mb-6">
-                        From ISO 8601 date formats to the leap seconds managed by the IERS (International Earth Rotation and Reference Systems Service), the standardization of time allows for the seamless operation of international banking, aviation, and telecommunications. GlassChronos adheres to these strict standards, providing you with a reference tool you can trust for professional applications.
-                    </p>
                 </div>
             </div>
 
@@ -509,24 +532,27 @@
             document.getElementById('page-title').innerText = titles[view] || 'GlassChronos';
             
             // Scroll Reset
-            document.getElementById('main-scroll').scrollTop = 0;
+            const scrollContainer = document.getElementById('main-scroll');
+            if(scrollContainer) scrollContainer.scrollTop = 0;
         }
 
         // --- CLOCK ENGINE ---
         function initClock() {
             // Generate Markers
             const face = document.getElementById('clock-face');
-            face.innerHTML = ''; // Clean re-init
-            for(let i=0; i<60; i++) {
-                const mark = document.createElement('div');
-                const isHour = i % 5 === 0;
-                mark.className = `absolute bg-white ${isHour ? 'w-0.5 h-3 opacity-90' : 'w-px h-1.5 opacity-30'}`;
-                // CSS Transform fixes
-                mark.style.left = '50%';
-                mark.style.bottom = '50%';
-                mark.style.transformOrigin = 'bottom center';
-                mark.style.transform = `translateX(-50%) rotate(${i * 6}deg) translateY(-${isHour ? 135 : 140}px)`;
-                face.appendChild(mark);
+            if (face) {
+                face.innerHTML = ''; // Clean re-init
+                for(let i=0; i<60; i++) {
+                    const mark = document.createElement('div');
+                    const isHour = i % 5 === 0;
+                    mark.className = `absolute bg-white ${isHour ? 'w-0.5 h-3 opacity-90' : 'w-px h-1.5 opacity-30'}`;
+                    // CSS Transform fixes
+                    mark.style.left = '50%';
+                    mark.style.bottom = '50%';
+                    mark.style.transformOrigin = 'bottom center';
+                    mark.style.transform = `translateX(-50%) rotate(${i * 6}deg) translateY(-${isHour ? 135 : 140}px)`;
+                    face.appendChild(mark);
+                }
             }
 
             // Tick Loop
@@ -534,9 +560,14 @@
                 const now = new Date();
                 
                 // Digital
-                document.getElementById('main-digital').innerText = now.toLocaleTimeString('en-US', {hour12: false});
-                document.getElementById('main-date').innerText = now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'});
-                document.getElementById('utc-time').innerText = `UTC: ${now.toISOString().slice(11,19)}`;
+                const digitalEl = document.getElementById('main-digital');
+                if(digitalEl) digitalEl.innerText = now.toLocaleTimeString('en-US', {hour12: false});
+                
+                const dateEl = document.getElementById('main-date');
+                if(dateEl) dateEl.innerText = now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'});
+                
+                const utcEl = document.getElementById('utc-time');
+                if(utcEl) utcEl.innerText = `UTC: ${now.toISOString().slice(11,19)}`;
 
                 // Analog
                 const s = now.getSeconds();
@@ -547,9 +578,13 @@
                 const mDeg = ((m + s/60) / 60) * 360;
                 const hDeg = (((h % 12) + m/60) / 12) * 360;
 
-                document.getElementById('hand-second').style.transform = `translateX(-50%) rotate(${sDeg}deg)`;
-                document.getElementById('hand-minute').style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
-                document.getElementById('hand-hour').style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
+                const handS = document.getElementById('hand-second');
+                const handM = document.getElementById('hand-minute');
+                const handH = document.getElementById('hand-hour');
+
+                if(handS) handS.style.transform = `translateX(-50%) rotate(${sDeg}deg)`;
+                if(handM) handM.style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
+                if(handH) handH.style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
                 
                 requestAnimationFrame(update);
             };
@@ -559,6 +594,7 @@
         // --- WORLD CLOCK ---
         function renderWorldClocks() {
             const grid = document.getElementById('clock-grid');
+            if(!grid) return;
             grid.innerHTML = '';
 
             state.myZones.forEach(zone => {
@@ -566,7 +602,10 @@
                 const timeStr = now.toLocaleTimeString('en-US', {timeZone: zone, hour:'2-digit', minute:'2-digit', hour12: false});
                 const dateStr = now.toLocaleDateString('en-US', {timeZone: zone, weekday:'short', day:'numeric'});
                 const city = zone.split('/')[1].replace(/_/g, ' ');
-                const offset = now.toLocaleTimeString('en-US', {timeZone: zone, timeZoneName:'shortOffset'}).split(' ')[1];
+                let offset = '';
+                try {
+                    offset = now.toLocaleTimeString('en-US', {timeZone: zone, timeZoneName:'shortOffset'}).split(' ')[1];
+                } catch(e) { offset = ''; }
                 
                 const card = document.createElement('div');
                 card.className = 'glass-card rounded-2xl p-6 relative group border border-white/5';
@@ -591,24 +630,26 @@
             const input = document.getElementById('clock-search');
             const results = document.getElementById('search-results');
             
-            input.addEventListener('input', (e) => {
-                const val = e.target.value.toLowerCase();
-                if(val.length < 2) { results.classList.add('hidden'); return; }
-                
-                const matches = ALL_ZONES.filter(z => z.toLowerCase().includes(val)).slice(0, 50);
-                results.innerHTML = matches.map(z => `
-                    <div onclick="addZone('${z}')" class="p-4 hover:bg-white/5 cursor-pointer border-b border-white/5 last:border-0 text-sm flex justify-between items-center text-white/80 hover:text-white transition-colors">
-                        <span>${z}</span>
-                        <i data-lucide="plus" class="w-4 h-4 text-blue-400"></i>
-                    </div>
-                `).join('');
-                results.classList.remove('hidden');
-                lucide.createIcons();
-            });
+            if(input && results) {
+                input.addEventListener('input', (e) => {
+                    const val = e.target.value.toLowerCase();
+                    if(val.length < 2) { results.classList.add('hidden'); return; }
+                    
+                    const matches = ALL_ZONES.filter(z => z.toLowerCase().includes(val)).slice(0, 50);
+                    results.innerHTML = matches.map(z => `
+                        <div onclick="addZone('${z}')" class="p-4 hover:bg-white/5 cursor-pointer border-b border-white/5 last:border-0 text-sm flex justify-between items-center text-white/80 hover:text-white transition-colors">
+                            <span>${z}</span>
+                            <i data-lucide="plus" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+                    `).join('');
+                    results.classList.remove('hidden');
+                    lucide.createIcons();
+                });
 
-            document.addEventListener('click', (e) => {
-                if(!input.contains(e.target) && !results.contains(e.target)) results.classList.add('hidden');
-            });
+                document.addEventListener('click', (e) => {
+                    if(!input.contains(e.target) && !results.contains(e.target)) results.classList.add('hidden');
+                });
+            }
         }
 
         window.addZone = (zone) => {
@@ -631,6 +672,8 @@
         let calcVal = '0';
         window.calcInput = (key) => {
             const display = document.getElementById('calc-display');
+            if(!display) return;
+            
             if(key === 'AC') calcVal = '0';
             else if(key === 'DEL') calcVal = calcVal.slice(0,-1) || '0';
             else if(calcVal === '0' && !isNaN(key)) calcVal = key;
@@ -639,14 +682,15 @@
         };
 
         window.calcResult = () => {
+            const display = document.getElementById('calc-display');
              try {
                  const res = eval(calcVal.replace('×','*').replace('÷','/'));
                  document.getElementById('calc-history').innerText = calcVal + ' =';
                  calcVal = String(res);
-                 document.getElementById('calc-display').value = calcVal;
+                 if(display) display.value = calcVal;
              } catch(e) {
                  calcVal = 'Error';
-                 document.getElementById('calc-display').value = 'Error';
+                 if(display) display.value = 'Error';
                  setTimeout(() => calcVal = '0', 1000);
              }
         };
@@ -698,8 +742,8 @@
                     const s = Math.floor((total % 60000) / 1000);
                     const ms = Math.floor((total % 1000) / 10);
                     
-                    document.getElementById('sw-display').innerText = 
-                        `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}.${ms.toString().padStart(2,'0')}`;
+                    const el = document.getElementById('sw-display');
+                    if(el) el.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}.${ms.toString().padStart(2,'0')}`;
                     
                     state.sw.interval = requestAnimationFrame(loop);
                 }
@@ -712,7 +756,8 @@
             state.sw.running = false;
             state.sw.elapsed = 0;
             cancelAnimationFrame(state.sw.interval);
-            document.getElementById('sw-display').innerText = "00:00.00";
+            const el = document.getElementById('sw-display');
+            if(el) el.innerText = "00:00.00";
             const btn = document.getElementById('sw-btn');
             btn.innerHTML = '<i data-lucide="play" class="w-6 h-6 fill-current"></i>';
             btn.classList.replace('text-red-400', 'text-emerald-400');
