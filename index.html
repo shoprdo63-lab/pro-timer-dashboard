@@ -9,7 +9,7 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- React & ReactDOM -->
+    <!-- React & ReactDOM (UMD for single-file stability) -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
@@ -48,6 +48,8 @@
             background-color: #0f172a; 
             color: #fff; 
         }
+        
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
@@ -76,7 +78,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // --- GLOBAL VARIABLES ---
+        // --- GLOBAL DESTRUCTURE ---
         const { useState, useEffect, useRef, useMemo } = React;
         const { 
             Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette, 
