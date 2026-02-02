@@ -36,7 +36,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
         style={{ background: activeTheme.colors.glassPanel }}
       >
          <div className="hidden md:block mb-auto mt-4 font-bold text-xl tracking-tighter" style={{ color: activeTheme.colors.accent }}>
-            GC
+            YC
          </div>
          
          <div className="flex md:flex-col flex-row w-full justify-around md:justify-center md:space-y-8">

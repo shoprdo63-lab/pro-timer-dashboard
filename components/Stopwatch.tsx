@@ -57,6 +57,13 @@ export const Stopwatch: React.FC<StopwatchProps> = ({ theme }) => {
 
     return (
         <div className="flex flex-col h-full p-6 items-center w-full max-w-4xl mx-auto">
+             <header className="w-full flex justify-between items-center mb-4 shrink-0">
+                <div>
+                    <h2 className="text-3xl font-light tracking-tight text-white">Stopwatch</h2>
+                    <p className="opacity-40 text-sm mt-1">Precision tracking</p>
+                </div>
+            </header>
+
             <div className="flex-1 flex flex-col items-center justify-center w-full min-h-[350px] relative">
                 {/* Visual Pulse Ring */}
                 {isRunning && (

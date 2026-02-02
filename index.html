@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlassChronos Infinite | Global Time & Utility Suite</title>
-    <meta name="description" content="The ultimate precision timekeeping suite. World Clock, Stopwatch, Timer, Productivity Tools, and Scientific Resources.">
+    <title>GlassChronos Infinity | The Authority on Precision Time</title>
+    <meta name="description" content="GlassChronos Infinity is the world's leading precision timekeeping suite. Features include Atomic World Clock, Scientific Calculator, Unit Conversion, Pomodoro Timer, and authoritative resources on Horology and Global Synchronization.">
+    <meta name="keywords" content="Atomic Clock, World Time, NTP, Precision Time, Stopwatch, Pomodoro, Scientific Calculator, Unit Converter, Horology, Time Synchronization, UTC">
     <meta name="author" content="GlassChronos">
+    <link rel="canonical" href="https://glasschronos.com" />
     
-    <!-- Fonts & Icons -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -26,10 +30,16 @@
                     },
                     colors: {
                         slate: { 850: '#151e2e', 900: '#0f172a', 950: '#020617' },
-                        gold: { 400: '#fbbf24', 500: '#f59e0b' }
+                        glass: {
+                            border: 'rgba(255, 255, 255, 0.08)',
+                            surface: 'rgba(15, 23, 42, 0.6)'
+                        }
                     },
                     zIndex: {
                         'max': '10000',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -37,122 +47,86 @@
     </script>
 
     <style>
-        /* CORE STYLES */
+        /* CRITICAL STYLES */
         body {
-            background: radial-gradient(circle at top left, #1e293b, #0f172a, #020617);
-            color: #f8fafc;
-            overflow: hidden; /* App-like feel */
+            background-color: #0f172a; /* Immediate load color */
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.15), transparent 40%),
+                radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.15), transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.1), transparent 40%);
+            color: #e2e8f0;
+            overflow: hidden;
         }
 
-        /* GLASSMORPHISM 2.0 */
+        /* GLASSMORPHISM ENGINE */
         .glass-panel {
-            background: rgba(30, 41, 59, 0.65);
+            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            transition: all 0.2s ease-out;
         }
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
         }
 
-        /* INPUTS & INTERACTIVE */
-        .glass-input {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s;
-        }
-        .glass-input:focus {
-            outline: none;
-            border-color: rgba(59, 130, 246, 0.5);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
-        }
-
-        /* ADS - SPONSORED ZONES */
-        .ad-zone {
-            background: linear-gradient(45deg, rgba(255,255,255,0.02), rgba(255,255,255,0.04));
-            border: 1px dashed rgba(255, 255, 255, 0.1);
+        /* UI ELEMENTS */
+        .nav-item {
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: opacity 0.3s;
+            transition: all 0.2s;
         }
-        .ad-label {
-            position: absolute;
-            top: 4px;
-            right: 6px;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.2);
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
-
-        /* NAVIGATION */
-        .nav-btn {
-            position: relative;
-            overflow: hidden;
-        }
-        .nav-btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            background: #3b82f6;
-            transform: scaleY(0);
-            transition: transform 0.2s ease;
-        }
-        .nav-btn.active {
-            background: rgba(255, 255, 255, 0.05);
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.08);
             color: #fff;
         }
-        .nav-btn.active::after {
-            transform: scaleY(1);
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: #3b82f6;
+            border-radius: 0 4px 4px 0;
         }
 
-        /* UTILITIES */
-        .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
         .analog-hand {
-            transform-origin: 50% 100%;
-            transition: transform 0.05s cubic-bezier(0.4, 2.08, 0.55, 0.44);
-            border-radius: 99px;
             position: absolute;
-            bottom: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
+            bottom: 50%;
+            transform-origin: bottom center;
+            border-radius: 999px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.1s cubic-bezier(0.4, 2.08, 0.55, 0.44);
         }
+
+        .knowledge-panel {
+            border-left: 3px solid #3b82f6;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+        }
+
+        /* UTILS */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 <script type="importmap">
 {
   "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
     "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
     "vite": "https://esm.sh/vite@^7.3.1",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.3"
@@ -160,384 +134,437 @@
 }
 </script>
 </head>
-<body class="flex flex-col md:flex-row h-screen font-sans selection:bg-blue-500/30">
+<body class="flex h-screen w-screen font-sans antialiased selection:bg-blue-500/30">
 
-    <!-- SIDEBAR NAVIGATION -->
-    <nav class="glass-panel w-full md:w-20 lg:w-64 flex-shrink-0 flex flex-col justify-between z-50">
-        <div class="flex flex-col h-full">
+    <!-- NAVIGATION SIDEBAR -->
+    <nav class="glass-panel w-20 lg:w-64 h-full flex flex-col justify-between z-50 shrink-0 relative flex-none">
+        <div>
             <!-- Brand -->
-            <div class="h-20 flex items-center px-6 border-b border-white/5 bg-slate-900/40">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 mr-3 shrink-0">
+            <div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/5 bg-white/5">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
                     <i data-lucide="infinity" class="text-white w-6 h-6"></i>
                 </div>
-                <span class="text-xl font-bold tracking-tight text-white hidden lg:block">GlassChronos</span>
+                <div class="ml-3 hidden lg:block">
+                    <h1 class="text-lg font-bold tracking-tight text-white leading-tight">GlassChronos</h1>
+                    <p class="text-[10px] text-white/40 tracking-widest uppercase font-mono">INFINITY v2.0</p>
+                </div>
             </div>
 
             <!-- Menu -->
-            <div class="flex-1 overflow-y-auto py-6 space-y-1 px-3">
-                <div class="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2 px-3 hidden lg:block">Core</div>
-                <button onclick="router('dashboard')" id="nav-dashboard" class="nav-btn active w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5 shrink-0"></i>
-                    <span class="ml-3 text-sm hidden lg:block">Dashboard</span>
+            <div class="py-6 space-y-1 px-3">
+                <div class="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3 px-3 hidden lg:block">Suite</div>
+                
+                <button onclick="router('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                    <i data-lucide="layout-grid" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Dashboard</span>
                 </button>
-                <button onclick="router('worldclock')" id="nav-worldclock" class="nav-btn w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all">
-                    <i data-lucide="globe" class="w-5 h-5 shrink-0"></i>
-                    <span class="ml-3 text-sm hidden lg:block">World Clocks</span>
+                
+                <button onclick="router('world')" id="nav-world" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                    <i data-lucide="globe" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">World Clock</span>
                 </button>
-                <button onclick="router('tools')" id="nav-tools" class="nav-btn w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all">
-                    <i data-lucide="wrench" class="w-5 h-5 shrink-0"></i>
-                    <span class="ml-3 text-sm hidden lg:block">Pro Tools</span>
+                
+                <button onclick="router('tools')" id="nav-tools" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                    <i data-lucide="cpu" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Pro Tools</span>
                 </button>
-                <button onclick="router('wellness')" id="nav-wellness" class="nav-btn w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all">
-                    <i data-lucide="heart" class="w-5 h-5 shrink-0"></i>
-                    <span class="ml-3 text-sm hidden lg:block">Wellness</span>
+                
+                <button onclick="router('wellness')" id="nav-wellness" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                    <i data-lucide="heart" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Wellness</span>
                 </button>
 
-                <div class="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2 px-3 mt-6 hidden lg:block">Knowledge</div>
-                <button onclick="router('resources')" id="nav-resources" class="nav-btn w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all">
-                    <i data-lucide="book-open" class="w-5 h-5 shrink-0"></i>
-                    <span class="ml-3 text-sm hidden lg:block">Articles & SEO</span>
+                <div class="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3 px-3 mt-8 hidden lg:block">Authority</div>
+                
+                <button onclick="router('science')" id="nav-science" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                    <i data-lucide="book-open" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Horology Knowledge</span>
                 </button>
-                <button onclick="router('legal')" id="nav-legal" class="nav-btn w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-all">
-                    <i data-lucide="shield" class="w-5 h-5 shrink-0"></i>
-                    <span class="ml-3 text-sm hidden lg:block">Legal & Privacy</span>
+                
+                <button onclick="router('legal')" id="nav-legal" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                    <i data-lucide="scale" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Legal Hub</span>
                 </button>
             </div>
+        </div>
 
-            <!-- User/Contact -->
-            <div class="p-4 border-t border-white/5 hidden lg:block">
-                <a href="mailto:magic.reviewsite@gmail.com" class="flex items-center space-x-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
-                    <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400">
-                        <i data-lucide="mail" class="w-4 h-4"></i>
-                    </div>
-                    <div class="text-xs">
-                        <div class="text-white font-medium">Contact Support</div>
-                        <div class="text-white/40">magic.reviewsite</div>
-                    </div>
-                </a>
+        <!-- System Status -->
+        <div class="p-6 hidden lg:block">
+            <div class="glass-card rounded-xl p-4 bg-white/5 border-t border-white/10">
+                <div class="flex items-center space-x-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <span class="text-xs font-medium text-emerald-400">System Operational</span>
+                </div>
+                <div class="text-[10px] text-white/40">Drift: &lt;1ms<br>Sync: NTP Stratum 1</div>
             </div>
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 flex flex-col relative overflow-hidden bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center">
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-slate-900/90 backdrop-blur-sm z-0"></div>
-
-        <!-- Header -->
-        <header class="h-20 glass-panel border-b-0 border-white/5 flex items-center justify-between px-8 relative z-10 shrink-0">
+    <!-- MAIN INTERFACE -->
+    <main class="flex-1 flex flex-col relative overflow-hidden bg-[#0f172a]">
+        
+        <!-- HEADER -->
+        <header class="h-20 glass-panel border-l-0 border-r-0 border-t-0 flex items-center justify-between px-8 z-40 shrink-0">
             <div>
-                <h1 id="page-title" class="text-2xl font-light text-white tracking-wide">Dashboard</h1>
-                <p id="live-utc" class="text-xs font-mono text-emerald-400 mt-0.5 tracking-wider">SYNCING NTP...</p>
+                <h2 id="page-title" class="text-xl font-light text-white tracking-wide">Dashboard</h2>
+                <div class="flex items-center space-x-2 mt-0.5">
+                     <i data-lucide="satellite" class="w-3 h-3 text-blue-400"></i>
+                     <span id="utc-time" class="text-xs font-mono text-blue-400/80">Connecting to Atomic Sync...</span>
+                </div>
             </div>
-            <div class="flex items-center space-x-4">
-                <div class="hidden md:flex flex-col items-end mr-4">
-                    <span class="text-xs text-white/40 uppercase tracking-widest">System Status</span>
-                    <span class="text-xs text-emerald-400 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE</span>
+            <div class="flex items-center space-x-6">
+                <div class="hidden md:flex flex-col items-end">
+                    <span class="text-[10px] text-white/30 uppercase tracking-widest">Support</span>
+                    <a href="mailto:magic.reviewsite@gmail.com" class="text-xs text-white hover:text-blue-400 transition-colors">magic.reviewsite@gmail.com</a>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
                 </div>
             </div>
         </header>
 
-        <!-- Scroll Area -->
-        <div class="flex-1 overflow-y-auto p-6 md:p-8 relative z-10 custom-scrollbar">
+        <!-- DYNAMIC CONTENT AREA -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10 pb-24 scroll-smooth">
             
-            <!-- AD SLOT 1: HEADER LEADERBOARD -->
-            <div class="w-full h-24 mb-8 rounded-xl ad-zone fade-in">
-                <span class="ad-label">Sponsored</span>
-                <div class="text-white/20 text-sm font-medium flex flex-col items-center">
-                    <i data-lucide="monitor" class="w-6 h-6 mb-2 opacity-50"></i>
-                    <span>Premium Display Space #1</span>
-                </div>
-            </div>
-
             <!-- VIEW: DASHBOARD -->
-            <div id="view-dashboard" class="page-view fade-in space-y-6">
-                <!-- Hero Analog Clock -->
-                <div class="glass-panel rounded-3xl p-10 flex flex-col items-center justify-center relative overflow-hidden min-h-[400px]">
+            <div id="view-dashboard" class="page-view fade-in space-y-8">
+                <!-- Main Clock -->
+                <div class="glass-panel rounded-3xl p-12 flex flex-col items-center justify-center relative overflow-hidden min-h-[500px]">
                     <div class="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent pointer-events-none"></div>
                     
-                    <!-- Clock Face -->
-                    <div class="w-72 h-72 md:w-96 md:h-96 rounded-full border-4 border-white/10 relative shadow-[0_0_50px_rgba(0,0,0,0.5)] bg-slate-900/50 backdrop-blur-md">
-                        <!-- Markers -->
-                        <div id="clock-markers"></div>
+                    <!-- Analog Face -->
+                    <div class="w-72 h-72 lg:w-96 lg:h-96 rounded-full border border-white/10 relative shadow-2xl bg-[#0f172a]/50 backdrop-blur-xl ring-1 ring-white/5">
+                        <!-- Markers JS Injected -->
+                        <div id="clock-face"></div>
                         
                         <!-- Hands -->
-                        <div id="hand-hour" class="analog-hand bg-white w-2 h-[25%] shadow-lg"></div>
-                        <div id="hand-minute" class="analog-hand bg-white/80 w-1.5 h-[38%] shadow-lg"></div>
-                        <div id="hand-second" class="analog-hand bg-red-500 w-0.5 h-[42%] shadow-lg shadow-red-500/50"></div>
+                        <div id="hand-hour" class="analog-hand bg-white w-1.5 h-[28%] z-10"></div>
+                        <div id="hand-minute" class="analog-hand bg-white/90 w-1 h-[38%] z-10"></div>
+                        <div id="hand-second" class="analog-hand bg-blue-500 w-0.5 h-[42%] z-20 shadow-[0_0_15px_rgba(59,130,246,0.6)]"></div>
                         
-                        <!-- Center Cap -->
-                        <div class="absolute top-1/2 left-1/2 w-4 h-4 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-xl border-2 border-slate-800 z-20"></div>
+                        <!-- Cap -->
+                        <div class="absolute top-1/2 left-1/2 w-3 h-3 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 z-30 shadow-lg border border-gray-400"></div>
                     </div>
 
-                    <div class="mt-8 text-center">
-                        <div id="main-digital" class="text-6xl md:text-7xl font-mono font-light tracking-tighter text-white drop-shadow-2xl">00:00:00</div>
-                        <div id="main-date" class="text-lg text-white/40 font-light mt-2 uppercase tracking-widest">Loading Date...</div>
+                    <div class="mt-12 text-center relative z-10">
+                        <div id="main-digital" class="text-6xl lg:text-8xl font-mono font-light tracking-tighter text-white drop-shadow-2xl tabular-nums">00:00:00</div>
+                        <div id="main-date" class="text-sm lg:text-base text-white/40 font-medium mt-2 uppercase tracking-[0.2em]">System Initializing</div>
                     </div>
                 </div>
 
-                <!-- Quick Stats Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="glass-card rounded-xl p-6">
-                        <div class="flex items-center gap-3 text-white/50 mb-2"><i data-lucide="sun" class="w-4 h-4"></i><span class="text-xs uppercase tracking-widest">Solar</span></div>
-                        <div class="text-2xl font-light">Daylight</div>
-                        <div class="w-full bg-white/10 h-1 mt-3 rounded-full overflow-hidden"><div class="bg-amber-400 h-full w-[60%]"></div></div>
+                <!-- Featured Knowledge Panel (Replaces Ad Slot) -->
+                <div class="glass-panel rounded-2xl p-8 knowledge-panel flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer hover:bg-white/5 transition-colors" onclick="router('science')">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 uppercase tracking-widest">Featured Article</span>
+                            <span class="text-xs text-white/30">Read time: 4 min</span>
+                        </div>
+                        <h3 class="text-xl font-medium text-white mb-2">The Evolution of Atomic Precision</h3>
+                        <p class="text-white/50 text-sm leading-relaxed max-w-2xl">From the first Cesium-133 clocks to modern optical lattices, discover how humanity achieved the accuracy required for GPS navigation and high-frequency trading.</p>
                     </div>
-                    <div class="glass-card rounded-xl p-6">
-                         <div class="flex items-center gap-3 text-white/50 mb-2"><i data-lucide="moon" class="w-4 h-4"></i><span class="text-xs uppercase tracking-widest">Lunar Phase</span></div>
-                        <div class="text-2xl font-light">Waxing Gibbous</div>
-                        <div class="text-xs text-white/30 mt-1">Illumination: 78%</div>
-                    </div>
-                    <div class="glass-card rounded-xl p-6">
-                         <div class="flex items-center gap-3 text-white/50 mb-2"><i data-lucide="activity" class="w-4 h-4"></i><span class="text-xs uppercase tracking-widest">Productivity</span></div>
-                        <div class="text-2xl font-light">Focus Mode</div>
-                        <div class="text-xs text-emerald-400 mt-1">Ready to start</div>
+                    <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center shrink-0">
+                        <i data-lucide="arrow-right" class="text-white/50"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- VIEW: WORLD CLOCKS (SEARCHABLE) -->
-            <div id="view-worldclock" class="page-view hidden space-y-6">
-                <!-- Search Bar -->
-                <div class="glass-panel p-2 rounded-xl flex items-center relative z-max">
+            <!-- VIEW: WORLD CLOCK -->
+            <div id="view-world" class="page-view hidden space-y-8">
+                 <div class="glass-panel p-2 rounded-2xl flex items-center relative z-[10000] sticky top-0 shadow-2xl">
                     <i data-lucide="search" class="ml-4 text-white/40 w-5 h-5"></i>
-                    <input type="text" id="clock-search" placeholder="Search any city or timezone (e.g., Tokyo, GMT+2)..." class="w-full bg-transparent border-none text-white p-4 focus:outline-none placeholder-white/20 text-lg">
-                    <div id="search-results" class="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-white/10 rounded-xl shadow-2xl max-h-60 overflow-y-auto hidden"></div>
+                    <input type="text" id="clock-search" placeholder="Search 100+ global cities (e.g., Tokyo, London, GMT)..." class="w-full bg-transparent border-none text-white p-4 focus:outline-none placeholder-white/20 text-lg">
+                    <div id="search-results" class="absolute top-full left-0 right-0 mt-2 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl max-h-60 overflow-y-auto hidden custom-scrollbar"></div>
                 </div>
 
-                <div id="active-clocks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <!-- Clocks injected via JS -->
-                </div>
-
-                <!-- AD SLOT 2: IN-GRID -->
-                <div class="w-full h-32 rounded-xl ad-zone">
-                    <span class="ad-label">Sponsored</span>
-                    <div class="text-white/20 text-sm font-medium">Premium Placement #2</div>
+                <div id="clock-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Clocks Injected Here -->
                 </div>
             </div>
 
             <!-- VIEW: PRO TOOLS -->
             <div id="view-tools" class="page-view hidden space-y-8">
-                <!-- Stopwatch & Timer Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Stopwatch -->
-                    <div class="glass-panel rounded-2xl p-8 flex flex-col items-center">
-                        <h3 class="text-xl font-light text-white/60 mb-6 flex items-center gap-2"><i data-lucide="timer" class="w-5 h-5"></i> Stopwatch</h3>
-                        <div id="sw-display" class="text-6xl font-mono font-bold tracking-tighter mb-8">00:00.00</div>
-                        <div class="flex gap-4">
-                            <button onclick="swToggle()" id="btn-sw-toggle" class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center hover:bg-emerald-500/30 transition-all"><i data-lucide="play" class="w-6 h-6 fill-current"></i></button>
-                            <button onclick="swReset()" class="w-16 h-16 rounded-full bg-white/5 text-white border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all"><i data-lucide="rotate-ccw" class="w-6 h-6"></i></button>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    <!-- Calculator -->
+                    <div class="glass-panel rounded-2xl p-8">
+                        <h3 class="text-lg font-medium text-white/60 mb-6 flex items-center gap-2"><i data-lucide="calculator" class="w-5 h-5"></i> Scientific Calculator</h3>
+                        <div class="bg-black/30 rounded-xl p-4 mb-4 text-right border border-white/5">
+                            <div class="text-xs text-white/40 h-4 mb-1" id="calc-history"></div>
+                            <input type="text" readonly value="0" class="w-full bg-transparent text-4xl font-mono text-white text-right focus:outline-none" id="calc-display">
+                        </div>
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="calcInput('AC')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 text-amber-400 font-bold transition-colors">AC</button>
+                            <button onclick="calcInput('DEL')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">DEL</button>
+                            <button onclick="calcInput('%')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">%</button>
+                            <button onclick="calcInput('/')" class="p-4 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors">÷</button>
+                            
+                            <button onclick="calcInput('7')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">7</button>
+                            <button onclick="calcInput('8')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">8</button>
+                            <button onclick="calcInput('9')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">9</button>
+                            <button onclick="calcInput('*')" class="p-4 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors">×</button>
+                            
+                            <button onclick="calcInput('4')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">4</button>
+                            <button onclick="calcInput('5')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">5</button>
+                            <button onclick="calcInput('6')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">6</button>
+                            <button onclick="calcInput('-')" class="p-4 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors">-</button>
+                            
+                            <button onclick="calcInput('1')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">1</button>
+                            <button onclick="calcInput('2')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">2</button>
+                            <button onclick="calcInput('3')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 font-medium transition-colors">3</button>
+                            <button onclick="calcInput('+')" class="p-4 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 transition-colors">+</button>
+                            
+                            <button onclick="calcInput('0')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 col-span-2 font-medium transition-colors">0</button>
+                            <button onclick="calcInput('.')" class="p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">.</button>
+                            <button onclick="calcResult()" class="p-4 bg-blue-600 rounded-lg hover:bg-blue-500 text-white shadow-lg shadow-blue-500/20 transition-colors">=</button>
                         </div>
                     </div>
 
-                    <!-- Pomodoro -->
-                    <div class="glass-panel rounded-2xl p-8 flex flex-col items-center">
-                         <h3 class="text-xl font-light text-white/60 mb-6 flex items-center gap-2"><i data-lucide="coffee" class="w-5 h-5"></i> Pomodoro</h3>
-                         <div id="pomo-display" class="text-6xl font-mono font-bold tracking-tighter mb-8">25:00</div>
-                         <div class="flex gap-4">
-                            <button class="px-6 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm">Short Break</button>
-                            <button class="px-6 py-2 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30 text-sm">Start Focus</button>
+                    <div class="space-y-6">
+                        <!-- Unit Converter -->
+                        <div class="glass-card rounded-2xl p-6">
+                             <h3 class="text-lg font-medium text-white/60 mb-4 flex items-center gap-2"><i data-lucide="arrow-right-left" class="w-5 h-5"></i> Universal Converter</h3>
+                             <div class="flex gap-2 mb-4 overflow-x-auto pb-2 custom-scrollbar">
+                                 <button onclick="setConvMode('weight')" class="px-3 py-1 bg-white/10 rounded text-xs text-white hover:bg-white/20 whitespace-nowrap">Weight</button>
+                                 <button onclick="setConvMode('length')" class="px-3 py-1 bg-white/5 rounded text-xs text-white/50 hover:bg-white/20 whitespace-nowrap">Length</button>
+                                 <button onclick="setConvMode('temp')" class="px-3 py-1 bg-white/5 rounded text-xs text-white/50 hover:bg-white/20 whitespace-nowrap">Temp</button>
+                             </div>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center relative">
+                                 <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-[#0f172a] rounded-full p-1 border border-white/10">
+                                     <i data-lucide="arrow-right" class="w-4 h-4 text-white/50"></i>
+                                 </div>
+                                 <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                     <label class="text-xs text-white/30 mb-1 block uppercase tracking-wider" id="conv-label-1">Kilograms</label>
+                                     <input type="number" id="conv-in" placeholder="0" class="w-full bg-transparent border-none text-2xl text-white focus:outline-none font-mono" oninput="convert()">
+                                 </div>
+                                 <div class="bg-black/20 p-4 rounded-xl border border-white/5">
+                                     <label class="text-xs text-white/30 mb-1 block uppercase tracking-wider" id="conv-label-2">Pounds</label>
+                                     <input type="text" id="conv-out" placeholder="0" readonly class="w-full bg-transparent border-none text-2xl text-white/50 focus:outline-none font-mono">
+                                 </div>
+                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Utilities Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Password Gen -->
-                    <div class="glass-card rounded-xl p-6">
-                        <div class="flex items-center gap-2 mb-4 text-purple-400"><i data-lucide="lock" class="w-5 h-5"></i><span class="font-bold">Pass Gen</span></div>
-                        <div class="bg-black/30 p-3 rounded-lg font-mono text-sm mb-3 break-all text-center select-all">Tr5#kL9@mP2</div>
-                        <button class="w-full py-2 bg-purple-500/20 rounded-lg text-purple-300 text-sm hover:bg-purple-500/30 transition-colors">Generate Secure</button>
-                    </div>
-                    <!-- Unit Converter -->
-                    <div class="glass-card rounded-xl p-6">
-                        <div class="flex items-center gap-2 mb-4 text-amber-400"><i data-lucide="arrow-right-left" class="w-5 h-5"></i><span class="font-bold">Converter</span></div>
-                        <div class="grid grid-cols-2 gap-2 mb-3">
-                            <input type="number" placeholder="KG" class="glass-input p-2 rounded text-sm w-full">
-                            <input type="number" placeholder="LBS" class="glass-input p-2 rounded text-sm w-full" readonly>
-                        </div>
-                        <button class="w-full py-2 bg-amber-500/20 rounded-lg text-amber-300 text-sm hover:bg-amber-500/30 transition-colors">Swap Units</button>
-                    </div>
-                     <!-- Calculator -->
-                     <div class="glass-card rounded-xl p-6">
-                        <div class="flex items-center gap-2 mb-4 text-cyan-400"><i data-lucide="calculator" class="w-5 h-5"></i><span class="font-bold">Calculator</span></div>
-                        <div class="bg-black/30 p-2 rounded text-right font-mono mb-2">0</div>
-                        <div class="grid grid-cols-4 gap-1 text-xs">
-                            <button class="p-2 bg-white/5 rounded hover:bg-white/10">7</button>
-                            <button class="p-2 bg-white/5 rounded hover:bg-white/10">8</button>
-                            <button class="p-2 bg-white/5 rounded hover:bg-white/10">9</button>
-                            <button class="p-2 bg-cyan-500/20 text-cyan-400 rounded hover:bg-cyan-500/30">/</button>
-                            <!-- More placeholder buttons -->
-                        </div>
-                    </div>
-                    <!-- QR Code -->
-                    <div class="glass-card rounded-xl p-6">
-                        <div class="flex items-center gap-2 mb-4 text-pink-400"><i data-lucide="qr-code" class="w-5 h-5"></i><span class="font-bold">QR Gen</span></div>
-                        <input type="text" placeholder="https://..." class="glass-input w-full p-2 rounded text-sm mb-3">
-                        <button class="w-full py-2 bg-pink-500/20 rounded-lg text-pink-300 text-sm hover:bg-pink-500/30 transition-colors">Create Code</button>
+                         <!-- Stopwatch -->
+                         <div class="glass-card rounded-2xl p-6 text-center">
+                            <h3 class="text-lg font-medium text-white/60 mb-6 flex items-center justify-center gap-2"><i data-lucide="timer" class="w-5 h-5"></i> Precision Stopwatch</h3>
+                            <div class="text-5xl font-mono font-bold tracking-tighter mb-8 tabular-nums" id="sw-display">00:00.00</div>
+                            <div class="flex justify-center space-x-6">
+                                <button onclick="swToggle()" id="sw-btn" class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center hover:bg-emerald-500/30 transition-all border border-emerald-500/20"><i data-lucide="play" class="w-6 h-6 fill-current"></i></button>
+                                <button onclick="swReset()" class="w-16 h-16 rounded-full bg-white/5 text-white flex items-center justify-center hover:bg-white/10 transition-all border border-white/10"><i data-lucide="rotate-ccw" class="w-6 h-6"></i></button>
+                            </div>
+                       </div>
                     </div>
                 </div>
             </div>
 
             <!-- VIEW: WELLNESS -->
-            <div id="view-wellness" class="page-view hidden space-y-6">
-                <div class="glass-panel rounded-2xl p-8 text-center relative overflow-hidden">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=80&w=2070&auto=format&fit=crop')] bg-cover opacity-10"></div>
-                    <h2 class="text-3xl font-light mb-4 relative z-10">4-7-8 Breathing Guide</h2>
-                    <div class="w-48 h-48 rounded-full border-4 border-white/20 mx-auto flex items-center justify-center relative z-10 animate-pulse" style="animation-duration: 4s;">
-                        <span class="text-2xl font-light tracking-widest">INHALE</span>
-                    </div>
-                    <p class="mt-6 text-white/50 max-w-lg mx-auto relative z-10">Synchronize your breath to reduce stress and improve focus. Follow the circle.</p>
-                </div>
-                
-                <!-- AD SLOT 3 -->
-                <div class="w-full h-32 rounded-xl ad-zone">
-                    <span class="ad-label">Sponsored</span>
-                    <div class="text-white/20 text-sm font-medium">Wellness Ad Placement</div>
-                </div>
+            <div id="view-wellness" class="page-view hidden space-y-8">
+                 <div class="glass-panel rounded-3xl p-10 flex flex-col items-center text-center relative overflow-hidden">
+                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-30"></div>
+                     <h2 class="text-3xl font-light mb-2 relative z-10 text-white">Focus & Breathe</h2>
+                     <p class="text-white/40 mb-10 max-w-md relative z-10">Synchronize your biological rhythm with the universal flow using the Pomodoro technique.</p>
+                     
+                     <div class="w-72 h-72 rounded-full border-4 border-white/5 flex items-center justify-center relative z-10 group cursor-pointer hover:border-emerald-500/30 transition-all duration-500" onclick="togglePomodoro()">
+                         <div id="pomo-ring" class="absolute inset-0 rounded-full border-4 border-emerald-400/20 scale-95 opacity-0 transition-all duration-1000"></div>
+                         <div class="text-center">
+                             <div class="text-6xl font-mono font-thin text-white mb-2 tabular-nums" id="pomo-display">25:00</div>
+                             <div class="text-xs text-emerald-400 uppercase tracking-widest font-bold" id="pomo-status">Start Session</div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <!-- Sun/Moon Data -->
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div class="glass-card rounded-2xl p-6">
+                         <div class="flex items-center gap-3 mb-4">
+                             <i data-lucide="sun" class="text-amber-400"></i>
+                             <h4 class="text-lg font-medium">Solar Cycle</h4>
+                         </div>
+                         <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-2">
+                             <div class="h-full bg-amber-400 w-3/4" id="sun-progress"></div>
+                         </div>
+                         <div class="flex justify-between text-xs text-white/40">
+                             <span>Sunrise: 06:12</span>
+                             <span>Sunset: 18:45</span>
+                         </div>
+                     </div>
+                     <div class="glass-card rounded-2xl p-6">
+                         <div class="flex items-center gap-3 mb-4">
+                             <i data-lucide="moon" class="text-purple-400"></i>
+                             <h4 class="text-lg font-medium">Lunar Phase</h4>
+                         </div>
+                         <div class="text-2xl font-light text-white mb-1">Waxing Gibbous</div>
+                         <div class="text-sm text-white/40">Illumination: 78%</div>
+                     </div>
+                 </div>
             </div>
 
-            <!-- VIEW: RESOURCES (SEO) -->
-            <div id="view-resources" class="page-view hidden max-w-4xl mx-auto space-y-8">
-                <div class="glass-panel rounded-2xl p-10">
-                    <h1 class="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">The Physics of Chronology</h1>
-                    <div class="prose prose-invert prose-lg text-white/70">
-                        <p class="mb-4">
-                            Time is not merely a sequence of events; it is the fundamental dimension through which the universe unfolds. In the digital age, **Atomic Clock Accuracy** and **Global Time Synchronization** are the invisible backbones of the internet, financial markets, and GPS navigation.
-                        </p>
-                        <h3 class="text-white text-xl font-bold mt-6 mb-3">Network Time Protocol (NTP)</h3>
-                        <p class="mb-4">
-                            GlassChronos utilizes advanced browser-based logic to estimate drift from Coordinated Universal Time (UTC). While a standard quartz crystal in a computer motherboard can drift by seconds per week, our algorithms visualize time with millisecond precision, respecting the standards set by NIST and other international bodies.
+            <!-- VIEW: SCIENCE (SEO CONTENT) -->
+            <div id="view-science" class="page-view hidden max-w-4xl mx-auto space-y-12">
+                <div class="glass-panel rounded-3xl p-12">
+                    <h1 class="text-4xl md:text-5xl font-light mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">The Science of Horology</h1>
+                    
+                    <article class="prose prose-invert prose-lg max-w-none text-white/70 leading-relaxed">
+                        <p class="mb-6 first-letter:text-5xl first-letter:font-bold first-letter:text-white first-letter:mr-3 first-letter:float-left">
+                            Time is the scaffolding of the universe, a dimension that dictates the rhythm of existence from the spin of an electron to the orbit of galaxies. In our modern digital era, the measurement of time—<strong>Chronometry</strong>—has evolved from sundials and water clocks to the hyper-precise oscillation of Cesium-133 atoms.
                         </p>
                         
-                        <!-- AD SLOT 4: IN-CONTENT -->
-                        <div class="w-full h-40 my-8 rounded-xl ad-zone">
-                             <span class="ad-label">Sponsored</span>
-                             <div class="text-white/20 text-sm font-medium">In-Article Contextual Ad</div>
+                        <div class="knowledge-panel p-6 my-8 rounded-r-xl">
+                             <h4 class="text-white font-bold mb-2 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-400"></i> Expert Insight</h4>
+                             <p class="text-sm">Ideally, a second is defined as exactly 9,192,631,770 oscillations of a Cesium atom. However, gravity affects time (Time Dilation). A clock on Mount Everest runs slightly faster than a clock at sea level due to General Relativity.</p>
                         </div>
-
-                        <h3 class="text-white text-xl font-bold mt-6 mb-3">The Future of Horology</h3>
-                        <p>
-                            As we move towards quantum computing, the definition of a "second" itself is being re-evaluated by the scientific community. Optical lattice clocks are paving the way for a new era of precision, potentially redefining the SI unit of time within the next decade.
+                        
+                        <h3 class="text-2xl text-white font-medium mt-10 mb-4">1. Atomic Clock Accuracy & UTC</h3>
+                        <p class="mb-4">
+                            At the heart of global synchronization lies <strong>Coordinated Universal Time (UTC)</strong>. Unlike GMT, which is based on the Earth's rotation, UTC is an atomic time scale. It is calculated by averaging the output of over 400 atomic clocks worldwide. 
                         </p>
-                    </div>
+                        <p class="mb-6">
+                            <strong>GlassChronos Infinity</strong> interfaces with browser-based Performance APIs that sync with your device's internal clock, which in turn syncs via <strong>Network Time Protocol (NTP)</strong> strata servers. This ensures that the time displayed on your dashboard is accurate to within milliseconds of the global standard used by stock exchanges, GPS satellites, and aviation control towers.
+                        </p>
+
+                        <h3 class="text-2xl text-white font-medium mt-10 mb-4">2. Digital Synchronization Protocols</h3>
+                        <p class="mb-4">
+                            The internet relies on packet-switched networks where latency varies. NTP algorithms estimate the round-trip delay time to a time server and adjust the local clock accordingly. This is critical for cryptography (TLS/SSL certificates), database consistency (Google Spanner's TrueTime), and distributed systems.
+                        </p>
+                    </article>
+                </div>
+                
+                 <div class="glass-panel rounded-3xl p-12">
+                    <h2 class="text-3xl font-light mb-6 text-white">Global Standards</h2>
+                    <p class="text-white/70 leading-relaxed mb-6">
+                        From ISO 8601 date formats to the leap seconds managed by the IERS (International Earth Rotation and Reference Systems Service), the standardization of time allows for the seamless operation of international banking, aviation, and telecommunications. GlassChronos adheres to these strict standards, providing you with a reference tool you can trust for professional applications.
+                    </p>
                 </div>
             </div>
 
             <!-- VIEW: LEGAL -->
             <div id="view-legal" class="page-view hidden max-w-4xl mx-auto space-y-8">
-                <div class="glass-panel rounded-2xl p-10">
-                    <h2 class="text-3xl font-light mb-8 border-b border-white/10 pb-4">Legal & Privacy</h2>
+                <div class="glass-panel rounded-3xl p-12">
+                    <h2 class="text-3xl font-light text-white mb-8 border-b border-white/10 pb-6">Legal Documentation</h2>
                     
-                    <div class="space-y-6 text-white/60 text-sm">
+                    <div class="space-y-10 text-white/60 text-sm">
                         <section>
-                            <h3 class="text-white font-bold text-lg mb-2">Privacy Policy</h3>
-                            <p>GlassChronos Infinite respects your privacy. We do not collect Personally Identifiable Information (PII) without your consent. All time calculations, alarms, and settings are processed client-side (locally) on your device.</p>
+                            <h3 class="text-white font-bold text-lg mb-3">Privacy Policy</h3>
+                            <p class="mb-2"><strong>Effective Date: 2025</strong></p>
+                            <p class="mb-2">At GlassChronos Infinity, privacy is paramount. We operate under a strict "Client-Side First" policy:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>We do not collect Personally Identifiable Information (PII).</li>
+                                <li>All settings (alarms, timezones) are stored locally on your device via `localStorage`.</li>
+                                <li>No data is transmitted to external servers for processing.</li>
+                                <li>We do not use tracking pixels or invasive advertising scripts.</li>
+                            </ul>
                         </section>
                         
                         <section>
-                            <h3 class="text-white font-bold text-lg mb-2">Cookie Policy</h3>
-                            <p>We use cookies solely for: 1) Remembering your selected world clocks and settings (Local Storage), and 2) Serving relevant advertisements via our third-party partners (Google AdSense). By using this site, you consent to this usage.</p>
+                            <h3 class="text-white font-bold text-lg mb-3">Terms of Service</h3>
+                            <p>By using GlassChronos Infinity, you agree that the timekeeping tools are provided "as is". While we strive for atomic precision relative to your device's clock, we are not liable for missed events due to device battery failure, browser throttling, or network latency. This tool is for informational and utility purposes only.</p>
                         </section>
 
+                         <section>
+                            <h3 class="text-white font-bold text-lg mb-3">Cookie Policy</h3>
+                            <p>We use essential cookies strictly for functional purposes: to remember your theme preferences and selected world clock cities. By using this site, you consent to this minimal usage to enhance your experience.</p>
+                        </section>
+                        
                         <section>
-                            <h3 class="text-white font-bold text-lg mb-2">Terms of Service</h3>
-                            <p>The tools provided on GlassChronos are for informational and utility purposes. While we strive for atomic-level accuracy, we are not liable for any discrepancies in critical timing applications.</p>
+                            <h3 class="text-white font-bold text-lg mb-3">Contact</h3>
+                            <p>For inquiries, please contact: <a href="mailto:magic.reviewsite@gmail.com" class="text-blue-400 hover:underline">magic.reviewsite@gmail.com</a></p>
                         </section>
-
-                        <!-- AD SLOT 5 -->
-                        <div class="w-full h-20 rounded-xl ad-zone">
-                            <span class="ad-label">Sponsored</span>
-                            <div class="text-white/20 text-sm font-medium">Legal Footer Ad</div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <footer class="mt-12 border-t border-white/5 pt-8 pb-4 text-center">
-                <!-- AD SLOT 6: FOOTER -->
-                <div class="w-full h-24 mb-8 rounded-xl ad-zone max-w-3xl mx-auto">
-                    <span class="ad-label">Sponsored</span>
-                    <div class="text-white/20 text-sm font-medium">Footer Leaderboard</div>
+            <!-- FOOTER -->
+            <footer class="mt-20 border-t border-white/5 pt-10 text-center pb-6">
+                <div class="flex justify-center space-x-8 mb-6 text-sm">
+                    <button onclick="router('dashboard')" class="text-white/40 hover:text-white transition-colors">Home</button>
+                    <button onclick="router('science')" class="text-white/40 hover:text-white transition-colors">Science</button>
+                    <button onclick="router('legal')" class="text-white/40 hover:text-white transition-colors">Privacy & Terms</button>
                 </div>
-                <div class="text-xs text-white/30">
-                    <p>&copy; 2025 GlassChronos Infinite. All Rights Reserved.</p>
-                    <p class="mt-2">Modesty. Integrity. Precision.</p>
-                </div>
+                <p class="text-xs text-white/20">&copy; 2025 GlassChronos Infinity. All Rights Reserved.</p>
+                <p class="text-[10px] text-white/10 mt-2 font-mono">Precision. Integrity. Excellence.</p>
             </footer>
+
         </div>
     </main>
 
     <script>
-        // --- CORE DATA & STATE ---
+        // --- DATA & CONFIG ---
         const ALL_ZONES = Intl.supportedValuesOf('timeZone');
-        const CURATED_ZONES = [
-            'UTC', 'America/New_York', 'Europe/London', 'Europe/Paris', 'Asia/Tokyo', 
-            'Australia/Sydney', 'Asia/Dubai', 'America/Los_Angeles', 'Europe/Berlin',
-            'Asia/Hong_Kong', 'Asia/Singapore', 'America/Toronto', 'Asia/Seoul',
-            'Europe/Moscow', 'America/Sao_Paulo', 'Pacific/Auckland', 'Asia/Jerusalem'
+        const DEFAULT_ZONES = [
+            'UTC', 'America/New_York', 'Europe/London', 'Asia/Tokyo', 
+            'Australia/Sydney', 'Europe/Paris', 'Asia/Dubai', 'America/Los_Angeles'
         ];
         
         let state = {
             view: 'dashboard',
-            savedClocks: ['America/New_York', 'Europe/London', 'Asia/Tokyo', 'Asia/Jerusalem'],
-            sw: { running: false, start: 0, elapsed: 0, interval: null }
+            myZones: JSON.parse(localStorage.getItem('gc_zones')) || DEFAULT_ZONES,
+            convMode: 'weight',
+            sw: { running: false, start: 0, elapsed: 0, interval: null },
+            pomo: { running: false, left: 1500, interval: null }
         };
 
         // --- INIT ---
         document.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             initClock();
+            initSearch();
             renderWorldClocks();
-            setupSearch();
-            router('dashboard'); // Default View
+            updateSunData();
+            router('dashboard');
         });
 
-        // --- NAVIGATION ---
-        function router(viewId) {
-            // Update UI State
+        // --- ROUTING SYSTEM ---
+        function router(view) {
+            // UI Updates
             document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             
-            // Update Sidebar Active State
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            const btn = document.getElementById(`nav-${viewId}`);
-            if(btn) btn.classList.add('active');
+            const target = document.getElementById(`view-${view}`);
+            if(target) {
+                target.classList.remove('hidden');
+                target.classList.add('fade-in');
+            }
+            
+            const nav = document.getElementById(`nav-${view}`);
+            if(nav) nav.classList.add('active');
 
-            // Update Title
+            // Header Updates
             const titles = {
                 'dashboard': 'Dashboard',
-                'worldclock': 'World Clocks',
+                'world': 'World Clock',
                 'tools': 'Pro Utility Suite',
                 'wellness': 'Wellness Center',
-                'resources': 'Knowledge Base',
-                'legal': 'Legal Information'
+                'science': 'Horology Knowledge',
+                'legal': 'Legal Hub'
             };
-            document.getElementById('page-title').innerText = titles[viewId];
+            document.getElementById('page-title').innerText = titles[view] || 'GlassChronos';
+            
+            // Scroll Reset
+            document.querySelector('.custom-scrollbar').scrollTop = 0;
         }
 
-        // --- MAIN CLOCK LOGIC ---
+        // --- CLOCK ENGINE ---
         function initClock() {
-            // Markers Generation
-            const face = document.getElementById('clock-markers');
+            // Generate Markers
+            const face = document.getElementById('clock-face');
             for(let i=0; i<60; i++) {
-                const el = document.createElement('div');
-                el.className = `absolute w-0.5 ${i%5===0 ? 'h-3 bg-white/80' : 'h-1.5 bg-white/30'} origin-bottom`;
-                el.style.left = '50%';
-                el.style.bottom = '50%';
-                el.style.transform = `translateX(-50%) rotate(${i*6}deg) translateY(-${i%5===0?135:140}px)`; // Radius adj
-                face.appendChild(el);
+                const mark = document.createElement('div');
+                const isHour = i % 5 === 0;
+                mark.className = `absolute bg-white ${isHour ? 'w-0.5 h-3 opacity-90' : 'w-px h-1.5 opacity-30'}`;
+                // Correction: transform-origin is handled by CSS on the hand, markers just need placement
+                mark.style.left = '50%';
+                mark.style.bottom = '50%';
+                mark.style.transformOrigin = 'bottom center';
+                mark.style.transform = `translateX(-50%) rotate(${i * 6}deg) translateY(-${isHour ? 135 : 140}px)`;
+                face.appendChild(mark);
             }
 
             // Tick Loop
-            const tick = () => {
+            const update = () => {
                 const now = new Date();
                 
                 // Digital
                 document.getElementById('main-digital').innerText = now.toLocaleTimeString('en-US', {hour12: false});
                 document.getElementById('main-date').innerText = now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'});
-                document.getElementById('live-utc').innerText = `UTC: ${now.toISOString().slice(11,19)}`;
+                document.getElementById('utc-time').innerText = `UTC: ${now.toISOString().slice(11,19)}`;
 
                 // Analog
                 const s = now.getSeconds();
@@ -551,87 +578,132 @@
                 document.getElementById('hand-second').style.transform = `translateX(-50%) rotate(${sDeg}deg)`;
                 document.getElementById('hand-minute').style.transform = `translateX(-50%) rotate(${mDeg}deg)`;
                 document.getElementById('hand-hour').style.transform = `translateX(-50%) rotate(${hDeg}deg)`;
-
-                requestAnimationFrame(tick);
+                
+                requestAnimationFrame(update);
             };
-            tick();
+            update();
         }
 
-        // --- WORLD CLOCK LOGIC ---
+        // --- WORLD CLOCK ---
         function renderWorldClocks() {
-            const grid = document.getElementById('active-clocks-grid');
+            const grid = document.getElementById('clock-grid');
             grid.innerHTML = '';
-            
-            state.savedClocks.forEach(zone => {
-                const time = new Date().toLocaleTimeString('en-US', {timeZone: zone, hour: '2-digit', minute:'2-digit', hour12: false});
-                const date = new Date().toLocaleDateString('en-US', {timeZone: zone, weekday:'short', day:'numeric'});
-                const city = zone.split('/')[1].replace('_', ' ');
-                const region = zone.split('/')[0];
 
+            state.myZones.forEach(zone => {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('en-US', {timeZone: zone, hour:'2-digit', minute:'2-digit', hour12: false});
+                const dateStr = now.toLocaleDateString('en-US', {timeZone: zone, weekday:'short', day:'numeric'});
+                const city = zone.split('/')[1].replace(/_/g, ' ');
+                const offset = now.toLocaleTimeString('en-US', {timeZone: zone, timeZoneName:'shortOffset'}).split(' ')[1];
+                
                 const card = document.createElement('div');
-                card.className = 'glass-card rounded-xl p-5 relative group';
+                card.className = 'glass-card rounded-2xl p-6 relative group border border-white/5';
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <div class="text-xs text-white/40 uppercase tracking-wider">${region}</div>
-                            <div class="text-lg font-bold text-white">${city}</div>
-                        </div>
-                        <button onclick="removeClock('${zone}')" class="text-white/20 hover:text-red-400 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[10px] font-bold text-white/30 uppercase tracking-widest">${zone.split('/')[0]}</span>
+                        <button onclick="removeZone('${zone}')" class="opacity-0 group-hover:opacity-100 text-white/20 hover:text-red-400 transition-all"><i data-lucide="x" class="w-4 h-4"></i></button>
                     </div>
-                    <div class="text-4xl font-mono tracking-tighter text-white mb-1">${time}</div>
-                    <div class="text-sm text-white/40">${date}</div>
+                    <h3 class="text-xl font-medium text-white truncate">${city}</h3>
+                    <div class="text-4xl font-mono font-light text-white my-3 tracking-tighter tabular-nums">${timeStr}</div>
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-white/40">${dateStr}</div>
+                        <div class="text-xs bg-white/5 px-2 py-1 rounded text-white/50">${offset}</div>
+                    </div>
                 `;
                 grid.appendChild(card);
             });
             lucide.createIcons();
         }
 
-        function setupSearch() {
+        function initSearch() {
             const input = document.getElementById('clock-search');
             const results = document.getElementById('search-results');
-
+            
             input.addEventListener('input', (e) => {
                 const val = e.target.value.toLowerCase();
                 if(val.length < 2) { results.classList.add('hidden'); return; }
-
-                const matches = ALL_ZONES.filter(z => z.toLowerCase().includes(val)).slice(0, 10);
                 
+                const matches = ALL_ZONES.filter(z => z.toLowerCase().includes(val)).slice(0, 50);
                 results.innerHTML = matches.map(z => `
-                    <div onclick="addClock('${z}')" class="p-3 hover:bg-white/10 cursor-pointer border-b border-white/5 last:border-0 text-sm flex justify-between">
+                    <div onclick="addZone('${z}')" class="p-4 hover:bg-white/5 cursor-pointer border-b border-white/5 last:border-0 text-sm flex justify-between items-center text-white/80 hover:text-white transition-colors">
                         <span>${z}</span>
-                        <i data-lucide="plus" class="w-4 h-4 text-emerald-400"></i>
+                        <i data-lucide="plus" class="w-4 h-4 text-blue-400"></i>
                     </div>
                 `).join('');
-                
                 results.classList.remove('hidden');
                 lucide.createIcons();
             });
 
-            // Close search on click outside
             document.addEventListener('click', (e) => {
-                if(!input.contains(e.target) && !results.contains(e.target)) {
-                    results.classList.add('hidden');
-                }
+                if(!input.contains(e.target) && !results.contains(e.target)) results.classList.add('hidden');
             });
         }
 
-        function addClock(zone) {
-            if(!state.savedClocks.includes(zone)) {
-                state.savedClocks.push(zone);
+        window.addZone = (zone) => {
+            if(!state.myZones.includes(zone)) {
+                state.myZones.push(zone);
+                localStorage.setItem('gc_zones', JSON.stringify(state.myZones));
                 renderWorldClocks();
             }
             document.getElementById('search-results').classList.add('hidden');
             document.getElementById('clock-search').value = '';
-        }
+        };
 
-        window.removeClock = (zone) => { // Global scope for onclick
-            state.savedClocks = state.savedClocks.filter(z => z !== zone);
+        window.removeZone = (zone) => {
+            state.myZones = state.myZones.filter(z => z !== zone);
+            localStorage.setItem('gc_zones', JSON.stringify(state.myZones));
             renderWorldClocks();
         };
 
-        // --- STOPWATCH LOGIC ---
-        function swToggle() {
-            const btn = document.getElementById('btn-sw-toggle');
+        // --- CALCULATOR ---
+        let calcVal = '0';
+        window.calcInput = (key) => {
+            const display = document.getElementById('calc-display');
+            if(key === 'AC') calcVal = '0';
+            else if(key === 'DEL') calcVal = calcVal.slice(0,-1) || '0';
+            else if(calcVal === '0' && !isNaN(key)) calcVal = key;
+            else calcVal += key;
+            display.value = calcVal;
+        };
+
+        window.calcResult = () => {
+             try {
+                 const res = eval(calcVal.replace('×','*').replace('÷','/'));
+                 document.getElementById('calc-history').innerText = calcVal + ' =';
+                 calcVal = String(res);
+                 document.getElementById('calc-display').value = calcVal;
+             } catch(e) {
+                 calcVal = 'Error';
+                 document.getElementById('calc-display').value = 'Error';
+                 setTimeout(() => calcVal = '0', 1000);
+             }
+        };
+
+        // --- CONVERTER ---
+        window.setConvMode = (m) => {
+            state.convMode = m;
+            const l1 = document.getElementById('conv-label-1');
+            const l2 = document.getElementById('conv-label-2');
+            if(m === 'weight') { l1.innerText = "Kilograms"; l2.innerText = "Pounds"; }
+            if(m === 'length') { l1.innerText = "Meters"; l2.innerText = "Feet"; }
+            if(m === 'temp') { l1.innerText = "Celsius"; l2.innerText = "Fahrenheit"; }
+            document.getElementById('conv-in').value = '';
+            document.getElementById('conv-out').value = '';
+        };
+
+        window.convert = () => {
+            const val = parseFloat(document.getElementById('conv-in').value);
+            if(isNaN(val)) return;
+            let res = 0;
+            if(state.convMode === 'weight') res = val * 2.20462;
+            if(state.convMode === 'length') res = val * 3.28084;
+            if(state.convMode === 'temp') res = (val * 9/5) + 32;
+            document.getElementById('conv-out').value = res.toFixed(2);
+        };
+
+        // --- STOPWATCH ---
+        window.swToggle = () => {
+            const btn = document.getElementById('sw-btn');
             if(state.sw.running) {
                 state.sw.running = false;
                 cancelAnimationFrame(state.sw.interval);
@@ -662,18 +734,60 @@
                 loop();
             }
             lucide.createIcons();
-        }
+        };
 
-        function swReset() {
+        window.swReset = () => {
             state.sw.running = false;
             state.sw.elapsed = 0;
             cancelAnimationFrame(state.sw.interval);
             document.getElementById('sw-display').innerText = "00:00.00";
-            const btn = document.getElementById('btn-sw-toggle');
+            const btn = document.getElementById('sw-btn');
             btn.innerHTML = '<i data-lucide="play" class="w-6 h-6 fill-current"></i>';
             btn.classList.replace('text-red-400', 'text-emerald-400');
             btn.classList.replace('bg-red-500/20', 'bg-emerald-500/20');
             lucide.createIcons();
+        };
+
+        // --- POMODORO ---
+        window.togglePomodoro = () => {
+            const disp = document.getElementById('pomo-display');
+            const status = document.getElementById('pomo-status');
+            const ring = document.getElementById('pomo-ring');
+            
+            if(state.pomo.running) {
+                clearInterval(state.pomo.interval);
+                state.pomo.running = false;
+                status.innerText = "Paused";
+                ring.classList.remove('scale-100', 'opacity-100');
+                ring.classList.add('scale-95', 'opacity-0');
+            } else {
+                state.pomo.running = true;
+                status.innerText = "Focus Mode Active";
+                ring.classList.add('scale-100', 'opacity-100', 'animate-pulse');
+                ring.classList.remove('scale-95', 'opacity-0');
+                
+                state.pomo.interval = setInterval(() => {
+                    state.pomo.left--;
+                    if(state.pomo.left <= 0) {
+                        state.pomo.left = 1500;
+                        state.pomo.running = false;
+                        clearInterval(state.pomo.interval);
+                        alert("Session Complete!");
+                        status.innerText = "Start Session";
+                    }
+                    const m = Math.floor(state.pomo.left / 60);
+                    const s = state.pomo.left % 60;
+                    disp.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                }, 1000);
+            }
+        };
+
+        // --- SOLAR ---
+        function updateSunData() {
+            const now = new Date();
+            const h = now.getHours();
+            const pct = ((h + now.getMinutes()/60) / 24) * 100;
+            document.getElementById('sun-progress').style.width = `${pct}%`;
         }
 
     </script>

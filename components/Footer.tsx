@@ -9,7 +9,7 @@ export const Footer: React.FC = () => {
                 <div className="text-sm text-white/40 space-y-4 leading-relaxed text-justify md:text-center columns-1 md:columns-2 gap-8">
                     <p>
                         In our interconnected digital era, the accuracy of time measurement is not merely a convenience but a cornerstone of global infrastructure. 
-                        GlassChronos utilizes browser-based high-precision APIs combined with Web Worker threads to minimize drift, mimicking the reliability of atomic clocks. 
+                        Yclock utilizes browser-based high-precision APIs combined with Web Worker threads to minimize drift, mimicking the reliability of atomic clocks. 
                         From financial markets in New York to logistics hubs in Dubai, synchronized timekeeping ensures the seamless operation of the global economy.
                     </p>
                     <p>
@@ -21,11 +21,11 @@ export const Footer: React.FC = () => {
                     <p>
                         We are committed to ethical technology. This platform is built to be a clean, distraction-free environment that promotes productivity and mental well-being. 
                         By combining aesthetic Glassmorphism design principles with robust engineering, we provide a utility that respects both your time and your visual attention. 
-                        Thank you for trusting GlassChronos for your daily time management needs.
+                        Thank you for trusting Yclock for your daily time management needs.
                     </p>
                 </div>
                 <div className="mt-8 text-xs text-white/20">
-                    &copy; {new Date().getFullYear()} GlassChronos Utility Suite. All rights reserved. Precision. Ethics. Design.
+                    &copy; {new Date().getFullYear()} Yclock Utility Suite. All rights reserved. Precision. Ethics. Design.
                 </div>
             </div>
         </div>

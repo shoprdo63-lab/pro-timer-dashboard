@@ -82,9 +82,10 @@ export const Timer: React.FC = () => {
 
     return (
         <div className="flex flex-col h-full p-6 items-center">
-            <header className="w-full flex justify-between items-center mb-8">
+            <header className="w-full flex justify-between items-center mb-8 shrink-0">
                 <div>
                     <h2 className="text-3xl font-light tracking-tight text-white">Timer</h2>
+                    <p className="opacity-40 text-sm mt-1">Countdown management</p>
                 </div>
             </header>
 

@@ -1,7 +1,7 @@
 import { SoundPreset, TimeZone, Theme, MathDifficultyLevel } from './types';
 
 export const MASTER_DATA = {
-  APP_NAME: "GlassChronos",
+  APP_NAME: "Yclock",
   TIME_ZONES: [
     { city: "New York", region: "USA", zone: "America/New_York" },
     { city: "London", region: "UK", zone: "Europe/London" },
