@@ -3,27 +3,42 @@ import { PRECISION_WORKER_CODE } from '../constants';
 
 export const useWorkerTimer = (isRunning: boolean, callback: () => void, workerCode: string = PRECISION_WORKER_CODE) => {
   const workerRef = useRef<Worker | null>(null);
+  const callbackRef = useRef(callback);
+
+  // Keep the callback ref updated so the worker always calls the latest version
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
 
   useEffect(() => {
     const blob = new Blob([workerCode], { type: "application/javascript" });
-    workerRef.current = new Worker(URL.createObjectURL(blob));
+    const worker = new Worker(URL.createObjectURL(blob));
+    workerRef.current = worker;
 
-    workerRef.current.onmessage = (e) => {
+    worker.onmessage = (e) => {
       if (e.data === "tick") {
-        callback();
+        callbackRef.current();
       }
     };
 
-    return () => {
-      workerRef.current?.terminate();
-    };
-  }, [workerCode, callback]);
-
-  useEffect(() => {
+    // Initialize state
     if (isRunning) {
-      workerRef.current?.postMessage("start");
-    } else {
-      workerRef.current?.postMessage("stop");
+      worker.postMessage("start");
+    }
+
+    return () => {
+      worker.terminate();
+    };
+  }, [workerCode]); // Only re-create worker if code changes, NOT when callback changes
+
+  // Handle start/stop dynamically without recreating worker
+  useEffect(() => {
+    if (workerRef.current) {
+      if (isRunning) {
+        workerRef.current.postMessage("start");
+      } else {
+        workerRef.current.postMessage("stop");
+      }
     }
   }, [isRunning]);
 };
