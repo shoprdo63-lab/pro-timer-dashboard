@@ -1,0 +1,236 @@
+import React, { useEffect, useState } from 'react';
+import { Plus, X, Globe, Search } from 'lucide-react';
+import { MASTER_DATA } from '../constants';
+import { TimeZone, Theme } from '../types';
+
+interface WorldClockProps {
+    theme?: Theme;
+    time?: Date; // Passed from parent
+}
+
+export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date() }) => {
+  const [selectedZones, setSelectedZones] = useState<TimeZone[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Load saved zones
+  useEffect(() => {
+    const saved = localStorage.getItem('glass_world_clock');
+    if (saved) {
+      setSelectedZones(JSON.parse(saved));
+    } else {
+      setSelectedZones([
+        MASTER_DATA.TIME_ZONES.find(z => z.city === 'New York')!,
+        MASTER_DATA.TIME_ZONES.find(z => z.city === 'London')!,
+        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Tokyo')!,
+        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Sydney')!,
+        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Dubai')!,
+        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Paris')!,
+      ].filter(Boolean));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('glass_world_clock', JSON.stringify(selectedZones));
+  }, [selectedZones]);
+
+  const addZone = (zone: TimeZone) => {
+    if (!selectedZones.find(z => z.city === zone.city)) {
+      setSelectedZones([...selectedZones, zone]);
+    }
+    setIsAdding(false);
+    setSearchQuery("");
+  };
+
+  const removeZone = (city: string) => {
+    setSelectedZones(selectedZones.filter(z => z.city !== city));
+  };
+
+  const getZoneTime = (zoneStr: string) => {
+    try {
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: zoneStr,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+      }).format(time);
+    } catch (e) {
+      return "--:--:--";
+    }
+  };
+
+  const getZoneDate = (zoneStr: string) => {
+     try {
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: zoneStr,
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric'
+      });
+      return formatter.format(time);
+    } catch (e) {
+      return "";
+    }
+  }
+
+  const getOffset = (zoneStr: string) => {
+    try {
+        const dateString = time.toLocaleString('en-US', { timeZone: zoneStr, timeZoneName: 'shortOffset' });
+        return dateString.split(' ').pop();
+    } catch (e) {
+        return "";
+    }
+  }
+
+  // Analog Clock Helpers
+  const getHandAngles = (zoneStr: string) => {
+      try {
+        // Get parts
+        const parts = new Intl.DateTimeFormat('en-US', {
+            timeZone: zoneStr,
+            hour: 'numeric', minute: 'numeric', second: 'numeric',
+            hour12: false
+        }).formatToParts(time);
+        
+        const h = parseInt(parts.find(p => p.type === 'hour')?.value || '0');
+        const m = parseInt(parts.find(p => p.type === 'minute')?.value || '0');
+        const s = parseInt(parts.find(p => p.type === 'second')?.value || '0');
+
+        const ms = time.getMilliseconds();
+        
+        const sAngle = ((s + ms/1000) / 60) * 360;
+        const mAngle = ((m + s/60) / 60) * 360;
+        const hAngle = (((h % 12) + m/60) / 12) * 360;
+
+        return { h: hAngle, m: mAngle, s: sAngle, isDay: h >= 6 && h < 18 };
+      } catch(e) {
+          return { h:0, m:0, s:0, isDay: true };
+      }
+  }
+
+  const filteredZones = MASTER_DATA.TIME_ZONES.filter(z => 
+    z.city.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    z.region.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const accentColor = theme?.colors.accent || '#3b82f6';
+
+  return (
+    <div className="flex flex-col h-full p-6 space-y-6 overflow-hidden">
+        <header className="flex justify-between items-center shrink-0">
+            <div>
+                <h2 className="text-3xl font-light tracking-tight">World Clock</h2>
+                <p className="opacity-40 text-sm mt-1">International sync</p>
+            </div>
+            <button 
+                onClick={() => setIsAdding(!isAdding)}
+                className="p-3 rounded-full hover:bg-white/20 transition-all border border-white/10 backdrop-blur-md"
+                style={{ backgroundColor: isAdding ? accentColor : 'rgba(255,255,255,0.05)' }}
+            >
+                <Plus className="w-6 h-6 text-white" />
+            </button>
+        </header>
+
+        {isAdding && (
+            <div className="relative shrink-0 animate-in fade-in slide-in-from-top-4 duration-300">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Search className="h-5 w-5 opacity-40" />
+                </div>
+                <input
+                    type="text"
+                    placeholder="Search city..."
+                    className="w-full pl-10 pr-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2"
+                    style={{ '--tw-ring-color': accentColor } as any}
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    autoFocus
+                />
+                <div className="absolute z-10 w-full mt-2 bg-[#1a1f2e] border border-white/10 rounded-xl max-h-60 overflow-y-auto shadow-2xl">
+                    {filteredZones.map((z) => (
+                        <button
+                            key={z.city}
+                            onClick={() => addZone(z)}
+                            className="w-full text-left px-4 py-3 hover:bg-white/5 flex justify-between items-center border-b border-white/5 last:border-0"
+                        >
+                            <span className="text-white">{z.city}, {z.region}</span>
+                            <span className="text-xs opacity-40">{z.zone}</span>
+                        </button>
+                    ))}
+                </div>
+            </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto pb-20 custom-scrollbar pr-2">
+            {selectedZones.map((zone) => {
+                const timeStr = getZoneTime(zone.zone);
+                const { h, m, s, isDay } = getHandAngles(zone.zone);
+
+                return (
+                    <div 
+                        key={zone.city} 
+                        className="rounded-2xl p-6 relative group transition-colors duration-300 border border-white/5 hover:border-white/10 overflow-hidden flex flex-col justify-between h-48" 
+                        style={{ background: theme?.colors.glassCard }}
+                    >
+                        {/* Header Row: City Name and Remove Button */}
+                        <div className="flex justify-between items-start relative z-10 w-full">
+                            <div className="min-w-0 flex-1 mr-2">
+                                <h3 className="text-xl font-medium truncate" title={zone.city}>{zone.city}</h3>
+                                <p className="text-sm opacity-50 truncate">{getZoneDate(zone.zone)}</p>
+                            </div>
+                            <button 
+                                onClick={() => removeZone(zone.city)}
+                                className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-500/20 rounded text-red-400 transition-all shrink-0"
+                            >
+                                <X className="w-4 h-4" />
+                            </button>
+                        </div>
+                        
+                        {/* Time Row: Digital and Analog */}
+                        <div className="flex items-end justify-between relative z-10 mt-2">
+                             <div className="flex flex-col min-w-0 mr-4">
+                                <div className="text-4xl font-mono font-light tracking-tighter whitespace-nowrap">
+                                    {timeStr}
+                                </div>
+                                <div className="flex items-center space-x-2 mt-2">
+                                    <span className="text-xs font-bold bg-white/10 px-2 py-0.5 rounded opacity-70 whitespace-nowrap">
+                                        {getOffset(zone.zone)}
+                                    </span>
+                                    {isDay ? (
+                                        <Globe className="w-4 h-4 text-yellow-400/80 shrink-0" />
+                                    ) : (
+                                        <Globe className="w-4 h-4 text-blue-400/80 shrink-0" />
+                                    )}
+                                </div>
+                            </div>
+                            
+                            {/* Analog Clock Visualization */}
+                            <div className="w-20 h-20 shrink-0 rounded-full border-2 border-white/10 relative shadow-inner bg-black/20">
+                                {/* Markers */}
+                                {[0, 90, 180, 270].map(deg => (
+                                    <div key={deg} className="absolute w-1 h-1 bg-white/40 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-34px)` }} />
+                                ))}
+
+                                {/* Hands */}
+                                <div 
+                                    className="absolute top-1/2 left-1/2 w-0.5 h-5 bg-white origin-bottom rounded-full -translate-x-1/2 -translate-y-full transition-transform duration-100 ease-linear"
+                                    style={{ transform: `rotate(${h}deg)` }}
+                                />
+                                <div 
+                                    className="absolute top-1/2 left-1/2 w-0.5 h-7 bg-white/80 origin-bottom rounded-full -translate-x-1/2 -translate-y-full transition-transform duration-100 ease-linear"
+                                    style={{ transform: `rotate(${m}deg)` }}
+                                />
+                                <div 
+                                    className="absolute top-1/2 left-1/2 w-0.5 h-8 origin-bottom rounded-full -translate-x-1/2 -translate-y-full transition-transform duration-100 ease-linear"
+                                    style={{ backgroundColor: accentColor, transform: `rotate(${s}deg)` }}
+                                />
+                                <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow" />
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+        </div>
+    </div>
+  );
+};
