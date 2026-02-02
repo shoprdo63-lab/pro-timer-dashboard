@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlassChronos - Professional Time Suite</title>
+    <title>GlassChronos - Precision Time Suite</title>
     <meta name="description" content="A professional suite of precision timekeeping tools including World Clock, Smart Alarm, Stopwatch, and Pomodoro Timer.">
     
     <!-- Tailwind CSS -->
@@ -41,12 +41,11 @@
         }
     </script>
     <style>
-        /* Default Dark Blue Background to prevent flash */
+        /* Default Background to prevent flash */
         body { 
             margin: 0; 
             overflow: hidden; 
             background-color: #0f172a; 
-            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
             color: #fff; 
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -77,6 +76,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
+        // --- GLOBAL VARIABLES ---
         const { useState, useEffect, useRef, useMemo } = React;
         const { 
             Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette, 
@@ -124,7 +124,8 @@
             THEMES: [
                 { 
                     id: 'midnight', 
-                    name: 'Midnight', 
+                    name: 'Midnight',
+                    previewColor: '#0f172a',
                     colors: {
                         bgGradient: 'radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%)',
                         glassPanel: 'rgba(17, 25, 40, 0.75)',
@@ -135,8 +136,35 @@
                     }
                 },
                 { 
+                    id: 'ocean', 
+                    name: 'Ocean Depth',
+                    previewColor: '#0891b2',
+                    colors: {
+                        bgGradient: 'radial-gradient(at top left, #083344, #155e75, #164e63)',
+                        glassPanel: 'rgba(22, 78, 99, 0.6)',
+                        glassCard: 'rgba(255, 255, 255, 0.08)',
+                        textMain: '#ecfeff',
+                        textDim: 'rgba(207, 250, 254, 0.5)',
+                        accent: '#22d3ee'
+                    }
+                },
+                { 
+                    id: 'forest', 
+                    name: 'Forest Whisper',
+                    previewColor: '#15803d',
+                    colors: {
+                        bgGradient: 'radial-gradient(at top right, #022c22, #14532d, #166534)',
+                        glassPanel: 'rgba(20, 83, 45, 0.6)',
+                        glassCard: 'rgba(255, 255, 255, 0.08)',
+                        textMain: '#f0fdf4',
+                        textDim: 'rgba(220, 252, 231, 0.5)',
+                        accent: '#4ade80'
+                    }
+                },
+                { 
                     id: 'deep-purple', 
-                    name: 'Deep Purple', 
+                    name: 'Deep Purple',
+                    previewColor: '#581c87',
                     colors: {
                         bgGradient: 'radial-gradient(at 0% 0%, #1e1b4b 0, transparent 50%), radial-gradient(at 50% 100%, #4c1d95 0, transparent 50%), radial-gradient(at 100% 0%, #2e1065 0, transparent 50%)',
                         glassPanel: 'rgba(46, 16, 101, 0.65)',
@@ -147,8 +175,61 @@
                     }
                 },
                 { 
+                    id: 'sunset', 
+                    name: 'Sunset Glow',
+                    previewColor: '#c2410c',
+                    colors: {
+                        bgGradient: 'linear-gradient(to bottom right, #451a03, #7c2d12, #9a3412)',
+                        glassPanel: 'rgba(124, 45, 18, 0.5)',
+                        glassCard: 'rgba(255, 255, 255, 0.1)',
+                        textMain: '#fff7ed',
+                        textDim: 'rgba(255, 237, 213, 0.6)',
+                        accent: '#fb923c'
+                    }
+                },
+                { 
+                    id: 'cherry', 
+                    name: 'Cherry Blossom',
+                    previewColor: '#be185d',
+                    colors: {
+                        bgGradient: 'radial-gradient(at bottom left, #4c0519, #831843, #9d174d)',
+                        glassPanel: 'rgba(131, 24, 67, 0.5)',
+                        glassCard: 'rgba(255, 255, 255, 0.1)',
+                        textMain: '#fff1f2',
+                        textDim: 'rgba(255, 228, 230, 0.6)',
+                        accent: '#f472b6'
+                    }
+                },
+                { 
+                    id: 'gold', 
+                    name: 'Golden Hour',
+                    previewColor: '#a16207',
+                    colors: {
+                        bgGradient: 'linear-gradient(135deg, #422006, #713f12, #854d0e)',
+                        glassPanel: 'rgba(113, 63, 18, 0.6)',
+                        glassCard: 'rgba(255, 255, 255, 0.08)',
+                        textMain: '#fefce8',
+                        textDim: 'rgba(254, 252, 232, 0.5)',
+                        accent: '#facc15'
+                    }
+                },
+                { 
+                    id: 'slate', 
+                    name: 'Slate Grey',
+                    previewColor: '#475569',
+                    colors: {
+                        bgGradient: 'linear-gradient(135deg, #0f172a 0%, #334155 100%)',
+                        glassPanel: 'rgba(30, 41, 59, 0.8)',
+                        glassCard: 'rgba(255, 255, 255, 0.05)',
+                        textMain: '#f8fafc',
+                        textDim: 'rgba(248, 250, 252, 0.5)',
+                        accent: '#94a3b8'
+                    }
+                },
+                { 
                     id: 'high-contrast', 
-                    name: 'High Contrast', 
+                    name: 'High Contrast',
+                    previewColor: '#000000',
                     colors: {
                         bgGradient: 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)',
                         glassPanel: 'rgba(0, 0, 0, 0.9)',
@@ -265,6 +346,7 @@
             useEffect(() => {
                 let worker = null;
                 try {
+                    // Try to create worker. This might fail with strict CSP on some hosts.
                     const blob = new Blob([workerCode], { type: "application/javascript" });
                     worker = new Worker(URL.createObjectURL(blob));
                     worker.onmessage = (e) => {
@@ -272,7 +354,7 @@
                     };
                     workerRef.current = worker;
                 } catch (e) {
-                    console.warn("Worker creation failed, falling back to interval", e);
+                    console.warn("Worker creation failed, falling back to interval. This prevents black screen.", e);
                 }
 
                 return () => {
@@ -286,13 +368,18 @@
                     if (workerRef.current) {
                         workerRef.current.postMessage("start");
                     } else {
-                        // Fallback logic
+                        // Fallback logic if worker failed to initialize
                         const intervalMs = workerCode.includes("16") ? 16 : 1000;
-                        intervalRef.current = setInterval(() => callbackRef.current(), intervalMs);
+                        if (!intervalRef.current) {
+                             intervalRef.current = setInterval(() => callbackRef.current(), intervalMs);
+                        }
                     }
                 } else {
                     if (workerRef.current) workerRef.current.postMessage("stop");
-                    if (intervalRef.current) clearInterval(intervalRef.current);
+                    if (intervalRef.current) {
+                        clearInterval(intervalRef.current);
+                        intervalRef.current = null;
+                    }
                 }
             }, [isRunning]);
         };
@@ -396,6 +483,7 @@
                             </button>
                         </div>
                         
+                        {/* Search Bar - Fixed Overlap Issues */}
                         <div className={`transition-all duration-300 ease-in-out relative ${isAdding ? 'opacity-100 translate-y-0 h-14' : 'opacity-0 -translate-y-4 h-0 pointer-events-none'}`}>
                              <div className="absolute inset-x-0 top-0 z-[100] relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search className="h-5 w-5 opacity-40" /></div>
@@ -447,11 +535,11 @@
                                                 <div key={deg} className="absolute w-1 h-1 bg-white/40 rounded-full" style={{ top: '50%', left: '50%', transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-38px)` }} />
                                             ))}
                                             <div className="absolute inset-0">
-                                                {/* Hour Hand */}
+                                                {/* Hour Hand: Centered and Anchored Bottom */}
                                                 <div className="absolute top-1/2 left-1/2 w-1.5 bg-white origin-bottom rounded-full hand-transition z-10" style={{ height: '25%', transform: `translate(-50%, -100%) rotate(${h}deg)` }} />
-                                                {/* Minute Hand */}
+                                                {/* Minute Hand: Centered and Anchored Bottom */}
                                                 <div className="absolute top-1/2 left-1/2 w-1 bg-white/90 origin-bottom rounded-full hand-transition z-20" style={{ height: '35%', transform: `translate(-50%, -100%) rotate(${m}deg)` }} />
-                                                {/* Second Hand */}
+                                                {/* Second Hand: Centered and Anchored Bottom */}
                                                 <div className="absolute top-1/2 left-1/2 w-0.5 origin-bottom rounded-full hand-transition z-30" style={{ height: '42%', backgroundColor: accentColor, transform: `translate(-50%, -100%) rotate(${s}deg)` }} />
                                                 {/* Center Cap */}
                                                 <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 z-40 shadow-sm" />
@@ -723,8 +811,8 @@
                                 ))}
                             </div>
                             <div className="hidden md:flex flex-col mt-auto space-y-4 items-center">
-                                <div className="flex flex-col space-y-2 mb-4">
-                                    {MASTER_DATA.THEMES.map(t => <button key={t.id} onClick={()=>setThemeId(t.id)} className={`w-4 h-4 rounded-full border border-white/20 ${themeId===t.id?'scale-125 ring-2 ring-white/50':''}`} style={{background: t.id==='high-contrast'?'#000':t.id==='deep-purple'?'#4c1d95':'#0f172a'}} />)}
+                                <div className="flex flex-col space-y-2 mb-4 max-h-[200px] overflow-y-auto custom-scrollbar px-1 py-2">
+                                    {MASTER_DATA.THEMES.map(t => <button key={t.id} onClick={()=>setThemeId(t.id)} className={`w-4 h-4 rounded-full border border-white/20 ${themeId===t.id?'scale-125 ring-2 ring-white/50':''}`} style={{background: t.previewColor}} title={t.name} />)}
                                 </div>
                                 <button onClick={()=>setIsNightMode(true)} className="p-3 text-white/40 hover:text-white hover:bg-white/10 rounded-xl"><Moon className="w-6 h-6"/></button>
                             </div>
