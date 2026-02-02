@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette } from 'lucide-react';
 import { AppMode, Theme } from '../types';
 import { MASTER_DATA } from '../constants';
+import { Footer } from './Footer';
 
 interface LayoutProps {
   currentMode: AppMode;
@@ -103,18 +104,24 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
              </div>
           </div>
 
-          {/* Dynamic Content */}
+          {/* Dynamic Content + Footer (Scrollable Container) */}
           <div className="flex-1 overflow-hidden relative p-4 md:p-8">
              <div 
-                className="w-full h-full rounded-3xl overflow-hidden shadow-2xl relative transition-colors duration-700"
+                className="w-full h-full rounded-3xl overflow-y-auto shadow-2xl relative transition-colors duration-700 custom-scrollbar flex flex-col"
                 style={{ background: activeTheme.colors.glassPanel, borderColor: 'rgba(255,255,255,0.1)', borderWidth: '1px', borderStyle: 'solid' }}
              >
-                {React.Children.map(children, child => {
-                    if (React.isValidElement(child)) {
-                        return React.cloneElement(child as React.ReactElement<any>, { theme: activeTheme, time });
-                    }
-                    return child;
-                })}
+                {/* View Content */}
+                <div className="flex-shrink-0 min-h-[calc(100%-80px)]">
+                    {React.Children.map(children, child => {
+                        if (React.isValidElement(child)) {
+                            return React.cloneElement(child as React.ReactElement<any>, { theme: activeTheme, time });
+                        }
+                        return child;
+                    })}
+                </div>
+
+                {/* Sponsored Footer */}
+                <Footer />
              </div>
           </div>
       </main>

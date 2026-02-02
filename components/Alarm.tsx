@@ -56,8 +56,8 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
   const accentColor = theme?.colors.accent || '#3b82f6';
 
   return (
-    <div className="flex flex-col h-full p-6 space-y-6">
-        <header className="flex justify-between items-center">
+    <div className="flex flex-col w-full p-6 space-y-6">
+        <header className="flex justify-between items-center shrink-0">
              <div>
                 <h2 className="text-3xl font-light tracking-tight">Alarm</h2>
                 <p className="opacity-40 text-sm mt-1">Smart wake-up</p>
@@ -136,7 +136,7 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
              </div>
         )}
 
-        <div className="space-y-3 overflow-y-auto pb-20 custom-scrollbar">
+        <div className="space-y-3">
             {alarms.length === 0 && !isCreating && (
                 <div className="text-center opacity-20 py-10 flex flex-col items-center">
                     <Bell className="w-16 h-16 mb-4" />
@@ -177,7 +177,6 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
   );
 };
 
-// Math Challenge Modal Component
 export const MathChallenge: React.FC<{ onSolved: () => void, onSnooze: () => void, difficulty?: MathDifficultyLevel }> = ({ onSolved, onSnooze, difficulty = 'Medium' }) => {
     const [problem, setProblem] = useState({ q: "", a: 0 });
     const [answer, setAnswer] = useState("");

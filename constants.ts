@@ -80,7 +80,115 @@ export const MASTER_DATA = {
     Medium: { label: 'Medium', desc: 'Add & Subtract' },
     Hard: { label: 'Hard', desc: 'Multiplication' },
     Expert: { label: 'Expert', desc: 'Mixed Operations' }
-  }
+  },
+
+  SPONSORED_ADS: [
+    {
+      id: 'ad_01',
+      title: 'Lumina Desk Precision',
+      description: 'Advanced LED lighting designed to reduce eye strain during late-night productivity sessions. Flicker-free technology.',
+      category: 'Productivity',
+      imageURL: 'https://images.unsplash.com/photo-1534067783865-612665cd2a77?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_02',
+      title: 'ErgoSpine Pro Chair',
+      description: 'Engineered for 12+ hour sitting sessions. Protects your lumbar health with adaptive mesh technology.',
+      category: 'Health',
+      imageURL: 'https://images.unsplash.com/photo-1505843490538-5133c6c7d0e1?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_03',
+      title: 'FocusFlow Nootropics',
+      description: 'Natural Vitamin B complex and Lions Mane mushroom blend for sustained mental clarity without the jitters.',
+      category: 'Science',
+      imageURL: 'https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_04',
+      title: 'SilentKey Mechanical',
+      description: 'The satisfying tactile feel of a mechanical keyboard with sound-dampening switches for shared workspaces.',
+      category: 'Tech',
+      imageURL: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_05',
+      title: 'Nordic Blue Blockers',
+      description: 'Scientifically validated lenses that block 99% of harmful blue light spectrum from digital screens.',
+      category: 'Health',
+      imageURL: 'https://images.unsplash.com/photo-1570222094114-28a9d8894b74?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_06',
+      title: 'HydroSmart Tracker',
+      description: 'A water bottle that glows to remind you to hydrate based on your activity level and biometrics.',
+      category: 'Health',
+      imageURL: 'https://images.unsplash.com/photo-1602143407151-011141950038?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_07',
+      title: 'ZenNoise ANC',
+      description: 'Active Noise Cancelling headphones that create a sanctuary of silence for deep work and meditation.',
+      category: 'Audio',
+      imageURL: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_08',
+      title: 'VerticalLift Desk',
+      description: 'Smooth, motorized standing desk that transitions in seconds to improve circulation and posture.',
+      category: 'Office',
+      imageURL: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_09',
+      title: 'CableMaster Kit',
+      description: 'Complete solution for hiding and organizing wires. Create a visually peaceful minimalist workspace.',
+      category: 'Organization',
+      imageURL: 'https://images.unsplash.com/photo-1621252179027-94459d27d3ee?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_10',
+      title: 'TimeBlock Planner',
+      description: 'Premium paper journal structured for the Pomodoro technique and deep work scheduling.',
+      category: 'Productivity',
+      imageURL: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_11',
+      title: 'CloudSync Drive',
+      description: 'Encrypted, decentralized cloud storage ensuring your intellectual property remains yours forever.',
+      category: 'Tech',
+      imageURL: 'https://images.unsplash.com/photo-1544197150-b99a580bbcbf?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_12',
+      title: 'SolarPower Bank',
+      description: 'High-capacity battery pack with efficient solar cells. Energy independence for the modern nomad.',
+      category: 'Travel',
+      imageURL: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_13',
+      title: 'Digital Ink Tablet',
+      description: 'E-ink tablet for distraction-free reading and note-taking. Feels exactly like paper.',
+      category: 'Tech',
+      imageURL: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_14',
+      title: 'PostureAlign Brace',
+      description: 'Lightweight wearable that gently vibrates when you slouch, training a healthy spine position.',
+      category: 'Health',
+      imageURL: 'https://images.unsplash.com/photo-1584650589355-d6090757d5c9?auto=format&fit=crop&q=80&w=600'
+    },
+    {
+      id: 'ad_15',
+      title: 'AeroBreeze Purifier',
+      description: 'HEPA-13 filtration system that removes allergens and dust, creating a pristine environment for breathing.',
+      category: 'Health',
+      imageURL: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&q=80&w=600'
+    }
+  ]
 };
 
 // 60FPS tick for Stopwatch/Timer

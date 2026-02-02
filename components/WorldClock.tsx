@@ -77,7 +77,6 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
   const getOffset = (zoneStr: string) => {
     try {
         const dateString = time.toLocaleString('en-US', { timeZone: zoneStr, timeZoneName: 'shortOffset' });
-        // Extracts UTC-5, GMT+1 etc.
         const parts = dateString.split(' ');
         return parts[parts.length - 1];
     } catch (e) {
@@ -88,7 +87,6 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
   // Analog Clock Helpers
   const getHandAngles = (zoneStr: string) => {
       try {
-        // Get parts in the target timezone
         const parts = new Intl.DateTimeFormat('en-US', {
             timeZone: zoneStr,
             hour: 'numeric', minute: 'numeric', second: 'numeric',
@@ -98,11 +96,6 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
         const h = parseInt(parts.find(p => p.type === 'hour')?.value || '0');
         const m = parseInt(parts.find(p => p.type === 'minute')?.value || '0');
         const s = parseInt(parts.find(p => p.type === 'second')?.value || '0');
-
-        // We use system milliseconds for smooth second hand if desired, 
-        // but for "ticking" look we usually ignore ms or use them for smooth sweep.
-        // User requested "Transition" which implies ticking or smooth sweep.
-        // Let's stick to strict seconds for accurate ticking with the cubic-bezier.
         
         const sAngle = (s / 60) * 360;
         const mAngle = ((m + s/60) / 60) * 360;
@@ -122,9 +115,9 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
   const accentColor = theme?.colors.accent || '#3b82f6';
 
   return (
-    <div className="flex flex-col h-full w-full p-6 space-y-6 overflow-hidden">
-        {/* Header Section */}
-        <header className="flex flex-col space-y-4 shrink-0 relative z-40">
+    <div className="flex flex-col w-full p-6 space-y-6">
+        {/* Sticky Header Section */}
+        <header className="flex flex-col space-y-4 shrink-0 relative z-40 sticky top-0 pt-2 pb-4 -mt-2 -mx-6 px-6 bg-[#0f172a]/80 backdrop-blur-xl border-b border-white/5 transition-colors">
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-3xl font-light tracking-tight text-white">World Clock</h2>
@@ -176,7 +169,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
         </header>
 
         {/* Grid Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 overflow-y-auto pb-20 custom-scrollbar pr-2 relative z-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 relative z-10 w-full">
             {selectedZones.map((zone) => {
                 const timeStr = getZoneTime(zone.zone);
                 const { h, m, s, isDay } = getHandAngles(zone.zone);
