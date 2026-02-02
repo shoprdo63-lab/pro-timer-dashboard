@@ -228,28 +228,31 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
                                 <div className="absolute inset-0">
                                     {/* Hour Hand */}
                                     <div 
-                                        className="absolute top-1/2 left-1/2 w-1.5 bg-white origin-bottom rounded-full shadow-sm z-10"
+                                        className="absolute top-1/2 left-1/2 w-1.5 bg-white rounded-full shadow-sm z-10"
                                         style={{ 
                                             height: '25%', 
+                                            transformOrigin: '50% 100%',
                                             transform: `translate(-50%, -100%) rotate(${h}deg)`,
                                             transition: 'transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44)'
                                         }}
                                     />
                                     {/* Minute Hand */}
                                     <div 
-                                        className="absolute top-1/2 left-1/2 w-1 bg-white/90 origin-bottom rounded-full shadow-sm z-20"
+                                        className="absolute top-1/2 left-1/2 w-1 bg-white/90 rounded-full shadow-sm z-20"
                                         style={{ 
                                             height: '38%', 
+                                            transformOrigin: '50% 100%',
                                             transform: `translate(-50%, -100%) rotate(${m}deg)`,
                                             transition: 'transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44)'
                                         }}
                                     />
                                     {/* Second Hand */}
                                     <div 
-                                        className="absolute top-1/2 left-1/2 w-0.5 origin-bottom rounded-full shadow-sm z-30"
+                                        className="absolute top-1/2 left-1/2 w-0.5 rounded-full shadow-sm z-30"
                                         style={{ 
                                             height: '42%', 
                                             backgroundColor: accentColor, 
+                                            transformOrigin: '50% 100%',
                                             transform: `translate(-50%, -100%) rotate(${s}deg)`,
                                             transition: 'transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44)'
                                         }}
