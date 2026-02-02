@@ -16,9 +16,8 @@
     <!-- Babel for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+    <!-- Lucide Icons (Specific UMD version for stability) -->
+    <script src="https://unpkg.com/lucide-react@0.294.0/dist/umd/lucide-react.min.js"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,14 +40,14 @@
         }
     </script>
     <style>
-        /* CRITICAL FIX: Ensure body has volume and color before JS loads to prevent black screen */
+        /* CRITICAL FIX: Background color set immediately to prevent white flash/black screen */
         html, body { 
             height: 100%;
             min-height: 100vh;
             margin: 0; 
             padding: 0;
             overflow: hidden; 
-            background-color: #0f172a; 
+            background-color: #0f172a !important; 
             color: #fff; 
         }
         
@@ -59,12 +58,12 @@
         ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         
-        /* Glassmorphism Classes */
-        .glass-panel { background: rgba(17, 25, 40, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.125); }
-        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        
-        /* Clock Hand Transitions */
+        /* Clock Hand Transitions & Alignment */
         .hand-transition { transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44); }
+        .origin-bottom { transform-origin: bottom; }
+        
+        /* Utility */
+        .glass-panel { background: rgba(17, 25, 40, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.125); }
     </style>
 <script type="importmap">
 {
@@ -78,23 +77,30 @@
 </script>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <!-- Fallback content if JS fails -->
+        <div style="display:flex;justify-content:center;align-items:center;height:100vh;color:rgba(255,255,255,0.5);font-family:sans-serif;">
+            Initializing System...
+        </div>
+    </div>
 
     <script type="text/babel">
-        // Debugging Hook
-        console.log("System Initializing...");
-        window.onerror = function(msg, url, line) {
-            console.error("Global Error: " + msg + " at " + line);
-        };
+        // --- INITIALIZATION & GLOBAL SETUP ---
+        console.log("GlassChronos System Initializing...");
 
-        // --- GLOBAL VARIABLES (Destructure from CDNs) ---
-        const { useState, useEffect, useRef, useMemo } = React;
+        // Safety check for dependencies
+        if (!window.React || !window.ReactDOM || !window.lucideReact) {
+            document.getElementById('root').innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;color:white;font-family:sans-serif;">Error: Core libraries failed to load. Please refresh.</div>';
+            throw new Error("Missing Dependencies");
+        }
+
+        const { useState, useEffect, useRef, useMemo, Fragment } = React;
         const { 
             Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette, 
             Plus, Trash2, Bell, Check, X, Calculator, Brain, 
             Play, Pause, RotateCcw, Coffee, Briefcase, 
             Globe, Search, Maximize2, Minimize2, Flag 
-        } = lucideReact;
+        } = window.lucideReact;
 
         // --- CONSTANTS ---
         const MASTER_DATA = {
@@ -320,8 +326,7 @@
         };
 
         // --- HOOKS ---
-        // Robust Worker with fallback for "Black Screen" fix
-        const useWorkerTimer = (isRunning, callback, workerCode) => {
+        const useWorkerTimer = (isRunning, callback, workerCode = PRECISION_WORKER_CODE) => {
             const workerRef = useRef(null);
             const callbackRef = useRef(callback);
             const intervalRef = useRef(null);
@@ -331,16 +336,14 @@
             useEffect(() => {
                 let worker = null;
                 try {
-                    // Try to create worker. This might fail with strict CSP on some hosts.
                     const blob = new Blob([workerCode], { type: "application/javascript" });
                     worker = new Worker(URL.createObjectURL(blob));
                     worker.onmessage = (e) => {
                         if (e.data === "tick") callbackRef.current();
                     };
                     workerRef.current = worker;
-                    console.log("Worker initialized successfully");
                 } catch (e) {
-                    console.warn("Worker creation failed, falling back to interval. This prevents black screen.", e);
+                    console.warn("Worker failed, fallback to setInterval");
                 }
 
                 return () => {
@@ -354,7 +357,7 @@
                     if (workerRef.current) {
                         workerRef.current.postMessage("start");
                     } else {
-                        // Fallback logic if worker failed to initialize
+                        // Fallback
                         const intervalMs = workerCode.includes("16") ? 16 : 1000;
                         if (!intervalRef.current) {
                              intervalRef.current = setInterval(() => callbackRef.current(), intervalMs);
@@ -376,12 +379,10 @@
             return (
                 <div className="w-full mt-12 pb-12 border-t border-white/10">
                     <div className="px-6 md:px-10 max-w-5xl mx-auto text-center pt-8">
-                        <h3 className="text-2xl font-light text-white mb-6">About GlassChronos & The Science of Time</h3>
+                        <h3 className="text-2xl font-light text-white mb-6">Precision Timekeeping & Global Synchronization</h3>
                         <div className="text-sm text-white/40 space-y-4 leading-relaxed text-justify md:text-center columns-1 md:columns-2 gap-8">
-                            <p>For millennia, humanity relied on the apparent motion of the sun to track time. From ancient Egyptian obelisks to the sophisticated sundials of Greece and Rome, time was a local phenomenon, fluid and varying with the seasons. The invention of the mechanical clock in medieval Europe began the shift towards standardization, but it was the Age of Exploration that demanded precision. The challenge of determining longitude at sea spurred the creation of the marine chronometer by John Harrison in the 18th century, a masterpiece of engineering that allowed sailors to carry "home time" with them across the oceans.</p>
-                            <p>The arrival of the railways in the 19th century necessitated the synchronization of time across vast distances, leading to the establishment of Greenwich Mean Time (GMT) and the global time zone system we use today. No longer did noon vary from town to town; the world was divided into orderly segments, facilitating trade, travel, and communication on an unprecedented scale.</p>
-                            <p>In the 20th century, the demand for exactitude transcended mechanical limitations. The discovery of the oscillation of atoms led to the atomic clock, a device so accurate it would lose only a second in millions of years. This atomic precision underpins the GPS systems that guide our vehicles, the internet protocols that synchronize our data, and the financial markets that drive the global economy. Today, services like GlassChronos leverage this legacy, using Network Time Protocol (NTP) and browser-based high-precision timing to bring atomic-level accuracy to your personal dashboard.</p>
-                            <p>However, amidst this technological pursuit of the femtosecond, we must not lose sight of the human experience. Our biological clocks, or circadian rhythms, are ancient systems tuned to the rise and set of the sun. In an always-on world, maintaining a healthy relationship with time is crucial for mental and physical well-being. Tools like our Pomodoro timer and sleep-cycle-aware alarms are designed to harmonize this modern precision with human needs, ensuring that while we track time with machine-like accuracy, we live it with human purpose.</p>
+                            <p>For millennia, humanity relied on the apparent motion of the sun. GlassChronos utilizes browser-based high-precision APIs combined with Web Worker threads to minimize drift, mimicking the reliability of atomic clocks.</p>
+                            <p>Whether you are a developer managing server cron jobs or a researcher timing critical experiments, reliability is paramount. Our tools respect your workflow and privacy without external server dependencies.</p>
                         </div>
                         <div className="mt-8 text-xs text-white/20">&copy; {new Date().getFullYear()} GlassChronos Utility Suite. Precision. Ethics. Design.</div>
                     </div>
@@ -433,6 +434,23 @@
                     }).format(time);
                 } catch (e) { return "--:--:--"; }
             };
+            
+            const getZoneDate = (zoneStr) => {
+                 try {
+                  const formatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: zoneStr, weekday: 'short', month: 'short', day: 'numeric'
+                  });
+                  return formatter.format(time);
+                } catch (e) { return ""; }
+            }
+
+            const getOffset = (zoneStr) => {
+                try {
+                    const dateString = time.toLocaleString('en-US', { timeZone: zoneStr, timeZoneName: 'shortOffset' });
+                    const parts = dateString.split(' ');
+                    return parts[parts.length - 1];
+                } catch (e) { return ""; }
+            }
 
             const getHandAngles = (zoneStr) => {
                 try {
@@ -458,18 +476,17 @@
 
             return (
                 <div className="flex flex-col w-full p-8 space-y-10">
-                    <header className="flex flex-col space-y-4 shrink-0 relative z-40 sticky top-0 pt-2 pb-4 -mt-2 -mx-6 px-6 bg-[#0f172a]/95 backdrop-blur-xl border-b border-white/5">
+                    <header className="flex flex-col space-y-4 shrink-0 relative z-[50] sticky top-0 pt-2 pb-4 -mt-2 -mx-6 px-6 bg-[#0f172a]/95 backdrop-blur-xl border-b border-white/5">
                         <div className="flex justify-between items-center">
                             <div>
                                 <h2 className="text-3xl font-light tracking-tight text-white">World Clock</h2>
                                 <p className="opacity-40 text-sm mt-1">International sync</p>
                             </div>
-                            <button onClick={() => setIsAdding(!isAdding)} className="p-3 rounded-full border border-white/10" style={{ backgroundColor: isAdding ? accentColor : 'rgba(255,255,255,0.05)' }}>
+                            <button onClick={() => setIsAdding(!isAdding)} className="p-3 rounded-full border border-white/10 transition-colors" style={{ backgroundColor: isAdding ? accentColor : 'rgba(255,255,255,0.05)' }}>
                                 <Plus className={`w-6 h-6 text-white transition-transform ${isAdding ? 'rotate-45' : ''}`} />
                             </button>
                         </div>
                         
-                        {/* Search Bar - Fixed Overlap Issues */}
                         <div className={`transition-all duration-300 ease-in-out relative ${isAdding ? 'opacity-100 translate-y-0 h-14' : 'opacity-0 -translate-y-4 h-0 pointer-events-none'}`}>
                              <div className="absolute inset-x-0 top-0 z-[100] relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search className="h-5 w-5 opacity-40" /></div>
@@ -502,18 +519,18 @@
                             return (
                                 <div key={zone.city} className="rounded-2xl p-6 relative group border border-white/5 bg-white/5 hover:border-white/10 overflow-hidden flex flex-col justify-between h-56 shadow-lg transition-all duration-500 hover:shadow-2xl">
                                     <div className="flex justify-between items-start z-10">
-                                        <div>
+                                        <div className="overflow-hidden">
                                             <h3 className="text-xl font-medium truncate">{zone.city}</h3>
-                                            <p className="text-sm opacity-50">{zone.region}</p>
+                                            <p className="text-sm opacity-50 truncate">{getZoneDate(zone.zone)}</p>
                                         </div>
-                                        <button onClick={() => removeZone(zone.city)} className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-500/20 rounded text-red-400 transition-all"><X className="w-4 h-4" /></button>
+                                        <button onClick={() => removeZone(zone.city)} className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-500/20 rounded text-red-400 transition-all shrink-0"><X className="w-4 h-4" /></button>
                                     </div>
                                     <div className="flex items-end justify-between z-10 mt-4">
-                                        <div className="flex flex-col">
-                                            <div className="text-4xl font-mono font-light tracking-tighter">{timeStr}</div>
+                                        <div className="flex flex-col min-w-0 mr-4 flex-1">
+                                            <div className="text-4xl font-mono font-light tracking-tighter truncate">{timeStr}</div>
                                             <div className="flex items-center space-x-2 mt-2">
-                                                {isDay ? <Globe className="w-4 h-4 text-yellow-400/80" /> : <Globe className="w-4 h-4 text-blue-400/80" />}
-                                                <span className="text-xs font-bold bg-white/10 px-2 py-0.5 rounded opacity-70">{zone.zone.split('/')[1]}</span>
+                                                {isDay ? <Globe className="w-4 h-4 text-yellow-400/80 shrink-0" /> : <Globe className="w-4 h-4 text-blue-400/80 shrink-0" />}
+                                                <span className="text-xs font-bold bg-white/10 px-2 py-0.5 rounded opacity-70">{getOffset(zone.zone)}</span>
                                             </div>
                                         </div>
                                         <div className="w-24 h-24 relative rounded-full border-2 border-white/10 bg-black/20 shadow-inner shrink-0">
@@ -521,12 +538,17 @@
                                                 <div key={deg} className="absolute w-1 h-1 bg-white/40 rounded-full" style={{ top: '50%', left: '50%', transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-38px)` }} />
                                             ))}
                                             <div className="absolute inset-0">
-                                                {/* Hour Hand: Top 50%, Left 50%, Translate Y -100% to pin bottom to center */}
+                                                {/* Hands: transform-origin: bottom + translate(-50%, -100%) to pin bottom to center */}
+                                                
+                                                {/* Hour Hand */}
                                                 <div className="absolute top-1/2 left-1/2 w-1.5 bg-white origin-bottom rounded-full hand-transition z-10" style={{ height: '25%', transform: `translate(-50%, -100%) rotate(${h}deg)` }} />
+                                                
                                                 {/* Minute Hand */}
                                                 <div className="absolute top-1/2 left-1/2 w-1 bg-white/90 origin-bottom rounded-full hand-transition z-20" style={{ height: '35%', transform: `translate(-50%, -100%) rotate(${m}deg)` }} />
+                                                
                                                 {/* Second Hand */}
                                                 <div className="absolute top-1/2 left-1/2 w-0.5 origin-bottom rounded-full hand-transition z-30" style={{ height: '42%', backgroundColor: accentColor, transform: `translate(-50%, -100%) rotate(${s}deg)` }} />
+                                                
                                                 {/* Center Cap */}
                                                 <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 z-40 shadow-sm" />
                                             </div>
@@ -784,7 +806,7 @@
                 ];
 
                 return (
-                    <>
+                    <Fragment>
                     {isNightMode ? <NightMode onExit={()=>setIsNightMode(false)} time={time} /> : (
                         <div className="w-full h-screen text-white overflow-hidden flex flex-col md:flex-row transition-colors duration-700" style={{ background: activeTheme.colors.bgGradient, color: activeTheme.colors.textMain }}>
                             <nav className="md:w-24 w-full md:h-full h-20 md:flex-col flex-row flex items-center justify-between md:justify-center p-4 shrink-0 z-20 backdrop-blur-xl border-r border-white/10" style={{ background: activeTheme.colors.glassPanel }}>
@@ -824,7 +846,7 @@
                         </div>
                     )}
                     {activeAlarm && <MathChallenge onSolved={() => { stopAudio(); clearInterval(window.alarmInterval); setActiveAlarm(null); }} onSnooze={() => { stopAudio(); clearInterval(window.alarmInterval); setActiveAlarm(null); }} difficulty={activeAlarm.difficulty} />}
-                    </>
+                    </Fragment>
                 );
             } catch (error) {
                 console.error("App Render Error:", error);
