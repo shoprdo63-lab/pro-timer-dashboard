@@ -41,10 +41,12 @@
         }
     </script>
     <style>
-        /* CRITICAL FIX: Ensure body has height to prevent collapse before JS loads */
+        /* CRITICAL FIX: Ensure body has volume and color before JS loads */
         html, body { 
             height: 100%;
+            min-height: 100vh;
             margin: 0; 
+            padding: 0;
             overflow: hidden; 
             background-color: #0f172a; 
             color: #fff; 
@@ -79,11 +81,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // Debugging
-        console.log("App Starting...");
-        window.onerror = function(message, source, lineno, colno, error) {
-            console.error("Global Error:", message, error);
-        };
+        console.log("System Initializing...");
 
         // --- GLOBAL VARIABLES ---
         const { useState, useEffect, useRef, useMemo } = React;
@@ -318,7 +316,7 @@
         };
 
         // --- HOOKS ---
-        // Robust Worker with fallback for "Black Screen" fix
+        // ROBUST WORKER FALLBACK SYSTEM
         const useWorkerTimer = (isRunning, callback, workerCode) => {
             const workerRef = useRef(null);
             const callbackRef = useRef(callback);
@@ -329,15 +327,16 @@
             useEffect(() => {
                 let worker = null;
                 try {
-                    // Try to create worker. This might fail with strict CSP on some hosts.
+                    // Try to create worker. This might fail with strict CSP on Vercel/some hosts.
                     const blob = new Blob([workerCode], { type: "application/javascript" });
                     worker = new Worker(URL.createObjectURL(blob));
                     worker.onmessage = (e) => {
                         if (e.data === "tick") callbackRef.current();
                     };
                     workerRef.current = worker;
+                    console.log("Web Worker initialized successfully.");
                 } catch (e) {
-                    console.warn("Worker creation failed, falling back to interval. This prevents black screen.", e);
+                    console.warn("Web Worker creation failed. Falling back to setInterval for safety.", e);
                 }
 
                 return () => {
@@ -351,7 +350,7 @@
                     if (workerRef.current) {
                         workerRef.current.postMessage("start");
                     } else {
-                        // Fallback logic if worker failed to initialize
+                        // FALLBACK: Use setInterval if worker failed to initialize
                         const intervalMs = workerCode.includes("16") ? 16 : 1000;
                         if (!intervalRef.current) {
                              intervalRef.current = setInterval(() => callbackRef.current(), intervalMs);
