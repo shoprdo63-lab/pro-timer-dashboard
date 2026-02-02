@@ -35,6 +35,7 @@ export interface SoundPreset {
 export interface Theme {
   id: string;
   name: string;
+  previewColor: string; // Color used for the selection button
   colors: {
     bgGradient: string;
     glassPanel: string;

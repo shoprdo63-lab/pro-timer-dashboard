@@ -63,14 +63,14 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
 
          <div className="hidden md:flex flex-col mt-auto space-y-4 items-center">
             {/* Theme Toggle */}
-            <div className="flex flex-col space-y-2 mb-4">
+            <div className="flex flex-col space-y-2 mb-4 max-h-[200px] overflow-y-auto custom-scrollbar px-1 py-2">
                 {MASTER_DATA.THEMES.map(theme => (
                     <button
                         key={theme.id}
                         onClick={() => setCurrentThemeId(theme.id)}
                         className={`w-4 h-4 rounded-full border border-white/20 transition-transform ${currentThemeId === theme.id ? 'scale-125 ring-2 ring-white/50' : 'hover:scale-110'}`}
                         style={{ 
-                            background: theme.id === 'high-contrast' ? '#000' : theme.id === 'deep-purple' ? '#4c1d95' : '#0f172a'
+                            background: theme.previewColor
                         }}
                         title={theme.name}
                     />
@@ -120,7 +120,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
                     })}
                 </div>
 
-                {/* Sponsored Footer */}
+                {/* Footer */}
                 <Footer />
              </div>
           </div>

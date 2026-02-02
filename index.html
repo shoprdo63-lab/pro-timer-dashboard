@@ -1,104 +1,760 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GlassChronos - Ultimate Time Utility</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlassChronos - Professional Time Suite</title>
+    <meta name="description" content="A professional suite of precision timekeeping tools including World Clock, Smart Alarm, Stopwatch, and Pomodoro Timer.">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                },
             },
-            colors: {
-              glass: {
-                100: 'rgba(255, 255, 255, 0.1)',
-                200: 'rgba(255, 255, 255, 0.2)',
-                300: 'rgba(255, 255, 255, 0.3)',
-                border: 'rgba(255, 255, 255, 0.15)',
-              }
-            },
-            animation: {
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-              'blob': 'blob 10s infinite',
-            },
-            keyframes: {
-              blob: {
-                '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                '100%': { transform: 'translate(0px, 0px) scale(1)' },
-              }
-            }
-          },
-        },
-      }
+        }
     </script>
     <style>
-      body {
-        margin: 0;
-        overflow: hidden; /* App handles scrolling internally */
-        background-color: #0f172a;
-        color: #fff;
-      }
-      /* Custom scrollbar for glass feel */
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 3px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-      .glass-panel {
-        background: rgba(17, 25, 40, 0.75);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.125);
-      }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .bg-gradient-mesh {
-        background: 
-          radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-          radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-          radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-        background-size: 200% 200%;
-        animation: gradient-move 15s ease infinite;
-      }
-      @keyframes gradient-move {
-        0% { background-position: 0% 50% }
-        50% { background-position: 100% 50% }
-        100% { background-position: 0% 50% }
-      }
+        /* Default Dark Blue Background to prevent flash */
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background-color: #0f172a; 
+            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            color: #fff; 
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.3); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        
+        /* Glassmorphism Classes */
+        .glass-panel { background: rgba(17, 25, 40, 0.75); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.125); }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        
+        /* Clock Hand Transitions */
+        .hand-transition { transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44); }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
   }
 }
 </script>
 </head>
-  <body>
+<body>
     <div id="root"></div>
-  </body>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo } = React;
+        const { 
+            Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette, 
+            Plus, Trash2, Bell, Check, X, Calculator, Brain, 
+            Play, Pause, RotateCcw, Coffee, Briefcase, 
+            Globe, Search, Maximize2, Minimize2, Flag 
+        } = lucideReact;
+
+        // --- CONSTANTS ---
+        const MASTER_DATA = {
+            APP_NAME: "GlassChronos",
+            TIME_ZONES: [
+                { city: "New York", region: "USA", zone: "America/New_York" },
+                { city: "London", region: "UK", zone: "Europe/London" },
+                { city: "Paris", region: "France", zone: "Europe/Paris" },
+                { city: "Tokyo", region: "Japan", zone: "Asia/Tokyo" },
+                { city: "Sydney", region: "Australia", zone: "Australia/Sydney" },
+                { city: "Dubai", region: "UAE", zone: "Asia/Dubai" },
+                { city: "Los Angeles", region: "USA", zone: "America/Los_Angeles" },
+                { city: "Chicago", region: "USA", zone: "America/Chicago" },
+                { city: "Toronto", region: "Canada", zone: "America/Toronto" },
+                { city: "Berlin", region: "Germany", zone: "Europe/Berlin" },
+                { city: "Hong Kong", region: "China", zone: "Asia/Hong_Kong" },
+                { city: "Singapore", region: "Singapore", zone: "Asia/Singapore" },
+                { city: "Mumbai", region: "India", zone: "Asia/Kolkata" },
+                { city: "Shanghai", region: "China", zone: "Asia/Shanghai" },
+                { city: "São Paulo", region: "Brazil", zone: "America/Sao_Paulo" },
+                { city: "Moscow", region: "Russia", zone: "Europe/Moscow" },
+                { city: "Seoul", region: "South Korea", zone: "Asia/Seoul" },
+                { city: "Cape Town", region: "South Africa", zone: "Africa/Johannesburg" },
+                { city: "Vancouver", region: "Canada", zone: "America/Vancouver" },
+                { city: "Zurich", region: "Switzerland", zone: "Europe/Zurich" },
+                { city: "Jerusalem", region: "Israel", zone: "Asia/Jerusalem" }
+            ],
+            ALARM_SOUNDS: [
+                { id: 'beep', name: 'Digital Beep', type: 'oscillator', params: { type: 'square', freq: 880, mod: 4, env: 'sharp' } },
+                { id: 'chime', name: 'Soft Chime', type: 'oscillator', params: { type: 'sine', freq: 600, mod: 0.5, env: 'soft' } },
+                { id: 'alert', name: 'Emergency', type: 'oscillator', params: { type: 'sawtooth', freq: 150, mod: 10, env: 'harsh' } },
+                { id: 'cosmic', name: 'Cosmic Rise', type: 'oscillator', params: { type: 'sine', freq: 300, slide: true, env: 'long' } },
+                { id: 'zen', name: 'Zen Garden', type: 'oscillator', params: { type: 'triangle', freq: 220, mod: 2, env: 'slow' } },
+                { id: 'pulse', name: 'Radar Pulse', type: 'oscillator', params: { type: 'sine', freq: 1000, mod: 20, env: 'pluck' } },
+                { id: 'retro', name: '8-Bit Up', type: 'oscillator', params: { type: 'square', freq: 440, arpeggio: true, env: 'sharp' } },
+                { id: 'urgent', name: 'High Urgency', type: 'oscillator', params: { type: 'sawtooth', freq: 880, mod: 15, env: 'piercing' } }
+            ],
+            THEMES: [
+                { 
+                    id: 'midnight', 
+                    name: 'Midnight', 
+                    colors: {
+                        bgGradient: 'radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%)',
+                        glassPanel: 'rgba(17, 25, 40, 0.75)',
+                        glassCard: 'rgba(255, 255, 255, 0.05)',
+                        textMain: '#ffffff',
+                        textDim: 'rgba(255, 255, 255, 0.5)',
+                        accent: '#3b82f6'
+                    }
+                },
+                { 
+                    id: 'deep-purple', 
+                    name: 'Deep Purple', 
+                    colors: {
+                        bgGradient: 'radial-gradient(at 0% 0%, #1e1b4b 0, transparent 50%), radial-gradient(at 50% 100%, #4c1d95 0, transparent 50%), radial-gradient(at 100% 0%, #2e1065 0, transparent 50%)',
+                        glassPanel: 'rgba(46, 16, 101, 0.65)',
+                        glassCard: 'rgba(216, 180, 254, 0.1)',
+                        textMain: '#faf5ff',
+                        textDim: 'rgba(250, 245, 255, 0.5)',
+                        accent: '#a78bfa'
+                    }
+                },
+                { 
+                    id: 'high-contrast', 
+                    name: 'High Contrast', 
+                    colors: {
+                        bgGradient: 'linear-gradient(135deg, #000000 0%, #1a1a1a 100%)',
+                        glassPanel: 'rgba(0, 0, 0, 0.9)',
+                        glassCard: 'rgba(255, 255, 255, 0.15)',
+                        textMain: '#ffffff',
+                        textDim: 'rgba(255, 255, 255, 0.7)',
+                        accent: '#22c55e'
+                    }
+                }
+            ],
+            MATH_DIFFICULTIES: {
+                Easy: { label: 'Easy', desc: 'Simple Addition' },
+                Medium: { label: 'Medium', desc: 'Add & Subtract' },
+                Hard: { label: 'Hard', desc: 'Multiplication' },
+                Expert: { label: 'Expert', desc: 'Mixed Operations' }
+            }
+        };
+
+        const PRECISION_WORKER_CODE = `
+            let timerId = null;
+            self.onmessage = function(e) {
+                if (e.data === "start") {
+                    timerId = setInterval(() => { self.postMessage("tick"); }, 16);
+                } else if (e.data === "stop") {
+                    if (timerId) clearInterval(timerId);
+                }
+            };
+        `;
+
+        const CLOCK_WORKER_CODE = `
+            let timerId = null;
+            self.onmessage = function(e) {
+                if (e.data === "start") {
+                    timerId = setInterval(() => { self.postMessage("tick"); }, 1000);
+                } else if (e.data === "stop") {
+                    if (timerId) clearInterval(timerId);
+                }
+            };
+        `;
+
+        // --- UTILS ---
+        let audioCtx = null;
+        const getContext = () => {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioCtx;
+        };
+
+        const playAlarmSound = (soundId) => {
+            const ctx = getContext();
+            if (ctx.state === 'suspended') ctx.resume();
+
+            const preset = MASTER_DATA.ALARM_SOUNDS.find(s => s.id === soundId) || MASTER_DATA.ALARM_SOUNDS[0];
+            const params = preset.params || {};
+
+            if (preset.type === 'oscillator') {
+                const osc = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                const t = ctx.currentTime;
+                
+                osc.type = params.type || 'sine';
+                osc.frequency.setValueAtTime(params.freq, t);
+                
+                if (params.mod) {
+                    const lfo = ctx.createOscillator();
+                    lfo.frequency.value = params.mod;
+                    const lfoGain = ctx.createGain();
+                    lfoGain.gain.value = params.mod * 50; 
+                    lfo.connect(lfoGain);
+                    lfoGain.connect(osc.frequency);
+                    lfo.start();
+                }
+
+                if (params.slide) osc.frequency.exponentialRampToValueAtTime(params.freq * 2, t + 0.5);
+                
+                gainNode.gain.setValueAtTime(0, t);
+                gainNode.gain.linearRampToValueAtTime(0.5, t + 0.1);
+                gainNode.gain.linearRampToValueAtTime(0, t + 0.5);
+
+                osc.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                osc.start();
+                osc.stop(t + 2.0);
+            }
+        };
+
+        const stopAudio = () => {
+            if (audioCtx) {
+                audioCtx.suspend();
+                audioCtx = null; 
+            }
+        };
+
+        const formatDuration = (ms) => {
+            const totalSeconds = Math.floor(ms / 1000);
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+            const msPart = Math.floor((ms % 1000) / 10);
+            if (h > 0) return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}.${msPart.toString().padStart(2, '0')}`;
+        };
+
+        // --- HOOKS ---
+        // Robust Worker with fallback for "Black Screen" fix
+        const useWorkerTimer = (isRunning, callback, workerCode) => {
+            const workerRef = useRef(null);
+            const callbackRef = useRef(callback);
+            const intervalRef = useRef(null);
+
+            useEffect(() => { callbackRef.current = callback; }, [callback]);
+
+            useEffect(() => {
+                let worker = null;
+                try {
+                    const blob = new Blob([workerCode], { type: "application/javascript" });
+                    worker = new Worker(URL.createObjectURL(blob));
+                    worker.onmessage = (e) => {
+                        if (e.data === "tick") callbackRef.current();
+                    };
+                    workerRef.current = worker;
+                } catch (e) {
+                    console.warn("Worker creation failed, falling back to interval", e);
+                }
+
+                return () => {
+                    if (worker) worker.terminate();
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                };
+            }, [workerCode]);
+
+            useEffect(() => {
+                if (isRunning) {
+                    if (workerRef.current) {
+                        workerRef.current.postMessage("start");
+                    } else {
+                        // Fallback logic
+                        const intervalMs = workerCode.includes("16") ? 16 : 1000;
+                        intervalRef.current = setInterval(() => callbackRef.current(), intervalMs);
+                    }
+                } else {
+                    if (workerRef.current) workerRef.current.postMessage("stop");
+                    if (intervalRef.current) clearInterval(intervalRef.current);
+                }
+            }, [isRunning]);
+        };
+
+        // --- COMPONENTS ---
+
+        const Footer = () => {
+            return (
+                <div className="w-full mt-12 pb-12 border-t border-white/10">
+                    <div className="px-6 md:px-10 max-w-5xl mx-auto text-center pt-8">
+                        <h3 className="text-2xl font-light text-white mb-6">About GlassChronos & The Science of Time</h3>
+                        <div className="text-sm text-white/40 space-y-4 leading-relaxed text-justify md:text-center columns-1 md:columns-2 gap-8">
+                            <p>For millennia, humanity relied on the apparent motion of the sun to track time. From ancient Egyptian obelisks to the sophisticated sundials of Greece and Rome, time was a local phenomenon, fluid and varying with the seasons. The invention of the mechanical clock in medieval Europe began the shift towards standardization, but it was the Age of Exploration that demanded precision. The challenge of determining longitude at sea spurred the creation of the marine chronometer by John Harrison in the 18th century, a masterpiece of engineering that allowed sailors to carry "home time" with them across the oceans.</p>
+                            <p>The arrival of the railways in the 19th century necessitated the synchronization of time across vast distances, leading to the establishment of Greenwich Mean Time (GMT) and the global time zone system we use today. No longer did noon vary from town to town; the world was divided into orderly segments, facilitating trade, travel, and communication on an unprecedented scale.</p>
+                            <p>In the 20th century, the demand for exactitude transcended mechanical limitations. The discovery of the oscillation of atoms led to the atomic clock, a device so accurate it would lose only a second in millions of years. This atomic precision underpins the GPS systems that guide our vehicles, the internet protocols that synchronize our data, and the financial markets that drive the global economy. Today, services like GlassChronos leverage this legacy, using Network Time Protocol (NTP) and browser-based high-precision timing to bring atomic-level accuracy to your personal dashboard.</p>
+                            <p>However, amidst this technological pursuit of the femtosecond, we must not lose sight of the human experience. Our biological clocks, or circadian rhythms, are ancient systems tuned to the rise and set of the sun. In an always-on world, maintaining a healthy relationship with time is crucial for mental and physical well-being. Tools like our Pomodoro timer and sleep-cycle-aware alarms are designed to harmonize this modern precision with human needs, ensuring that while we track time with machine-like accuracy, we live it with human purpose.</p>
+                        </div>
+                        <div className="mt-8 text-xs text-white/20">&copy; {new Date().getFullYear()} GlassChronos Utility Suite. Precision. Ethics. Design.</div>
+                    </div>
+                </div>
+            );
+        };
+
+        const WorldClock = ({ theme, time }) => {
+            const [selectedZones, setSelectedZones] = useState([]);
+            const [isAdding, setIsAdding] = useState(false);
+            const [searchQuery, setSearchQuery] = useState("");
+
+            useEffect(() => {
+                const saved = localStorage.getItem('glass_world_clock');
+                if (saved) {
+                    setSelectedZones(JSON.parse(saved));
+                } else {
+                    setSelectedZones([
+                        MASTER_DATA.TIME_ZONES.find(z => z.city === 'New York'),
+                        MASTER_DATA.TIME_ZONES.find(z => z.city === 'London'),
+                        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Tokyo'),
+                        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Paris'),
+                        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Dubai'),
+                        MASTER_DATA.TIME_ZONES.find(z => z.city === 'Sydney')
+                    ].filter(Boolean));
+                }
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('glass_world_clock', JSON.stringify(selectedZones));
+            }, [selectedZones]);
+
+            const addZone = (zone) => {
+                if (!selectedZones.find(z => z.city === zone.city)) {
+                    setSelectedZones([...selectedZones, zone]);
+                }
+                setIsAdding(false);
+                setSearchQuery("");
+            };
+
+            const removeZone = (city) => {
+                setSelectedZones(selectedZones.filter(z => z.city !== city));
+            };
+
+            const getZoneTime = (zoneStr) => {
+                try {
+                    return new Intl.DateTimeFormat('en-US', {
+                        timeZone: zoneStr, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+                    }).format(time);
+                } catch (e) { return "--:--:--"; }
+            };
+
+            const getHandAngles = (zoneStr) => {
+                try {
+                    const parts = new Intl.DateTimeFormat('en-US', {
+                        timeZone: zoneStr, hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false
+                    }).formatToParts(time);
+                    const h = parseInt(parts.find(p => p.type === 'hour')?.value || '0');
+                    const m = parseInt(parts.find(p => p.type === 'minute')?.value || '0');
+                    const s = parseInt(parts.find(p => p.type === 'second')?.value || '0');
+                    const sAngle = (s / 60) * 360;
+                    const mAngle = ((m + s/60) / 60) * 360;
+                    const hAngle = (((h % 12) + m/60) / 12) * 360;
+                    return { h: hAngle, m: mAngle, s: sAngle, isDay: h >= 6 && h < 18 };
+                } catch(e) { return { h:0, m:0, s:0, isDay: true }; }
+            };
+
+            const filteredZones = MASTER_DATA.TIME_ZONES.filter(z => 
+                z.city.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                z.region.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            const accentColor = theme?.colors.accent || '#3b82f6';
+
+            return (
+                <div className="flex flex-col w-full p-6 space-y-6">
+                    <header className="flex flex-col space-y-4 shrink-0 relative z-40 sticky top-0 pt-2 pb-4 -mt-2 -mx-6 px-6 bg-[#0f172a]/95 backdrop-blur-xl border-b border-white/5">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h2 className="text-3xl font-light tracking-tight text-white">World Clock</h2>
+                                <p className="opacity-40 text-sm mt-1">International sync</p>
+                            </div>
+                            <button onClick={() => setIsAdding(!isAdding)} className="p-3 rounded-full border border-white/10" style={{ backgroundColor: isAdding ? accentColor : 'rgba(255,255,255,0.05)' }}>
+                                <Plus className={`w-6 h-6 text-white transition-transform ${isAdding ? 'rotate-45' : ''}`} />
+                            </button>
+                        </div>
+                        
+                        <div className={`transition-all duration-300 ease-in-out relative ${isAdding ? 'opacity-100 translate-y-0 h-14' : 'opacity-0 -translate-y-4 h-0 pointer-events-none'}`}>
+                             <div className="absolute inset-x-0 top-0 z-[100] relative">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search className="h-5 w-5 opacity-40" /></div>
+                                <input
+                                    type="text" placeholder="Search city..."
+                                    className="w-full pl-10 pr-4 py-3 bg-[#1e293b] border border-white/20 rounded-xl text-white placeholder-white/30 focus:outline-none focus:ring-2 relative z-[100]"
+                                    style={{ '--tw-ring-color': accentColor }}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                                {searchQuery && (
+                                    <div className="absolute top-full left-0 w-full mt-2 bg-[#1e293b] border border-white/20 rounded-xl max-h-64 overflow-y-auto shadow-2xl z-[150]">
+                                        {filteredZones.map((z) => (
+                                            <button key={z.city} onClick={() => addZone(z)} className="w-full text-left px-4 py-3 hover:bg-white/10 flex justify-between items-center border-b border-white/5 last:border-0">
+                                                <span className="text-white font-medium">{z.city}, {z.region}</span>
+                                                <span className="text-xs opacity-50 bg-white/5 px-2 py-1 rounded">{z.zone}</span>
+                                            </button>
+                                        ))}
+                                        {filteredZones.length === 0 && <div className="px-4 py-3 text-white/40 text-sm">No cities found</div>}
+                                    </div>
+                                )}
+                             </div>
+                        </div>
+                    </header>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                        {selectedZones.map((zone) => {
+                            const timeStr = getZoneTime(zone.zone);
+                            const { h, m, s, isDay } = getHandAngles(zone.zone);
+                            return (
+                                <div key={zone.city} className="rounded-2xl p-6 relative group border border-white/5 bg-white/5 hover:border-white/10 overflow-hidden flex flex-col justify-between h-56 shadow-lg">
+                                    <div className="flex justify-between items-start z-10">
+                                        <div>
+                                            <h3 className="text-xl font-medium truncate">{zone.city}</h3>
+                                            <p className="text-sm opacity-50">{zone.region}</p>
+                                        </div>
+                                        <button onClick={() => removeZone(zone.city)} className="opacity-0 group-hover:opacity-100 p-1 hover:bg-red-500/20 rounded text-red-400 transition-all"><X className="w-4 h-4" /></button>
+                                    </div>
+                                    <div className="flex items-end justify-between z-10 mt-4">
+                                        <div className="flex flex-col">
+                                            <div className="text-4xl font-mono font-light tracking-tighter">{timeStr}</div>
+                                            <div className="flex items-center space-x-2 mt-2">
+                                                {isDay ? <Globe className="w-4 h-4 text-yellow-400/80" /> : <Globe className="w-4 h-4 text-blue-400/80" />}
+                                                <span className="text-xs font-bold bg-white/10 px-2 py-0.5 rounded opacity-70">{zone.zone.split('/')[1]}</span>
+                                            </div>
+                                        </div>
+                                        <div className="w-24 h-24 relative rounded-full border-2 border-white/10 bg-black/20 shadow-inner shrink-0">
+                                            {[0, 90, 180, 270].map(deg => (
+                                                <div key={deg} className="absolute w-1 h-1 bg-white/40 rounded-full" style={{ top: '50%', left: '50%', transform: `translate(-50%, -50%) rotate(${deg}deg) translateY(-38px)` }} />
+                                            ))}
+                                            <div className="absolute inset-0">
+                                                {/* Hour Hand */}
+                                                <div className="absolute top-1/2 left-1/2 w-1.5 bg-white origin-bottom rounded-full hand-transition z-10" style={{ height: '25%', transform: `translate(-50%, -100%) rotate(${h}deg)` }} />
+                                                {/* Minute Hand */}
+                                                <div className="absolute top-1/2 left-1/2 w-1 bg-white/90 origin-bottom rounded-full hand-transition z-20" style={{ height: '35%', transform: `translate(-50%, -100%) rotate(${m}deg)` }} />
+                                                {/* Second Hand */}
+                                                <div className="absolute top-1/2 left-1/2 w-0.5 origin-bottom rounded-full hand-transition z-30" style={{ height: '42%', backgroundColor: accentColor, transform: `translate(-50%, -100%) rotate(${s}deg)` }} />
+                                                {/* Center Cap */}
+                                                <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 z-40 shadow-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        const AlarmView = ({ onAlarmTrigger, theme }) => {
+            const [alarms, setAlarms] = useState([]);
+            const [isCreating, setIsCreating] = useState(false);
+            const [newTime, setNewTime] = useState("07:00");
+            const [newLabel, setNewLabel] = useState("Wake up");
+            const [newSound, setNewSound] = useState('beep');
+            const [newDifficulty, setNewDifficulty] = useState('Medium');
+
+            useEffect(() => {
+                const saved = localStorage.getItem('glass_alarms');
+                if (saved) setAlarms(JSON.parse(saved));
+            }, []);
+
+            useEffect(() => {
+                localStorage.setItem('glass_alarms', JSON.stringify(alarms));
+            }, [alarms]);
+
+            const addAlarm = () => {
+                const alarm = { id: Date.now().toString(), time: newTime, label: newLabel, enabled: true, days: [0,1,2,3,4,5,6], sound: newSound, difficulty: newDifficulty };
+                setAlarms([...alarms, alarm]);
+                setIsCreating(false);
+            };
+
+            const toggleAlarm = (id) => setAlarms(alarms.map(a => a.id === id ? { ...a, enabled: !a.enabled } : a));
+            const deleteAlarm = (id) => setAlarms(alarms.filter(a => a.id !== id));
+            const accentColor = theme?.colors.accent || '#3b82f6';
+
+            return (
+                <div className="flex flex-col w-full p-6 space-y-6">
+                    <header className="flex justify-between items-center">
+                        <div><h2 className="text-3xl font-light tracking-tight">Alarm</h2><p className="opacity-40 text-sm mt-1">Smart wake-up</p></div>
+                        <button onClick={() => setIsCreating(true)} className="p-3 rounded-full border border-white/10" style={{ backgroundColor: isCreating ? accentColor : 'rgba(255,255,255,0.05)' }}><Plus className="w-6 h-6 text-white" /></button>
+                    </header>
+                    {isCreating && (
+                        <div className="p-6 rounded-2xl space-y-4 border border-white/10 bg-white/5">
+                            <div className="flex justify-between items-center mb-2"><h3 className="text-lg font-medium">New Alarm</h3><button onClick={() => setIsCreating(false)}><X className="w-5 h-5 opacity-50" /></button></div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label className="block text-xs opacity-50 mb-1">Time</label><input type="time" value={newTime} onChange={(e) => setNewTime(e.target.value)} className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white text-2xl font-mono focus:outline-none" /></div>
+                                <div className="space-y-4">
+                                    <div><label className="block text-xs opacity-50 mb-1">Label</label><input type="text" value={newLabel} onChange={(e) => setNewLabel(e.target.value)} className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none" /></div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div><label className="block text-xs opacity-50 mb-1">Sound</label><select value={newSound} onChange={(e) => setNewSound(e.target.value)} className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none appearance-none">{MASTER_DATA.ALARM_SOUNDS.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}</select></div>
+                                        <div><label className="block text-xs opacity-50 mb-1">Math</label><select value={newDifficulty} onChange={(e) => setNewDifficulty(e.target.value)} className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none appearance-none">{Object.keys(MASTER_DATA.MATH_DIFFICULTIES).map(lvl => <option key={lvl} value={lvl}>{lvl}</option>)}</select></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex justify-end space-x-2 pt-4 border-t border-white/5"><button onClick={() => setIsCreating(false)} className="px-4 py-2 rounded-lg opacity-60">Cancel</button><button onClick={addAlarm} className="px-8 py-2 rounded-lg text-white font-medium shadow-lg" style={{ backgroundColor: accentColor }}>Save</button></div>
+                        </div>
+                    )}
+                    <div className="space-y-3">
+                        {alarms.map(alarm => (
+                            <div key={alarm.id} className={`p-5 rounded-2xl flex items-center justify-between border border-white/5 bg-white/5 ${!alarm.enabled ? 'opacity-50 grayscale' : ''}`}>
+                                <div><span className="text-5xl font-light font-mono">{alarm.time}</span><div className="flex items-center space-x-2 mt-1"><span className="text-sm opacity-50">{alarm.label}</span><span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-white/40 border border-white/5">{alarm.difficulty}</span></div></div>
+                                <div className="flex items-center space-x-6"><div onClick={() => toggleAlarm(alarm.id)} className="w-14 h-8 rounded-full p-1 cursor-pointer transition-colors" style={{ backgroundColor: alarm.enabled ? accentColor : 'rgba(255,255,255,0.1)' }}><div className={`w-6 h-6 rounded-full bg-white shadow-md transform transition-transform ${alarm.enabled ? 'translate-x-6' : 'translate-x-0'}`} /></div><button onClick={() => deleteAlarm(alarm.id)} className="opacity-30 hover:opacity-100 hover:text-red-400"><Trash2 className="w-5 h-5" /></button></div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const MathChallenge = ({ onSolved, onSnooze, difficulty = 'Medium' }) => {
+            const [problem, setProblem] = useState({ q: "", a: 0 });
+            const [answer, setAnswer] = useState("");
+            const [error, setError] = useState(false);
+
+            useEffect(() => {
+                let num1, num2, num3, qStr, ans;
+                if(difficulty === 'Easy') { num1=Math.floor(Math.random()*15)+5; num2=Math.floor(Math.random()*10)+1; qStr=`${num1} + ${num2}`; ans=num1+num2; }
+                else if(difficulty === 'Hard') { num1=Math.floor(Math.random()*15)+5; num2=Math.floor(Math.random()*12)+2; qStr=`${num1} × ${num2}`; ans=num1*num2; }
+                else if(difficulty === 'Expert') { num1=Math.floor(Math.random()*20)+10; num2=Math.floor(Math.random()*10)+2; num3=Math.floor(Math.random()*50)+10; qStr=`(${num1} × ${num2}) - ${num3}`; ans=(num1*num2)-num3; }
+                else { num1=Math.floor(Math.random()*50)+10; num2=Math.floor(Math.random()*40)+5; if(Math.random()>0.5){qStr=`${num1} + ${num2}`; ans=num1+num2;}else{qStr=`${num1} - ${num2}`; ans=num1-num2;} }
+                setProblem({ q: qStr, a: ans });
+            }, [difficulty]);
+
+            const checkAnswer = (e) => { e.preventDefault(); if(parseInt(answer) === problem.a) onSolved(); else { setError(true); setAnswer(""); setTimeout(()=>setError(false),500); } };
+
+            return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-6">
+                    <div className="w-full max-w-md bg-[#0f172a] border border-white/10 rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-pulse"></div>
+                        <Brain className="w-12 h-12 text-blue-400 mx-auto mb-6" />
+                        <h2 className="text-2xl font-bold mb-2 text-white">Wake Up!</h2>
+                        <div className="text-4xl font-mono font-bold mb-8 text-white">{problem.q} = <span className="text-blue-400">?</span></div>
+                        <form onSubmit={checkAnswer} className="space-y-4">
+                            <input type="number" value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder="Answer" className={`w-full text-center text-3xl font-mono bg-white/5 border-2 rounded-xl py-4 text-white focus:outline-none ${error ? 'border-red-500' : 'border-white/10 focus:border-blue-500'}`} autoFocus />
+                            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl">Stop Alarm</button>
+                            <button type="button" onClick={onSnooze} className="w-full text-white/40 hover:text-white py-2 text-sm">Snooze 5m</button>
+                        </form>
+                    </div>
+                </div>
+            );
+        };
+
+        const TimerView = () => {
+            const [duration, setDuration] = useState(300000);
+            const [remaining, setRemaining] = useState(300000);
+            const [isRunning, setIsRunning] = useState(false);
+            const [inputs, setInputs] = useState({ h: 0, m: 5, s: 0 });
+            const endTimeRef = useRef(null);
+
+            useWorkerTimer(isRunning, () => {
+                if (endTimeRef.current) {
+                    const left = endTimeRef.current - Date.now();
+                    if (left <= 0) { setRemaining(0); setIsRunning(false); endTimeRef.current = null; playAlarmSound('chime'); }
+                    else setRemaining(left);
+                }
+            }, PRECISION_WORKER_CODE);
+
+            const toggle = () => {
+                if (isRunning) { setIsRunning(false); endTimeRef.current = null; }
+                else {
+                    const d = remaining > 0 ? remaining : (inputs.h*3600+inputs.m*60+inputs.s)*1000 || 5000;
+                    if(remaining <= 0) { setDuration(d); setRemaining(d); }
+                    endTimeRef.current = Date.now() + d;
+                    setIsRunning(true);
+                }
+            };
+            const reset = () => { setIsRunning(false); endTimeRef.current = null; const d = (inputs.h*3600+inputs.m*60+inputs.s)*1000 || 5000; setDuration(d); setRemaining(d); };
+            useEffect(() => { if(!isRunning) reset(); }, [inputs]);
+
+            const progress = Math.max(0, (remaining / duration) * (2*Math.PI*120));
+
+            return (
+                <div className="flex flex-col h-full p-6 items-center">
+                    <h2 className="text-3xl font-light text-white w-full mb-8">Timer</h2>
+                    <div className="relative w-72 h-72 flex items-center justify-center mb-8">
+                        <svg className="w-full h-full transform -rotate-90"><circle cx="50%" cy="50%" r="120" stroke="rgba(255,255,255,0.05)" strokeWidth="8" fill="transparent" /><circle cx="50%" cy="50%" r="120" stroke={remaining<10000 && remaining>0 ? "#ef4444" : "#3b82f6"} strokeWidth="8" fill="transparent" strokeDasharray={2*Math.PI*120} strokeDashoffset={(2*Math.PI*120) - progress} strokeLinecap="round" className="transition-all duration-75" /></svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-5xl font-mono font-bold tracking-tighter">{formatDuration(remaining).split('.')[0]}</span></div>
+                    </div>
+                    <div className="flex space-x-6 mb-10"><button onClick={toggle} className={`w-16 h-16 rounded-full flex items-center justify-center ${isRunning ? 'bg-amber-500/20 text-amber-500' : 'bg-green-500/20 text-green-500'}`}>{isRunning ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current ml-1" />}</button><button onClick={reset} className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center"><RotateCcw className="w-6 h-6" /></button></div>
+                    <div className={`grid grid-cols-3 gap-4 bg-white/5 p-6 rounded-2xl ${isRunning ? 'opacity-30 pointer-events-none' : ''}`}>
+                        {['h','m','s'].map(u => <div key={u} className="flex flex-col items-center"><span className="text-xs text-white/40 mb-2 uppercase">{u}</span><input type="number" value={inputs[u]} onChange={(e)=>setInputs({...inputs, [u]: parseInt(e.target.value)||0})} className="w-16 bg-black/20 rounded-lg p-2 text-center text-xl font-mono outline-none" /></div>)}
+                    </div>
+                </div>
+            );
+        };
+
+        const Stopwatch = ({ theme }) => {
+            const [time, setTime] = useState(0);
+            const [isRunning, setIsRunning] = useState(false);
+            const [laps, setLaps] = useState([]);
+            const startTimeRef = useRef(0);
+            const storedTimeRef = useRef(0);
+
+            useWorkerTimer(isRunning, () => {
+                setTime(storedTimeRef.current + (performance.now() - startTimeRef.current));
+            }, PRECISION_WORKER_CODE);
+
+            const toggle = () => {
+                if(isRunning) { setIsRunning(false); storedTimeRef.current = time; }
+                else { setIsRunning(true); startTimeRef.current = performance.now(); }
+            };
+            const reset = () => { setIsRunning(false); setTime(0); storedTimeRef.current = 0; setLaps([]); };
+            const lap = () => { const last = laps.length > 0 ? laps[0].time : 0; setLaps([{id: laps.length+1, time, split: time-last}, ...laps]); };
+            
+            return (
+                <div className="flex flex-col h-full p-6 items-center w-full max-w-4xl mx-auto">
+                     <div className="flex-1 flex flex-col items-center justify-center w-full min-h-[350px]">
+                        <div className="font-mono text-7xl md:text-9xl font-light tracking-tighter tabular-nums text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 drop-shadow-2xl">{formatDuration(time)}</div>
+                        <div className="flex space-x-6 mt-16">
+                            <button onClick={toggle} className={`w-20 h-20 rounded-full flex items-center justify-center shadow-lg ${isRunning ? 'bg-red-500/20 text-red-500' : 'bg-green-500/20 text-green-500'}`}>{isRunning ? <Pause className="w-8 h-8 fill-current" /> : <Play className="w-8 h-8 fill-current ml-1" />}</button>
+                            <button onClick={isRunning ? lap : reset} className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">{isRunning ? <Flag className="w-8 h-8" /> : <RotateCcw className="w-8 h-8" />}</button>
+                        </div>
+                     </div>
+                     <div className="w-full rounded-2xl overflow-hidden flex-1 max-h-[40%] flex flex-col border border-white/5 bg-white/5">
+                        <div className="flex justify-between p-4 border-b border-white/10 text-xs font-bold opacity-40 uppercase"><span>Lap</span><span>Split</span><span>Total</span></div>
+                        <div className="overflow-y-auto custom-scrollbar flex-1">
+                            {laps.map((l, i) => <div key={l.id} className="flex justify-between p-4 border-b border-white/5 hover:bg-white/5"><span className="opacity-60">#{l.id}</span><span className={i===0?"text-blue-400 font-bold":""}>+{formatDuration(l.split)}</span><span>{formatDuration(l.time)}</span></div>)}
+                        </div>
+                     </div>
+                </div>
+            );
+        };
+
+        const Pomodoro = () => {
+            const WORK = 25*60000, BREAK = 5*60000;
+            const [mode, setMode] = useState('work');
+            const [timeLeft, setTimeLeft] = useState(WORK);
+            const [isRunning, setIsRunning] = useState(false);
+            
+            useWorkerTimer(isRunning, () => {
+                setTimeLeft(p => { if(p<=0){ setIsRunning(false); playAlarmSound('cosmic'); return 0; } return p-1000; });
+            }, PRECISION_WORKER_CODE);
+
+            const toggle = () => setIsRunning(!isRunning);
+            const switchMode = (m) => { setIsRunning(false); setMode(m); setTimeLeft(m==='work'?WORK:BREAK); };
+            const format = (ms) => `${Math.floor(ms/60000).toString().padStart(2,'0')}:${Math.floor((ms%60000)/1000).toString().padStart(2,'0')}`;
+
+            return (
+                <div className="flex flex-col h-full items-center justify-center p-6 space-y-12">
+                    <div className="bg-white/5 p-1 rounded-full flex"><button onClick={()=>switchMode('work')} className={`px-6 py-2 rounded-full flex items-center space-x-2 ${mode==='work'?'bg-white/10 text-white':'text-white/40'}`}><Briefcase className="w-4 h-4"/><span>Focus</span></button><button onClick={()=>switchMode('break')} className={`px-6 py-2 rounded-full flex items-center space-x-2 ${mode==='break'?'bg-white/10 text-white':'text-white/40'}`}><Coffee className="w-4 h-4"/><span>Break</span></button></div>
+                    <div onClick={toggle} className="cursor-pointer relative text-[8rem] md:text-[10rem] font-thin font-mono leading-none tracking-tighter text-white drop-shadow-2xl select-none">{format(timeLeft)}</div>
+                    <button onClick={toggle} className="bg-white text-black w-16 h-16 rounded-full flex items-center justify-center hover:scale-105 transition-transform">{isRunning ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}</button>
+                </div>
+            );
+        };
+
+        const NightMode = ({ onExit, time }) => {
+            const [dimmed, setDimmed] = useState(false);
+            const toggleFs = () => { if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else if(document.exitFullscreen) document.exitFullscreen(); };
+            return (
+                <div onClick={() => setDimmed(!dimmed)} className="fixed inset-0 z-50 bg-black flex items-center justify-center cursor-pointer">
+                    <div className={`text-center transition-all duration-1000 ${dimmed ? 'opacity-30 scale-90' : 'opacity-100'}`}>
+                        <div className="text-[20vw] leading-none font-bold text-white/90 font-mono tracking-tighter tabular-nums animate-pulse">{time.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',hour12:false})}</div>
+                        {!dimmed && <div className="text-white/40 text-2xl mt-4 font-light uppercase tracking-[0.5em]">{time.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}</div>}
+                    </div>
+                    <div className={`absolute bottom-8 right-8 flex space-x-4 transition-opacity ${dimmed?'opacity-0':'opacity-100'}`}><button onClick={(e)=>{e.stopPropagation();toggleFs()}} className="p-4 bg-white/10 rounded-full text-white"><Maximize2 className="w-6 h-6"/></button><button onClick={(e)=>{e.stopPropagation();onExit()}} className="p-4 bg-red-500/20 rounded-full text-red-200"><Minimize2 className="w-6 h-6"/></button></div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [mode, setMode] = useState('CLOCK');
+            const [isNightMode, setIsNightMode] = useState(false);
+            const [activeAlarm, setActiveAlarm] = useState(null);
+            const [time, setTime] = useState(new Date());
+            const [themeId, setThemeId] = useState('midnight');
+
+            useWorkerTimer(true, () => setTime(new Date()), CLOCK_WORKER_CODE);
+
+            useEffect(() => {
+                const alarms = JSON.parse(localStorage.getItem('glass_alarms') || '[]');
+                const currentTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                const currentDay = time.getDay();
+                const triggered = alarms.find(a => a.enabled && a.time === currentTime && a.days.includes(currentDay) && (!activeAlarm || activeAlarm.id !== a.id));
+                if (triggered && !activeAlarm) {
+                    setActiveAlarm(triggered);
+                    const interval = setInterval(() => playAlarmSound(triggered.sound), 2000);
+                    window.alarmInterval = interval;
+                }
+            }, [time, activeAlarm]);
+
+            const activeTheme = MASTER_DATA.THEMES.find(t => t.id === themeId) || MASTER_DATA.THEMES[0];
+            const navItems = [
+                { mode: 'CLOCK', icon: Clock, label: 'Clock' },
+                { mode: 'ALARM', icon: AlarmClock, label: 'Alarm' },
+                { mode: 'TIMER', icon: Timer, label: 'Timer' },
+                { mode: 'STOPWATCH', icon: TimerReset, label: 'Stopwatch' },
+                { mode: 'POMODORO', icon: Monitor, label: 'Focus' }
+            ];
+
+            return (
+                <>
+                {isNightMode ? <NightMode onExit={()=>setIsNightMode(false)} time={time} /> : (
+                    <div className="w-full h-screen text-white overflow-hidden flex flex-col md:flex-row transition-colors duration-700" style={{ background: activeTheme.colors.bgGradient, color: activeTheme.colors.textMain }}>
+                        <nav className="md:w-24 w-full md:h-full h-20 md:flex-col flex-row flex items-center justify-between md:justify-center p-4 shrink-0 z-20 backdrop-blur-xl border-r border-white/10" style={{ background: activeTheme.colors.glassPanel }}>
+                            <div className="hidden md:block mb-auto mt-4 font-bold text-xl tracking-tighter" style={{ color: activeTheme.colors.accent }}>GC</div>
+                            <div className="flex md:flex-col flex-row w-full justify-around md:justify-center md:space-y-8">
+                                {navItems.map(item => (
+                                    <button key={item.mode} onClick={() => setMode(item.mode)} className={`group relative p-3 rounded-xl transition-all duration-300 ${mode===item.mode ? 'shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'hover:bg-white/10'}`} style={{ backgroundColor: mode===item.mode ? activeTheme.colors.accent : 'transparent' }}>
+                                        <item.icon className="w-6 h-6" />
+                                        <span className="absolute left-14 bg-black/50 backdrop-blur px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity hidden md:block z-50">{item.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="hidden md:flex flex-col mt-auto space-y-4 items-center">
+                                <div className="flex flex-col space-y-2 mb-4">
+                                    {MASTER_DATA.THEMES.map(t => <button key={t.id} onClick={()=>setThemeId(t.id)} className={`w-4 h-4 rounded-full border border-white/20 ${themeId===t.id?'scale-125 ring-2 ring-white/50':''}`} style={{background: t.id==='high-contrast'?'#000':t.id==='deep-purple'?'#4c1d95':'#0f172a'}} />)}
+                                </div>
+                                <button onClick={()=>setIsNightMode(true)} className="p-3 text-white/40 hover:text-white hover:bg-white/10 rounded-xl"><Moon className="w-6 h-6"/></button>
+                            </div>
+                        </nav>
+                        <main className="flex-1 relative overflow-hidden flex flex-col">
+                            <div className="h-16 flex justify-between items-center px-6 md:px-10 shrink-0">
+                                <div className="text-sm font-medium opacity-60">{time.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}</div>
+                            </div>
+                            <div className="flex-1 overflow-hidden relative p-4 md:p-8">
+                                <div className="w-full h-full rounded-3xl overflow-y-auto shadow-2xl relative transition-colors duration-700 custom-scrollbar flex flex-col" style={{ background: activeTheme.colors.glassPanel, borderColor: 'rgba(255,255,255,0.1)', borderWidth: '1px', borderStyle: 'solid' }}>
+                                    <div className="flex-shrink-0 min-h-[calc(100%-80px)]">
+                                        {mode === 'CLOCK' && <WorldClock theme={activeTheme} time={time} />}
+                                        {mode === 'ALARM' && <AlarmView theme={activeTheme} onAlarmTrigger={setActiveAlarm} />}
+                                        {mode === 'TIMER' && <TimerView />}
+                                        {mode === 'STOPWATCH' && <Stopwatch theme={activeTheme} />}
+                                        {mode === 'POMODORO' && <Pomodoro />}
+                                    </div>
+                                    <Footer />
+                                </div>
+                            </div>
+                        </main>
+                    </div>
+                )}
+                {activeAlarm && <MathChallenge onSolved={() => { stopAudio(); clearInterval(window.alarmInterval); setActiveAlarm(null); }} onSnooze={() => { stopAudio(); clearInterval(window.alarmInterval); setActiveAlarm(null); }} difficulty={activeAlarm.difficulty} />}
+                </>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
 </html>
