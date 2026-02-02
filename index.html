@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GlassChronos Infinity | The Authority on Precision Time</title>
-    <meta name="description" content="GlassChronos Infinity is the world's leading precision timekeeping suite. Features include Atomic World Clock, Scientific Calculator, Unit Conversion, Pomodoro Timer, and authoritative resources on Horology and Global Synchronization.">
+    <meta name="description" content="GlassChronos Infinity is the premier precision timekeeping suite. Features Atomic World Clock, Scientific Calculator, Pomodoro Timer, and extensive resources on Global Synchronization.">
     <meta name="keywords" content="Atomic Clock, World Time, NTP, Precision Time, Stopwatch, Pomodoro, Scientific Calculator, Unit Converter, Horology, Time Synchronization, UTC">
     <meta name="author" content="GlassChronos">
     <link rel="canonical" href="https://glasschronos.com" />
@@ -14,10 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@200;400;700&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
+    <!-- Lucide Icons (CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -30,16 +30,9 @@
                     },
                     colors: {
                         slate: { 850: '#151e2e', 900: '#0f172a', 950: '#020617' },
-                        glass: {
-                            border: 'rgba(255, 255, 255, 0.08)',
-                            surface: 'rgba(15, 23, 42, 0.6)'
-                        }
                     },
                     zIndex: {
                         'max': '10000',
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -47,30 +40,30 @@
     </script>
 
     <style>
-        /* CRITICAL STYLES */
+        /* CORE STYLES - INSTANT LOAD */
         body {
-            background-color: #0f172a; /* Immediate load color */
+            background-color: #0f172a;
             background-image: 
-                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.15), transparent 40%),
-                radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.15), transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.1), transparent 40%);
+                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.15), transparent 50%),
+                radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.15), transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.1), transparent 50%);
             color: #e2e8f0;
-            overflow: hidden;
+            overflow: hidden; /* App feel */
         }
 
         /* GLASSMORPHISM ENGINE */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
         
         .glass-card {
             background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.2s ease-out;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .glass-card:hover {
             background: rgba(255, 255, 255, 0.06);
@@ -79,22 +72,16 @@
             box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
         }
 
-        /* UI ELEMENTS */
+        /* UI COMPONENTS */
         .nav-item {
             position: relative;
             transition: all 0.2s;
+            border-left: 3px solid transparent;
         }
         .nav-item.active {
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
-        }
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 3px;
-            background: #3b82f6;
-            border-radius: 0 4px 4px 0;
+            border-left-color: #3b82f6;
         }
 
         .analog-hand {
@@ -103,16 +90,15 @@
             bottom: 50%;
             transform-origin: bottom center;
             border-radius: 999px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             transition: transform 0.1s cubic-bezier(0.4, 2.08, 0.55, 0.44);
         }
 
-        .knowledge-panel {
+        .feature-panel {
             border-left: 3px solid #3b82f6;
             background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
         }
 
-        /* UTILS */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; }
@@ -124,9 +110,9 @@
 <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
     "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
     "vite": "https://esm.sh/vite@^7.3.1",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.3"
@@ -137,7 +123,7 @@
 <body class="flex h-screen w-screen font-sans antialiased selection:bg-blue-500/30">
 
     <!-- NAVIGATION SIDEBAR -->
-    <nav class="glass-panel w-20 lg:w-64 h-full flex flex-col justify-between z-50 shrink-0 relative flex-none">
+    <nav class="glass-panel w-20 lg:w-72 h-full flex flex-col justify-between z-50 shrink-0 relative flex-none">
         <div>
             <!-- Brand -->
             <div class="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/5 bg-white/5">
@@ -146,44 +132,44 @@
                 </div>
                 <div class="ml-3 hidden lg:block">
                     <h1 class="text-lg font-bold tracking-tight text-white leading-tight">GlassChronos</h1>
-                    <p class="text-[10px] text-white/40 tracking-widest uppercase font-mono">INFINITY v2.0</p>
+                    <p class="text-[10px] text-white/40 tracking-widest uppercase font-mono">INFINITY v2.1</p>
                 </div>
             </div>
 
             <!-- Menu -->
             <div class="py-6 space-y-1 px-3">
-                <div class="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3 px-3 hidden lg:block">Suite</div>
+                <div class="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3 px-3 hidden lg:block">Utility Suite</div>
                 
-                <button onclick="router('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                <button onclick="router('dashboard')" id="nav-dashboard" class="nav-item active w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="layout-grid" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
                     <span class="ml-3 text-sm hidden lg:block font-medium">Dashboard</span>
                 </button>
                 
-                <button onclick="router('world')" id="nav-world" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                <button onclick="router('world')" id="nav-world" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="globe" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
                     <span class="ml-3 text-sm hidden lg:block font-medium">World Clock</span>
                 </button>
                 
-                <button onclick="router('tools')" id="nav-tools" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                <button onclick="router('tools')" id="nav-tools" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="cpu" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
                     <span class="ml-3 text-sm hidden lg:block font-medium">Pro Tools</span>
                 </button>
                 
-                <button onclick="router('wellness')" id="nav-wellness" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                <button onclick="router('wellness')" id="nav-wellness" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="heart" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
                     <span class="ml-3 text-sm hidden lg:block font-medium">Wellness</span>
                 </button>
 
-                <div class="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3 px-3 mt-8 hidden lg:block">Authority</div>
+                <div class="text-[10px] font-bold text-white/20 uppercase tracking-widest mb-3 px-3 mt-8 hidden lg:block">Authority & Legal</div>
                 
-                <button onclick="router('science')" id="nav-science" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                <button onclick="router('science')" id="nav-science" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="book-open" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
                     <span class="ml-3 text-sm hidden lg:block font-medium">Horology Knowledge</span>
                 </button>
                 
-                <button onclick="router('legal')" id="nav-legal" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group">
+                <button onclick="router('legal')" id="nav-legal" class="nav-item w-full flex items-center p-3 rounded-lg text-white/60 hover:text-white hover:bg-white/5 group mb-1">
                     <i data-lucide="scale" class="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform"></i>
-                    <span class="ml-3 text-sm hidden lg:block font-medium">Legal Hub</span>
+                    <span class="ml-3 text-sm hidden lg:block font-medium">Legal & Privacy</span>
                 </button>
             </div>
         </div>
@@ -195,7 +181,10 @@
                     <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
                     <span class="text-xs font-medium text-emerald-400">System Operational</span>
                 </div>
-                <div class="text-[10px] text-white/40">Drift: &lt;1ms<br>Sync: NTP Stratum 1</div>
+                <div class="text-[10px] text-white/40 font-mono">
+                    NTP Stratum: 1<br>
+                    Latency: &lt;1ms
+                </div>
             </div>
         </div>
     </nav>
@@ -213,8 +202,8 @@
                 </div>
             </div>
             <div class="flex items-center space-x-6">
-                <div class="hidden md:flex flex-col items-end">
-                    <span class="text-[10px] text-white/30 uppercase tracking-widest">Support</span>
+                <div class="hidden md:flex flex-col items-end text-right">
+                    <span class="text-[10px] text-white/30 uppercase tracking-widest">Support Contact</span>
                     <a href="mailto:magic.reviewsite@gmail.com" class="text-xs text-white hover:text-blue-400 transition-colors">magic.reviewsite@gmail.com</a>
                 </div>
                 <div class="w-8 h-8 rounded-full bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center">
@@ -223,8 +212,8 @@
             </div>
         </header>
 
-        <!-- DYNAMIC CONTENT AREA -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10 pb-24 scroll-smooth">
+        <!-- DYNAMIC CONTENT SCROLL -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10 pb-24 scroll-smooth" id="main-scroll">
             
             <!-- VIEW: DASHBOARD -->
             <div id="view-dashboard" class="page-view fade-in space-y-8">
@@ -234,7 +223,7 @@
                     
                     <!-- Analog Face -->
                     <div class="w-72 h-72 lg:w-96 lg:h-96 rounded-full border border-white/10 relative shadow-2xl bg-[#0f172a]/50 backdrop-blur-xl ring-1 ring-white/5">
-                        <!-- Markers JS Injected -->
+                        <!-- JS Markers -->
                         <div id="clock-face"></div>
                         
                         <!-- Hands -->
@@ -252,32 +241,40 @@
                     </div>
                 </div>
 
-                <!-- Featured Knowledge Panel (Replaces Ad Slot) -->
-                <div class="glass-panel rounded-2xl p-8 knowledge-panel flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer hover:bg-white/5 transition-colors" onclick="router('science')">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 uppercase tracking-widest">Featured Article</span>
-                            <span class="text-xs text-white/30">Read time: 4 min</span>
+                <!-- Feature Panels (Replacing Ads) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-panel rounded-2xl p-8 feature-panel cursor-pointer hover:bg-white/5 transition-colors" onclick="router('science')">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i data-lucide="zap" class="w-4 h-4 text-blue-400"></i>
+                            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Featured Insight</span>
                         </div>
-                        <h3 class="text-xl font-medium text-white mb-2">The Evolution of Atomic Precision</h3>
-                        <p class="text-white/50 text-sm leading-relaxed max-w-2xl">From the first Cesium-133 clocks to modern optical lattices, discover how humanity achieved the accuracy required for GPS navigation and high-frequency trading.</p>
+                        <h3 class="text-xl font-medium text-white mb-2">The Physics of Atomic Time</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Discover how Cesium-133 resonance defines the modern second, enabling GPS accuracy to within centimeters.</p>
+                        <div class="text-xs text-white/30 font-mono">Read Article →</div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center shrink-0">
-                        <i data-lucide="arrow-right" class="text-white/50"></i>
+
+                    <div class="glass-panel rounded-2xl p-8 feature-panel cursor-pointer hover:bg-white/5 transition-colors" onclick="router('science')">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i data-lucide="network" class="w-4 h-4 text-purple-400"></i>
+                            <span class="text-xs font-bold text-purple-400 uppercase tracking-widest">Global Sync</span>
+                        </div>
+                        <h3 class="text-xl font-medium text-white mb-2">NTP & The Internet Backbone</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Understanding the Stratum hierarchy that keeps billions of devices synchronized across the globe.</p>
+                        <div class="text-xs text-white/30 font-mono">Read Article →</div>
                     </div>
                 </div>
             </div>
 
             <!-- VIEW: WORLD CLOCK -->
             <div id="view-world" class="page-view hidden space-y-8">
-                 <div class="glass-panel p-2 rounded-2xl flex items-center relative z-[10000] sticky top-0 shadow-2xl">
+                 <div class="glass-panel p-2 rounded-2xl flex items-center relative z-[100] sticky top-0 shadow-2xl">
                     <i data-lucide="search" class="ml-4 text-white/40 w-5 h-5"></i>
                     <input type="text" id="clock-search" placeholder="Search 100+ global cities (e.g., Tokyo, London, GMT)..." class="w-full bg-transparent border-none text-white p-4 focus:outline-none placeholder-white/20 text-lg">
                     <div id="search-results" class="absolute top-full left-0 right-0 mt-2 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl max-h-60 overflow-y-auto hidden custom-scrollbar"></div>
                 </div>
 
                 <div id="clock-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    <!-- Clocks Injected Here -->
+                    <!-- Clocks Injected via JS -->
                 </div>
             </div>
 
@@ -323,9 +320,9 @@
                         <div class="glass-card rounded-2xl p-6">
                              <h3 class="text-lg font-medium text-white/60 mb-4 flex items-center gap-2"><i data-lucide="arrow-right-left" class="w-5 h-5"></i> Universal Converter</h3>
                              <div class="flex gap-2 mb-4 overflow-x-auto pb-2 custom-scrollbar">
-                                 <button onclick="setConvMode('weight')" class="px-3 py-1 bg-white/10 rounded text-xs text-white hover:bg-white/20 whitespace-nowrap">Weight</button>
-                                 <button onclick="setConvMode('length')" class="px-3 py-1 bg-white/5 rounded text-xs text-white/50 hover:bg-white/20 whitespace-nowrap">Length</button>
-                                 <button onclick="setConvMode('temp')" class="px-3 py-1 bg-white/5 rounded text-xs text-white/50 hover:bg-white/20 whitespace-nowrap">Temp</button>
+                                 <button onclick="setConvMode('weight')" class="px-3 py-1 bg-white/10 rounded text-xs text-white hover:bg-white/20 whitespace-nowrap border border-white/10">Weight</button>
+                                 <button onclick="setConvMode('length')" class="px-3 py-1 bg-white/5 rounded text-xs text-white/50 hover:bg-white/20 whitespace-nowrap border border-white/5">Length</button>
+                                 <button onclick="setConvMode('temp')" class="px-3 py-1 bg-white/5 rounded text-xs text-white/50 hover:bg-white/20 whitespace-nowrap border border-white/5">Temp</button>
                              </div>
                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center relative">
                                  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-[#0f172a] rounded-full p-1 border border-white/10">
@@ -370,31 +367,6 @@
                          </div>
                      </div>
                  </div>
-
-                 <!-- Sun/Moon Data -->
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div class="glass-card rounded-2xl p-6">
-                         <div class="flex items-center gap-3 mb-4">
-                             <i data-lucide="sun" class="text-amber-400"></i>
-                             <h4 class="text-lg font-medium">Solar Cycle</h4>
-                         </div>
-                         <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-2">
-                             <div class="h-full bg-amber-400 w-3/4" id="sun-progress"></div>
-                         </div>
-                         <div class="flex justify-between text-xs text-white/40">
-                             <span>Sunrise: 06:12</span>
-                             <span>Sunset: 18:45</span>
-                         </div>
-                     </div>
-                     <div class="glass-card rounded-2xl p-6">
-                         <div class="flex items-center gap-3 mb-4">
-                             <i data-lucide="moon" class="text-purple-400"></i>
-                             <h4 class="text-lg font-medium">Lunar Phase</h4>
-                         </div>
-                         <div class="text-2xl font-light text-white mb-1">Waxing Gibbous</div>
-                         <div class="text-sm text-white/40">Illumination: 78%</div>
-                     </div>
-                 </div>
             </div>
 
             <!-- VIEW: SCIENCE (SEO CONTENT) -->
@@ -407,7 +379,7 @@
                             Time is the scaffolding of the universe, a dimension that dictates the rhythm of existence from the spin of an electron to the orbit of galaxies. In our modern digital era, the measurement of time—<strong>Chronometry</strong>—has evolved from sundials and water clocks to the hyper-precise oscillation of Cesium-133 atoms.
                         </p>
                         
-                        <div class="knowledge-panel p-6 my-8 rounded-r-xl">
+                        <div class="feature-panel p-6 my-8 rounded-r-xl">
                              <h4 class="text-white font-bold mb-2 flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-400"></i> Expert Insight</h4>
                              <p class="text-sm">Ideally, a second is defined as exactly 9,192,631,770 oscillations of a Cesium atom. However, gravity affects time (Time Dilation). A clock on Mount Everest runs slightly faster than a clock at sea level due to General Relativity.</p>
                         </div>
@@ -507,7 +479,6 @@
             initClock();
             initSearch();
             renderWorldClocks();
-            updateSunData();
             router('dashboard');
         });
 
@@ -533,23 +504,24 @@
                 'tools': 'Pro Utility Suite',
                 'wellness': 'Wellness Center',
                 'science': 'Horology Knowledge',
-                'legal': 'Legal Hub'
+                'legal': 'Legal & Privacy'
             };
             document.getElementById('page-title').innerText = titles[view] || 'GlassChronos';
             
             // Scroll Reset
-            document.querySelector('.custom-scrollbar').scrollTop = 0;
+            document.getElementById('main-scroll').scrollTop = 0;
         }
 
         // --- CLOCK ENGINE ---
         function initClock() {
             // Generate Markers
             const face = document.getElementById('clock-face');
+            face.innerHTML = ''; // Clean re-init
             for(let i=0; i<60; i++) {
                 const mark = document.createElement('div');
                 const isHour = i % 5 === 0;
                 mark.className = `absolute bg-white ${isHour ? 'w-0.5 h-3 opacity-90' : 'w-px h-1.5 opacity-30'}`;
-                // Correction: transform-origin is handled by CSS on the hand, markers just need placement
+                // CSS Transform fixes
                 mark.style.left = '50%';
                 mark.style.bottom = '50%';
                 mark.style.transformOrigin = 'bottom center';
@@ -781,14 +753,6 @@
                 }, 1000);
             }
         };
-
-        // --- SOLAR ---
-        function updateSunData() {
-            const now = new Date();
-            const h = now.getHours();
-            const pct = ((h + now.getMinutes()/60) / 24) * 100;
-            document.getElementById('sun-progress').style.width = `${pct}%`;
-        }
 
     </script>
 </body>
