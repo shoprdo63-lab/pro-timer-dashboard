@@ -21,7 +21,7 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
             </div>
             <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
                 <p className="text-lg">
-                    Welcome to <strong>Yclock</strong>, a premium digital utility suite engineered for precision, focus, and digital ethics.
+                    Welcome to <strong>Yclocktb</strong>, a premium digital utility suite engineered for precision, focus, and digital ethics.
                 </p>
                 <p>
                     In a digital landscape often cluttered with distractions and invasive tracking, we sought to build a sanctuary of utility. 
@@ -60,7 +60,7 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
               </div>
               <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
                   <p>
-                      Yclock leverages the latest capabilities of modern web browsers to deliver a native-app-like experience directly in your browser, without requiring any downloads.
+                      Yclocktb leverages the latest capabilities of modern web browsers to deliver a native-app-like experience directly in your browser, without requiring any downloads.
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -94,7 +94,7 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
               <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
                   <p className="text-sm opacity-50 uppercase tracking-widest border-b border-white/10 pb-4 mb-4">Last Updated: 2026</p>
                   <p>
-                      Your privacy is paramount. Unlike many free tools online, <strong>Yclock operates on a strict Zero-Data policy.</strong>
+                      Your privacy is paramount. Unlike many free tools online, <strong>Yclocktb operates on a strict Zero-Data policy.</strong>
                   </p>
                   
                   <section>
@@ -136,21 +136,21 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
               </div>
               <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
                   <p>
-                      By accessing and using Yclock, you agree to the following terms and conditions.
+                      By accessing and using Yclocktb, you agree to the following terms and conditions.
                   </p>
                   
                   <div className="space-y-8">
                       <div>
                         <h3 className="text-xl font-medium text-white mb-2">1. Usage License</h3>
                         <p>
-                            Yclock is free for personal, educational, and commercial use. You may use our timers and clocks for presentations, livestreams, or personal productivity without attribution, though it is appreciated.
+                            Yclocktb is free for personal, educational, and commercial use. You may use our timers and clocks for presentations, livestreams, or personal productivity without attribution, though it is appreciated.
                         </p>
                       </div>
 
                       <div>
                         <h3 className="text-xl font-medium text-white mb-2">2. Limitation of Liability</h3>
                         <p>
-                            <strong>The service is provided "as is".</strong> While we implement advanced drift-correction algorithms and fail-safes, Yclock is a web-based utility dependent on your browser version, battery status, and device hardware. We are not liable for any consequential damages resulting from missed alarms, timers, or scheduling errors (e.g., missed flights, medication times). For critical life-safety applications, please use dedicated hardware.
+                            <strong>The service is provided "as is".</strong> While we implement advanced drift-correction algorithms and fail-safes, Yclocktb is a web-based utility dependent on your browser version, battery status, and device hardware. We are not liable for any consequential damages resulting from missed alarms, timers, or scheduling errors (e.g., missed flights, medication times). For critical life-safety applications, please use dedicated hardware.
                         </p>
                       </div>
 
@@ -182,7 +182,9 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
                       <h3 className="text-xl font-medium text-white mb-2">Get in Touch</h3>
                       <div className="mb-8 flex flex-col items-center gap-2">
                          <p className="opacity-60">We aim to respond to all respectful inquiries within 24 hours.</p>
-                         <p className="text-sm bg-white/10 px-3 py-1 rounded-full text-white/90 font-medium">Please mention which website you are contacting us from.</p>
+                         <p className="text-sm bg-white/10 px-4 py-2 rounded-full text-white/90 font-bold border border-white/20">
+                             Important: Please mention you are contacting us from <span style={{ color: accentColor }}>Yclocktb</span> in your email.
+                         </p>
                       </div>
                       <a href="mailto:magic.reviewsite@gmail.com" className="text-xl md:text-3xl font-mono font-bold hover:opacity-80 transition-all select-all break-all" style={{ color: accentColor }}>
                           magic.reviewsite@gmail.com
@@ -207,7 +209,7 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
                                   <span className="transition-transform group-open:rotate-180 opacity-50">▼</span>
                               </summary>
                               <p className="mt-4 text-sm opacity-70 leading-relaxed border-t border-white/5 pt-4">
-                                  Yes, Yclock is 100% free. We built this as a clean, ethical alternative to ad-heavy timer sites.
+                                  Yes, Yclocktb is 100% free. We built this as a clean, ethical alternative to ad-heavy timer sites.
                               </p>
                           </details>
                       </div>

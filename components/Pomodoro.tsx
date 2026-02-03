@@ -65,12 +65,14 @@ export const Pomodoro: React.FC = () => {
         const totalSeconds = Math.floor(safeMs / 1000);
         const m = Math.floor(totalSeconds / 60);
         const s = totalSeconds % 60;
-        const msPart = Math.floor((safeMs % 1000) / 10); // 2 digits (centiseconds)
+        
+        // 3 digits for true milliseconds (000-999)
+        const msPart = safeMs % 1000;
 
         return (
             <>
                 {m.toString().padStart(2, '0')}:{s.toString().padStart(2, '0')}
-                <span className="text-[0.4em] opacity-50 font-medium ml-2">.{msPart.toString().padStart(2, '0')}</span>
+                <span className="text-[0.4em] opacity-50 font-medium ml-2">.{msPart.toString().padStart(3, '0')}</span>
             </>
         );
     };
