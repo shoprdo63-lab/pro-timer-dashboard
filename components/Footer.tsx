@@ -62,6 +62,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                         <h4 className="text-white font-medium mb-2 text-center md:text-left">Global Connectivity: The Future of Synchronicity in 2026</h4>
                         <p>As we move through 2026, the boundaries of physical office spaces continue to vanish. With developers in Tel Aviv collaborating in real-time with designers in San Francisco and managers in Dubai, a shared source of truth for time is the only thing keeping global projects on track. Yclocktb serves as your Global Synchronization Hub, ensuring you are perfectly aligned with the pulse of the world, regardless of your coordinates.</p>
                     </div>
+
+                    <div>
+                        <h4 className="text-white font-medium mb-2 text-center md:text-left">A Professional Commitment to Excellence</h4>
+                        <p>Yclocktb is more than just a website; it is a commitment to precision, ethics, and world-class design. We continuously refine our local algorithms to ensure the time displayed is the most accurate representation possible within a browser environment.</p>
+                    </div>
+
+                    <div className="pt-4 mt-4 border-t border-white/5">
+                        <p>Thank you for choosing Yclocktb as your trusted partner for daily time management and global synchronization. Experience the standard of excellence.</p>
+                    </div>
                 </div>
 
                 {/* CTA Button */}
