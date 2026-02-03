@@ -46,6 +46,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     setSelectedZones(selectedZones.filter(z => z.city !== city));
   };
 
+  // Pure logic: Native Intl API for time formatting without external dependencies
   const getZoneTime = (zoneStr: string) => {
     try {
       return new Intl.DateTimeFormat('en-US', {
@@ -60,6 +61,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     }
   };
 
+  // Pure logic: Native Intl API for date formatting
   const getZoneDate = (zoneStr: string) => {
      try {
       return new Intl.DateTimeFormat('en-US', {
@@ -73,9 +75,9 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     }
   }
 
+  // Pure logic: Reliable offset extraction using formatToParts
   const getOffset = (zoneStr: string) => {
     try {
-        // Use formatToParts for reliable extraction of the timezone offset
         const parts = new Intl.DateTimeFormat('en-US', {
             timeZone: zoneStr,
             timeZoneName: 'shortOffset'
@@ -88,7 +90,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     }
   }
 
-  // Analog Clock Helpers
+  // Pure logic: Calculate analog hand angles based on timezone components
   const getHandAngles = (zoneStr: string) => {
       try {
         const parts = new Intl.DateTimeFormat('en-US', {
