@@ -6,7 +6,7 @@ interface FooterProps {
     onNavigate?: (mode: AppMode) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
     return (
         <div className="w-full mt-12 pb-12 border-t border-white/10">
             {/* Navigation Links */}
@@ -96,4 +96,4 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
         </div>
     );
-};
+});

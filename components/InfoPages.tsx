@@ -7,7 +7,7 @@ interface InfoViewProps {
   theme?: Theme;
 }
 
-export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
+export const InfoView = React.memo<InfoViewProps>(({ mode, theme }) => {
   const accentColor = theme?.colors.accent || '#3b82f6';
 
   const renderContent = () => {
@@ -220,11 +220,4 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
       default:
         return null;
     }
-  };
-
-  return (
-    <div className="w-full h-full p-6 md:p-12 animate-in fade-in slide-in-from-bottom-4 duration-500 overflow-y-auto">
-        {renderContent()}
-    </div>
-  );
-};
+});

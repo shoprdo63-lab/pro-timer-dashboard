@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Layout } from './components/Layout';
-import { WorldClock } from './components/WorldClock';
-import { AlarmView, MathChallenge } from './components/Alarm';
-import { Timer } from './components/Timer';
-import { Stopwatch } from './components/Stopwatch';
-import { Pomodoro } from './components/Pomodoro';
-import { NightMode } from './components/NightMode';
-import { InfoView } from './components/InfoPages';
 import { AppMode, Alarm } from './types';
 import { playAlarmSound, stopAudio } from './utils/audioUtils';
 import { useWorkerTimer } from './hooks/useWorkerTimer';
 import { CLOCK_WORKER_CODE } from './constants';
+
+// Lazy load components for code splitting
+const WorldClock = lazy(() => import('./components/WorldClock').then(module => ({ default: module.WorldClock })));
+const AlarmView = lazy(() => import('./components/Alarm').then(module => ({ default: module.AlarmView })));
+const MathChallenge = lazy(() => import('./components/Alarm').then(module => ({ default: module.MathChallenge })));
+const Timer = lazy(() => import('./components/Timer').then(module => ({ default: module.Timer })));
+const Stopwatch = lazy(() => import('./components/Stopwatch').then(module => ({ default: module.Stopwatch })));
+const Pomodoro = lazy(() => import('./components/Pomodoro').then(module => ({ default: module.Pomodoro })));
+const NightMode = lazy(() => import('./components/NightMode').then(module => ({ default: module.NightMode })));
+const InfoView = lazy(() => import('./components/InfoPages').then(module => ({ default: module.InfoView })));
+
+// Loading Fallback
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center w-full h-full">
+    <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+  </div>
+);
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<AppMode>(AppMode.CLOCK);
@@ -19,12 +29,11 @@ const App: React.FC = () => {
   const [time, setTime] = useState(new Date());
 
   // Use the 1-second worker to drive the main clock and alarm checks
-  // This ensures checking happens even if the tab is throttled
   useWorkerTimer(true, () => {
     setTime(new Date());
   }, CLOCK_WORKER_CODE);
 
-  // Global Alarm Checker - Runs on every time update (driven by worker)
+  // Global Alarm Checker
   useEffect(() => {
     let currentAlarms: Alarm[] = [];
     try {
@@ -61,7 +70,6 @@ const App: React.FC = () => {
       stopAudio();
       clearInterval((window as any).alarmInterval);
       if (activeAlarm) {
-          // Implement snooze logic if needed (update storage)
           setActiveAlarm(null);
       }
   };
@@ -69,30 +77,35 @@ const App: React.FC = () => {
   return (
     <>
         {isNightMode ? (
-            <NightMode onExit={() => setIsNightMode(false)} time={time} />
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+                <NightMode onExit={() => setIsNightMode(false)} time={time} />
+            </Suspense>
         ) : (
             <Layout currentMode={mode} setMode={setMode} toggleNightMode={() => setIsNightMode(true)} time={time}>
-                {mode === AppMode.CLOCK && <WorldClock time={time} />}
-                {mode === AppMode.ALARM && <AlarmView onAlarmTrigger={setActiveAlarm} />}
-                {mode === AppMode.TIMER && <Timer />}
-                {mode === AppMode.STOPWATCH && <Stopwatch />}
-                {mode === AppMode.POMODORO && <Pomodoro />}
-                
-                {/* Info Pages */}
-                {(mode === AppMode.ABOUT || 
-                  mode === AppMode.HOW_IT_WORKS || 
-                  mode === AppMode.PRIVACY || 
-                  mode === AppMode.TERMS || 
-                  mode === AppMode.CONTACT) && <InfoView mode={mode} />}
+                <Suspense fallback={<LoadingSpinner />}>
+                    {mode === AppMode.CLOCK && <WorldClock time={time} />}
+                    {mode === AppMode.ALARM && <AlarmView onAlarmTrigger={setActiveAlarm} />}
+                    {mode === AppMode.TIMER && <Timer />}
+                    {mode === AppMode.STOPWATCH && <Stopwatch />}
+                    {mode === AppMode.POMODORO && <Pomodoro />}
+                    
+                    {(mode === AppMode.ABOUT || 
+                      mode === AppMode.HOW_IT_WORKS || 
+                      mode === AppMode.PRIVACY || 
+                      mode === AppMode.TERMS || 
+                      mode === AppMode.CONTACT) && <InfoView mode={mode} />}
+                </Suspense>
             </Layout>
         )}
 
         {activeAlarm && (
-            <MathChallenge 
-                onSolved={handleAlarmSolved} 
-                onSnooze={handleSnooze} 
-                difficulty={activeAlarm.difficulty}
-            />
+            <Suspense fallback={null}>
+                <MathChallenge 
+                    onSolved={handleAlarmSolved} 
+                    onSnooze={handleSnooze} 
+                    difficulty={activeAlarm.difficulty}
+                />
+            </Suspense>
         )}
     </>
   );
