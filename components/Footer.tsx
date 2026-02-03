@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     </p>
                 </div>
                 <div className="mt-8 text-xs text-white/20">
-                    &copy; {new Date().getFullYear()} Yclock Utility Suite. All rights reserved. Precision. Ethics. Design.
+                    &copy; 2026 Yclock Utility Suite. All rights reserved. Precision. Ethics. Design.
                 </div>
             </div>
         </div>

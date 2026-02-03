@@ -92,7 +92,7 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
                   <h2 className="text-3xl font-light">Privacy Policy</h2>
               </div>
               <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
-                  <p className="text-sm opacity-50 uppercase tracking-widest border-b border-white/10 pb-4 mb-4">Last Updated: 2024</p>
+                  <p className="text-sm opacity-50 uppercase tracking-widest border-b border-white/10 pb-4 mb-4">Last Updated: 2026</p>
                   <p>
                       Your privacy is paramount. Unlike many free tools online, <strong>Yclock operates on a strict Zero-Data policy.</strong>
                   </p>
