@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Play, Pause, Coffee, Briefcase } from 'lucide-react';
 import { useWorkerTimer } from '../hooks/useWorkerTimer';
 import { playAlarmSound } from '../utils/audioUtils';
-import { CLOCK_WORKER_CODE } from '../constants';
+import { PRECISION_WORKER_CODE } from '../constants';
 
 export const Pomodoro: React.FC = () => {
     const WORK_TIME = 25 * 60 * 1000;
@@ -16,8 +16,7 @@ export const Pomodoro: React.FC = () => {
     // High-precision refs for drift-free timing
     const endTimeRef = useRef<number | null>(null);
 
-    // Use 1Hz worker for standard countdown but calculate against a fixed end time
-    // This ensures that even if the thread lags, the time remains accurate to the wall clock
+    // Use Precision worker (approx 60fps) to animate milliseconds smoothly
     useWorkerTimer(isRunning, () => {
         if (endTimeRef.current) {
             const now = Date.now();
@@ -35,7 +34,7 @@ export const Pomodoro: React.FC = () => {
                 setTimeLeft(diff);
             }
         }
-    }, CLOCK_WORKER_CODE);
+    }, PRECISION_WORKER_CODE);
 
     const toggle = () => {
         if (isRunning) {
@@ -60,10 +59,20 @@ export const Pomodoro: React.FC = () => {
 
     const format = (ms: number) => {
         // Round up to ensure 00:01 stays visible until the very last millisecond
-        const totalSeconds = Math.ceil(ms / 1000);
+        // We use Math.max(0, ...) to prevent negative display right at the end
+        const safeMs = Math.max(0, ms);
+        
+        const totalSeconds = Math.floor(safeMs / 1000);
         const m = Math.floor(totalSeconds / 60);
         const s = totalSeconds % 60;
-        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        const msPart = Math.floor((safeMs % 1000) / 10); // 2 digits (centiseconds)
+
+        return (
+            <>
+                {m.toString().padStart(2, '0')}:{s.toString().padStart(2, '0')}
+                <span className="text-[0.4em] opacity-50 font-medium ml-2">.{msPart.toString().padStart(2, '0')}</span>
+            </>
+        );
     };
 
     return (
@@ -97,7 +106,7 @@ export const Pomodoro: React.FC = () => {
                 {/* Timer Display */}
                 <div className="relative group cursor-pointer" onClick={toggle}>
                     <div className={`absolute inset-0 bg-gradient-to-tr ${mode === 'work' ? 'from-pink-500/20 to-violet-500/20' : 'from-green-500/20 to-teal-500/20'} rounded-full blur-3xl transition-all duration-1000 animate-pulse-slow`}></div>
-                    <div className="relative text-[10rem] font-thin font-mono leading-none tracking-tighter text-white drop-shadow-2xl select-none">
+                    <div className="relative text-7xl md:text-9xl font-thin font-mono leading-none tracking-tighter text-white drop-shadow-2xl select-none tabular-nums flex items-baseline justify-center">
                         {format(timeLeft)}
                     </div>
                 </div>

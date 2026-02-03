@@ -180,7 +180,10 @@ export const InfoView: React.FC<InfoViewProps> = ({ mode, theme }) => {
                       <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       <Mail className="w-12 h-12 mb-6 opacity-80" style={{ color: accentColor }} />
                       <h3 className="text-xl font-medium text-white mb-2">Get in Touch</h3>
-                      <p className="mb-8 opacity-60">We aim to respond to all respectful inquiries within 24 hours.</p>
+                      <div className="mb-8 flex flex-col items-center gap-2">
+                         <p className="opacity-60">We aim to respond to all respectful inquiries within 24 hours.</p>
+                         <p className="text-sm bg-white/10 px-3 py-1 rounded-full text-white/90 font-medium">Please mention which website you are contacting us from.</p>
+                      </div>
                       <a href="mailto:magic.reviewsite@gmail.com" className="text-xl md:text-3xl font-mono font-bold hover:opacity-80 transition-all select-all break-all" style={{ color: accentColor }}>
                           magic.reviewsite@gmail.com
                       </a>
