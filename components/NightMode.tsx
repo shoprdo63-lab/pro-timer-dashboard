@@ -33,7 +33,7 @@ export const NightMode: React.FC<NightModeProps> = ({ onExit, time }) => {
                 </div>
                 {!dimmed && (
                     <div className="text-white/40 text-2xl mt-4 font-light uppercase tracking-[0.5em]">
-                        {time.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+                        {time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                     </div>
                 )}
             </div>

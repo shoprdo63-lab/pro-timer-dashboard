@@ -88,7 +88,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
           {/* Header Bar */}
           <div className="h-16 flex justify-between items-center px-6 md:px-10 shrink-0">
              <div className="text-sm font-medium opacity-60">
-                {time.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+                {time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
              </div>
              <div className="md:hidden flex items-center space-x-4">
                 <button onClick={() => {
