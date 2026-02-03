@@ -62,13 +62,12 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
 
   const getZoneDate = (zoneStr: string) => {
      try {
-      const formatter = new Intl.DateTimeFormat('en-US', {
+      return new Intl.DateTimeFormat('en-US', {
         timeZone: zoneStr,
         weekday: 'short',
         month: 'short',
         day: 'numeric'
-      });
-      return formatter.format(time);
+      }).format(time);
     } catch (e) {
       return "";
     }
@@ -76,9 +75,14 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
 
   const getOffset = (zoneStr: string) => {
     try {
-        const dateString = time.toLocaleString('en-US', { timeZone: zoneStr, timeZoneName: 'shortOffset' });
-        const parts = dateString.split(' ');
-        return parts[parts.length - 1];
+        // Use formatToParts for reliable extraction of the timezone offset
+        const parts = new Intl.DateTimeFormat('en-US', {
+            timeZone: zoneStr,
+            timeZoneName: 'shortOffset'
+        }).formatToParts(time);
+        
+        const offsetPart = parts.find(p => p.type === 'timeZoneName');
+        return offsetPart ? offsetPart.value : "";
     } catch (e) {
         return "";
     }
@@ -93,9 +97,9 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
             hour12: false
         }).formatToParts(time);
         
-        const h = parseInt(parts.find(p => p.type === 'hour')?.value || '0');
-        const m = parseInt(parts.find(p => p.type === 'minute')?.value || '0');
-        const s = parseInt(parts.find(p => p.type === 'second')?.value || '0');
+        const h = parseInt(parts.find(p => p.type === 'hour')?.value || '0', 10);
+        const m = parseInt(parts.find(p => p.type === 'minute')?.value || '0', 10);
+        const s = parseInt(parts.find(p => p.type === 'second')?.value || '0', 10);
         
         const sAngle = (s / 60) * 360;
         const mAngle = ((m + s/60) / 60) * 360;
