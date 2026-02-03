@@ -121,7 +121,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
                 </div>
 
                 {/* Footer */}
-                <Footer />
+                <Footer onNavigate={setMode} />
              </div>
           </div>
       </main>

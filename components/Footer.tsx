@@ -1,10 +1,26 @@
 import React from 'react';
+import { AppMode } from '../types';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+    onNavigate?: (mode: AppMode) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     return (
         <div className="w-full mt-12 pb-12 border-t border-white/10">
+            {/* Navigation Links */}
+            {onNavigate && (
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-8 pt-8 text-sm font-medium text-white/50">
+                    <button onClick={() => onNavigate(AppMode.ABOUT)} className="hover:text-white transition-colors">About Us</button>
+                    <button onClick={() => onNavigate(AppMode.HOW_IT_WORKS)} className="hover:text-white transition-colors">How It Works</button>
+                    <button onClick={() => onNavigate(AppMode.PRIVACY)} className="hover:text-white transition-colors">Privacy Policy</button>
+                    <button onClick={() => onNavigate(AppMode.TERMS)} className="hover:text-white transition-colors">Terms of Service</button>
+                    <button onClick={() => onNavigate(AppMode.CONTACT)} className="hover:text-white transition-colors">Contact Support</button>
+                </div>
+            )}
+
             {/* SEO & Authority Section */}
-            <div className="px-6 md:px-10 max-w-5xl mx-auto text-center pt-12">
+            <div className="px-6 md:px-10 max-w-5xl mx-auto text-center">
                 <h3 className="text-2xl font-light text-white mb-6">Precision Timekeeping & Global Synchronization</h3>
                 <div className="text-sm text-white/40 space-y-4 leading-relaxed text-justify md:text-center columns-1 md:columns-2 gap-8">
                     <p>

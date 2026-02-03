@@ -4,6 +4,12 @@ export enum AppMode {
   TIMER = 'TIMER',
   STOPWATCH = 'STOPWATCH',
   POMODORO = 'POMODORO',
+  // Info Pages
+  ABOUT = 'ABOUT',
+  HOW_IT_WORKS = 'HOW_IT_WORKS',
+  PRIVACY = 'PRIVACY',
+  TERMS = 'TERMS',
+  CONTACT = 'CONTACT'
 }
 
 export interface TimeZone {

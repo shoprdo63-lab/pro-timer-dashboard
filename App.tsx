@@ -6,6 +6,7 @@ import { Timer } from './components/Timer';
 import { Stopwatch } from './components/Stopwatch';
 import { Pomodoro } from './components/Pomodoro';
 import { NightMode } from './components/NightMode';
+import { InfoView } from './components/InfoPages';
 import { AppMode, Alarm } from './types';
 import { playAlarmSound, stopAudio } from './utils/audioUtils';
 import { useWorkerTimer } from './hooks/useWorkerTimer';
@@ -76,6 +77,13 @@ const App: React.FC = () => {
                 {mode === AppMode.TIMER && <Timer />}
                 {mode === AppMode.STOPWATCH && <Stopwatch />}
                 {mode === AppMode.POMODORO && <Pomodoro />}
+                
+                {/* Info Pages */}
+                {(mode === AppMode.ABOUT || 
+                  mode === AppMode.HOW_IT_WORKS || 
+                  mode === AppMode.PRIVACY || 
+                  mode === AppMode.TERMS || 
+                  mode === AppMode.CONTACT) && <InfoView mode={mode} />}
             </Layout>
         )}
 
