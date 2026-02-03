@@ -46,7 +46,8 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     setSelectedZones(selectedZones.filter(z => z.city !== city));
   };
 
-  // Pure logic: Native Intl API for time formatting without external dependencies
+  // Logic: Use native Intl.DateTimeFormat for zero-latency, client-side time calculation.
+  // This removes any dependency on external APIs.
   const getZoneTime = (zoneStr: string) => {
     try {
       return new Intl.DateTimeFormat('en-US', {
@@ -61,7 +62,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     }
   };
 
-  // Pure logic: Native Intl API for date formatting
+  // Logic: Use native Intl for Date string
   const getZoneDate = (zoneStr: string) => {
      try {
       return new Intl.DateTimeFormat('en-US', {
@@ -75,7 +76,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     }
   }
 
-  // Pure logic: Reliable offset extraction using formatToParts
+  // Logic: Use formatToParts to accurately extract the GMT offset from the locale data
   const getOffset = (zoneStr: string) => {
     try {
         const parts = new Intl.DateTimeFormat('en-US', {
@@ -90,7 +91,7 @@ export const WorldClock: React.FC<WorldClockProps> = ({ theme, time = new Date()
     }
   }
 
-  // Pure logic: Calculate analog hand angles based on timezone components
+  // Logic: Mathematical calculation of hand angles based on localized time components
   const getHandAngles = (zoneStr: string) => {
       try {
         const parts = new Intl.DateTimeFormat('en-US', {

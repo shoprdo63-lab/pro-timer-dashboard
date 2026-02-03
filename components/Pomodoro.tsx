@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, Coffee, Briefcase } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Play, Pause, Coffee, Briefcase } from 'lucide-react';
 import { useWorkerTimer } from '../hooks/useWorkerTimer';
 import { playAlarmSound } from '../utils/audioUtils';
 import { CLOCK_WORKER_CODE } from '../constants';
@@ -13,30 +13,56 @@ export const Pomodoro: React.FC = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [cycleCount, setCycleCount] = useState(0);
 
-    // Use 1Hz worker for standard countdown
+    // High-precision refs for drift-free timing
+    const endTimeRef = useRef<number | null>(null);
+
+    // Use 1Hz worker for standard countdown but calculate against a fixed end time
+    // This ensures that even if the thread lags, the time remains accurate to the wall clock
     useWorkerTimer(isRunning, () => {
-        setTimeLeft(prev => {
-            if (prev <= 1000) {
+        if (endTimeRef.current) {
+            const now = Date.now();
+            const diff = endTimeRef.current - now;
+            
+            if (diff <= 0) {
+                // Timer finished
+                setTimeLeft(0);
                 setIsRunning(false);
+                endTimeRef.current = null;
                 playAlarmSound('cosmic');
                 if (mode === 'work') setCycleCount(c => (c + 1) % 5);
-                return 0;
+            } else {
+                // Update display
+                setTimeLeft(diff);
             }
-            return prev - 1000;
-        });
+        }
     }, CLOCK_WORKER_CODE);
 
-    const toggle = () => setIsRunning(!isRunning);
+    const toggle = () => {
+        if (isRunning) {
+            // Pause: Clear the target end time
+            setIsRunning(false);
+            endTimeRef.current = null;
+        } else {
+            // Start: Calculate target end time based on current remaining duration
+            // This prevents drift by locking the end time to a specific timestamp
+            const duration = timeLeft > 0 ? timeLeft : (mode === 'work' ? WORK_TIME : BREAK_TIME);
+            endTimeRef.current = Date.now() + duration;
+            setIsRunning(true);
+        }
+    };
     
     const switchMode = (newMode: 'work' | 'break') => {
         setIsRunning(false);
+        endTimeRef.current = null;
         setMode(newMode);
         setTimeLeft(newMode === 'work' ? WORK_TIME : BREAK_TIME);
     };
 
     const format = (ms: number) => {
-        const m = Math.floor(ms / 60000);
-        const s = Math.floor((ms % 60000) / 1000);
+        // Round up to ensure 00:01 stays visible until the very last millisecond
+        const totalSeconds = Math.ceil(ms / 1000);
+        const m = Math.floor(totalSeconds / 60);
+        const s = totalSeconds % 60;
         return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     };
 
