@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Coffee, Briefcase } from 'lucide-react';
 import { useWorkerTimer } from '../hooks/useWorkerTimer';
 import { playAlarmSound } from '../utils/audioUtils';
-import { PRECISION_WORKER_CODE } from '../constants';
+import { CLOCK_WORKER_CODE } from '../constants';
 
 export const Pomodoro: React.FC = () => {
     const WORK_TIME = 25 * 60 * 1000;
@@ -13,16 +13,18 @@ export const Pomodoro: React.FC = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [cycleCount, setCycleCount] = useState(0);
 
+    // Use 1Hz worker for standard countdown
     useWorkerTimer(isRunning, () => {
         setTimeLeft(prev => {
-            if (prev <= 0) {
+            if (prev <= 1000) {
                 setIsRunning(false);
                 playAlarmSound('cosmic');
+                if (mode === 'work') setCycleCount(c => (c + 1) % 5);
                 return 0;
             }
             return prev - 1000;
         });
-    }, PRECISION_WORKER_CODE);
+    }, CLOCK_WORKER_CODE);
 
     const toggle = () => setIsRunning(!isRunning);
     
