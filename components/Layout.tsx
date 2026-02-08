@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette, Sparkles } from 'lucide-react';
 import { AppMode, Theme } from '../types';
 import { MASTER_DATA } from '../constants';
 import { Footer } from './Footer';
+import { GoogleGenAI } from "@google/genai";
 
 interface LayoutProps {
   currentMode: AppMode;
@@ -12,9 +13,45 @@ interface LayoutProps {
   time: Date;
 }
 
+const SyncAIInsight: React.FC<{ mode: AppMode; time: Date }> = ({ mode, time }) => {
+  const [insight, setInsight] = useState<string>("Synchronizing with global time nodes...");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchInsight = async () => {
+      setLoading(true);
+      try {
+        const ai = new GoogleGenAI({ apiKey: (process.env as any).API_KEY });
+        const prompt = `Act as a world-class productivity expert. Provide a 1-sentence elite time-management or synchronization insight for a user currently using ${mode} mode at ${time.toLocaleTimeString()}. Keep it professional, authoritative, and slightly futuristic. Do not use quotes.`;
+        const response = await ai.models.generateContent({
+          model: 'gemini-3-flash-preview',
+          contents: prompt,
+        });
+        setInsight(response.text || "Precision is the foundation of excellence.");
+      } catch (e) {
+        setInsight("Your time is your most valuable asset.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInsight();
+    const interval = setInterval(fetchInsight, 300000); // Update every 5 mins
+    return () => clearInterval(interval);
+  }, [mode]);
+
+  return (
+    <div className="flex items-center space-x-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 backdrop-blur-md animate-in fade-in slide-in-from-right-4">
+      <Sparkles className={`w-3 h-3 text-blue-400 ${loading ? 'animate-pulse' : ''}`} />
+      <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-white/60 truncate max-w-[200px] md:max-w-md">
+        {insight}
+      </span>
+    </div>
+  );
+};
+
 export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNightMode, children, time }) => {
   const [currentThemeId, setCurrentThemeId] = useState(MASTER_DATA.THEMES[0].id);
-
   const activeTheme = MASTER_DATA.THEMES.find(t => t.id === currentThemeId) || MASTER_DATA.THEMES[0];
 
   const navItems = [
@@ -27,33 +64,34 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
 
   return (
     <div 
-        className="w-full h-screen text-white overflow-hidden flex flex-col md:flex-row transition-colors duration-700"
-        style={{ background: activeTheme.colors.bgGradient, color: activeTheme.colors.textMain }}
+        className="w-full h-screen text-white overflow-hidden flex flex-col md:flex-row transition-all duration-1000 mesh-bg"
+        style={{ background: activeTheme.colors.bgGradient }}
     >
-      {/* Sidebar / Bottom Nav */}
+      {/* Sidebar - Premium Style */}
       <nav 
-        className="md:w-24 w-full md:h-full h-20 md:flex-col flex-row flex items-center justify-between md:justify-center md:space-y-8 p-4 shrink-0 z-20 backdrop-blur-xl border-r border-white/10"
-        style={{ background: activeTheme.colors.glassPanel }}
+        className="md:w-24 w-full md:h-full h-20 md:flex-col flex-row flex items-center justify-between md:justify-center md:space-y-12 p-4 shrink-0 z-20 glass-premium border-r border-white/5"
       >
-         <div className="hidden md:block mb-auto mt-4 font-bold text-xl tracking-tighter" style={{ color: activeTheme.colors.accent }}>
-            YC
+         <div className="hidden md:flex flex-col items-center mb-auto mt-4 font-bold text-2xl tracking-tighter group cursor-pointer" onClick={() => setMode(AppMode.CLOCK)}>
+            <div className="w-10 h-10 rounded-full border-2 border-blue-500/50 flex items-center justify-center group-hover:border-blue-400 transition-colors">
+                <span className="text-sm font-light">YC</span>
+            </div>
          </div>
          
-         <div className="flex md:flex-col flex-row w-full justify-around md:justify-center md:space-y-8">
+         <div className="flex md:flex-col flex-row w-full justify-around md:justify-center md:space-y-6">
             {navItems.map((item) => {
                 const isActive = currentMode === item.mode;
                 return (
                     <button 
                         key={item.mode}
                         onClick={() => setMode(item.mode)}
-                        className={`group relative p-3 rounded-xl transition-all duration-300 ${isActive ? 'shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'hover:bg-white/10'}`}
+                        className={`group relative p-3.5 rounded-2xl transition-all duration-500 ${isActive ? 'shadow-[0_0_30px_rgba(59,130,246,0.4)] scale-110' : 'hover:bg-white/5 hover:scale-105'}`}
                         style={{ 
                             backgroundColor: isActive ? activeTheme.colors.accent : 'transparent',
-                            color: isActive ? '#fff' : activeTheme.colors.textDim
+                            color: isActive ? '#fff' : 'rgba(255,255,255,0.4)'
                         }}
                     >
-                        <item.icon className="w-6 h-6" />
-                        <span className="absolute left-14 bg-black/50 backdrop-blur px-2 py-1 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity hidden md:block pointer-events-none whitespace-nowrap z-50">
+                        <item.icon className={`w-5 h-5 ${isActive ? 'drop-shadow-sm' : ''}`} />
+                        <span className="absolute left-16 bg-slate-900 border border-white/10 px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-all hidden md:block pointer-events-none whitespace-nowrap z-50 translate-x-[-10px] group-hover:translate-x-0">
                             {item.label}
                         </span>
                     </button>
@@ -61,67 +99,65 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
             })}
          </div>
 
-         <div className="hidden md:flex flex-col mt-auto space-y-4 items-center">
-            {/* Theme Toggle */}
-            <div className="flex flex-col space-y-2 mb-4 max-h-[200px] overflow-y-auto custom-scrollbar px-1 py-2">
-                {MASTER_DATA.THEMES.map(theme => (
+         <div className="hidden md:flex flex-col mt-auto space-y-6 items-center pb-4">
+            <div className="flex flex-col space-y-3 px-1 py-4 border-t border-white/10">
+                {MASTER_DATA.THEMES.slice(0, 5).map(theme => (
                     <button
                         key={theme.id}
                         onClick={() => setCurrentThemeId(theme.id)}
-                        className={`w-4 h-4 rounded-full border border-white/20 transition-transform ${currentThemeId === theme.id ? 'scale-125 ring-2 ring-white/50' : 'hover:scale-110'}`}
-                        style={{ 
-                            background: theme.previewColor
-                        }}
+                        className={`w-3 h-3 rounded-full border border-white/20 transition-all duration-300 ${currentThemeId === theme.id ? 'scale-150 ring-4 ring-white/10' : 'hover:scale-125 opacity-40 hover:opacity-100'}`}
+                        style={{ background: theme.previewColor }}
                         title={theme.name}
                     />
                 ))}
             </div>
 
-            <button onClick={toggleNightMode} className="p-3 text-white/40 hover:text-white hover:bg-white/10 rounded-xl transition-all">
-                <Moon className="w-6 h-6" />
+            <button onClick={toggleNightMode} className="p-3 text-white/20 hover:text-white transition-colors">
+                <Moon className="w-5 h-5" />
             </button>
          </div>
       </nav>
 
       {/* Main Content Area */}
       <main className="flex-1 relative overflow-hidden flex flex-col">
-          {/* Header Bar */}
-          <div className="h-16 flex justify-between items-center px-6 md:px-10 shrink-0">
-             <div className="text-sm font-medium opacity-60">
-                {time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+          {/* Header Bar - World Class Finish */}
+          <div className="h-20 flex justify-between items-center px-6 md:px-12 shrink-0 z-30">
+             <div className="flex flex-col">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-1">Current Sync</span>
+                <div className="text-sm font-light text-white/60">
+                    {time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                </div>
              </div>
-             <div className="md:hidden flex items-center space-x-4">
-                <button onClick={() => {
-                    const idx = MASTER_DATA.THEMES.findIndex(t => t.id === currentThemeId);
-                    const next = MASTER_DATA.THEMES[(idx + 1) % MASTER_DATA.THEMES.length];
-                    setCurrentThemeId(next.id);
-                }} className="p-2 opacity-60">
-                    <Palette className="w-5 h-5" />
-                </button>
-                <button onClick={toggleNightMode} className="p-2 opacity-60">
-                    <Moon className="w-5 h-5" />
-                </button>
+             
+             <div className="flex items-center space-x-6">
+                <SyncAIInsight mode={currentMode} time={time} />
+                <div className="md:hidden flex items-center space-x-4">
+                    <button onClick={toggleNightMode} className="p-2 opacity-60">
+                        <Moon className="w-5 h-5" />
+                    </button>
+                </div>
              </div>
           </div>
 
-          {/* Dynamic Content + Footer (Scrollable Container) */}
-          <div className="flex-1 overflow-hidden relative p-4 md:p-8">
+          {/* Dynamic Content + Footer */}
+          <div className="flex-1 overflow-hidden relative p-4 md:p-10 md:pt-0">
              <div 
-                className="w-full h-full rounded-3xl overflow-y-auto shadow-2xl relative transition-colors duration-700 custom-scrollbar flex flex-col"
-                style={{ background: activeTheme.colors.glassPanel, borderColor: 'rgba(255,255,255,0.1)', borderWidth: '1px', borderStyle: 'solid' }}
+                className="w-full h-full rounded-[40px] overflow-hidden shadow-2xl relative transition-all duration-1000 glass-premium flex flex-col group"
              >
-                {/* View Content */}
-                <div className="flex-shrink-0 min-h-[calc(100%-80px)]">
-                    {React.Children.map(children, child => {
-                        if (React.isValidElement(child)) {
-                            return React.cloneElement(child as React.ReactElement<any>, { theme: activeTheme, time });
-                        }
-                        return child;
-                    })}
+                {/* Scrollable Inner container */}
+                <div className="flex-1 overflow-y-auto custom-scrollbar">
+                    <div className="min-h-full flex flex-col">
+                        <div className="flex-1">
+                            {React.Children.map(children, child => {
+                                if (React.isValidElement(child)) {
+                                    return React.cloneElement(child as React.ReactElement<any>, { theme: activeTheme, time });
+                                }
+                                return child;
+                            })}
+                        </div>
+                        <Footer onNavigate={setMode} />
+                    </div>
                 </div>
-
-                {/* Footer */}
-                <Footer onNavigate={setMode} />
              </div>
           </div>
       </main>
