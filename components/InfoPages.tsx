@@ -66,7 +66,7 @@ export const InfoView = React.memo<InfoViewProps>(({ mode, theme }) => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                       <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
                           <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                             <span className="w-2 h-2 rounded-full bg-green-400"></span> Web Workers
+                             <span className="w-2 h-2 rounded-full bg-blue-400"></span> Web Workers
                           </h3>
                           <p className="text-sm opacity-70">
                               Standard websites often pause or "throttle" when you switch tabs to save battery, causing timers to drift. We utilize independent "Web Worker" threads that run in the background, ensuring your stopwatch and timer stay accurate to the millisecond, even when the tab is hidden or minimized.
@@ -220,4 +220,11 @@ export const InfoView = React.memo<InfoViewProps>(({ mode, theme }) => {
       default:
         return null;
     }
+  };
+
+  return (
+    <div className="flex flex-col w-full p-6 animate-in fade-in duration-500">
+      {renderContent()}
+    </div>
+  );
 });
