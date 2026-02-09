@@ -42,11 +42,16 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         </div>
                         <h3 className="text-2xl font-medium text-white mb-4 leading-tight">Neural Intervals: Why The Pomodoro Technique Reshapes Focus</h3>
                         <p className="text-white/50 text-sm leading-relaxed mb-6">
-                            Human cognitive architecture is not designed for indefinite concentration. Recent studies in neurobiology suggest that the "focus muscle" experiences fatigue similar to physical exertion. The structured 25-minute interval—pioneered by productivity scientists—aligns perfectly with the brain's natural alertness cycles. By implementing strict rest periods, users can maintain a high-beta wave state for significantly longer durations, bypassing the typical afternoon cognitive slump.
+                            Human cognitive architecture is not designed for indefinite concentration. Recent studies in neurobiology suggest that the "focus muscle" experiences fatigue similar to physical exertion. The structured 25-minute interval...
                         </p>
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 6 mins</span>
-                            <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                            <button 
+                                onClick={() => onNavigate?.(AppMode.BLOG_FOCUS)}
+                                className="text-blue-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                            >
+                                Explore Analysis →
+                            </button>
                         </div>
                     </article>
 
@@ -60,11 +65,16 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         </div>
                         <h3 className="text-2xl font-medium text-white mb-4 leading-tight">The Physics of Synchronization in a Decentralized World</h3>
                         <p className="text-white/50 text-sm leading-relaxed mb-6">
-                            In a globalized economy, time zones are no longer just geographic markers; they are the protocol for international trade. Synchronization across UTC, EST, and JST allows for the seamless execution of high-frequency trading, logistical routing, and distributed software development. Precision at the browser level ensures that every participant in a global network is operating on a unified "source of truth," reducing the risk of temporal drift that can lead to multi-million dollar discrepancies.
+                            In a globalized economy, time zones are no longer just geographic markers; they are the protocol for international trade. Synchronization across UTC, EST, and JST allows for the seamless execution...
                         </p>
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 8 mins</span>
-                            <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                            <button 
+                                onClick={() => onNavigate?.(AppMode.BLOG_SYNC)}
+                                className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                            >
+                                Explore Analysis →
+                            </button>
                         </div>
                     </article>
 
@@ -78,11 +88,16 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         </div>
                         <h3 className="text-2xl font-medium text-white mb-4 leading-tight">The Privacy Imperative: Why Client-Side Utility Matters</h3>
                         <p className="text-white/50 text-sm leading-relaxed mb-6">
-                            Privacy is often sacrificed for convenience in modern web applications. However, professional utilities do not require centralized tracking to function. By keeping all calculations, alarm triggers, and configuration data strictly within the local environment (Local Storage), we eliminate the vulnerability window associated with server-side data leaks. Sovereignty over one's own data is the fundamental ethical standard for the next generation of web tools.
+                            Privacy is often sacrificed for convenience in modern web applications. However, professional utilities do not require centralized tracking to function. By keeping all calculations local...
                         </p>
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 5 mins</span>
-                            <span className="text-amber-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                            <button 
+                                onClick={() => onNavigate?.(AppMode.BLOG_PRIVACY)}
+                                className="text-amber-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                            >
+                                Explore Analysis →
+                            </button>
                         </div>
                     </article>
 
@@ -96,11 +111,16 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         </div>
                         <h3 className="text-2xl font-medium text-white mb-4 leading-tight">Aesthetic Minimalism as a Tool for Cognitive Reduction</h3>
                         <p className="text-white/50 text-sm leading-relaxed mb-6">
-                            Visual noise directly impacts decision-making speed. Glassmorphism is more than a design trend; it is an exercise in visual hierarchy. By using transparency and depth, we allow the user's focus to rest naturally on the primary temporal data without the interference of heavy borders or solid backgrounds. This design philosophy significantly lowers the "interaction cost" of a utility, making it an invisible yet powerful part of the professional workspace.
+                            Visual noise directly impacts decision-making speed. Glassmorphism is more than a design trend; it is an exercise in visual hierarchy. By using transparency and depth, we allow focus...
                         </p>
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 7 mins</span>
-                            <span className="text-purple-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                            <button 
+                                onClick={() => onNavigate?.(AppMode.BLOG_AESTHETICS)}
+                                className="text-purple-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                            >
+                                Explore Analysis →
+                            </button>
                         </div>
                     </article>
                 </div>

@@ -74,6 +74,18 @@ const App: React.FC = () => {
       }
   };
 
+  const isInfoMode = [
+    AppMode.ABOUT, 
+    AppMode.HOW_IT_WORKS, 
+    AppMode.PRIVACY, 
+    AppMode.TERMS, 
+    AppMode.CONTACT,
+    AppMode.BLOG_FOCUS,
+    AppMode.BLOG_SYNC,
+    AppMode.BLOG_PRIVACY,
+    AppMode.BLOG_AESTHETICS
+  ].includes(mode);
+
   return (
     <>
         {isNightMode ? (
@@ -89,11 +101,7 @@ const App: React.FC = () => {
                     {mode === AppMode.STOPWATCH && <Stopwatch />}
                     {mode === AppMode.POMODORO && <Pomodoro />}
                     
-                    {(mode === AppMode.ABOUT || 
-                      mode === AppMode.HOW_IT_WORKS || 
-                      mode === AppMode.PRIVACY || 
-                      mode === AppMode.TERMS || 
-                      mode === AppMode.CONTACT) && <InfoView mode={mode} />}
+                    {isInfoMode && <InfoView mode={mode} />}
                 </Suspense>
             </Layout>
         )}

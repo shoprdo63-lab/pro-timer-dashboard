@@ -9,7 +9,12 @@ export enum AppMode {
   HOW_IT_WORKS = 'HOW_IT_WORKS',
   PRIVACY = 'PRIVACY',
   TERMS = 'TERMS',
-  CONTACT = 'CONTACT'
+  CONTACT = 'CONTACT',
+  // Research Articles
+  BLOG_FOCUS = 'BLOG_FOCUS',
+  BLOG_SYNC = 'BLOG_SYNC',
+  BLOG_PRIVACY = 'BLOG_PRIVACY',
+  BLOG_AESTHETICS = 'BLOG_AESTHETICS'
 }
 
 export interface TimeZone {
