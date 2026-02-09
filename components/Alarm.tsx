@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Bell, Check, X, Calculator, Brain } from 'lucide-react';
+import { Plus, Trash2, Bell, Check, X, Calculator, Brain, Clock } from 'lucide-react';
 import { Alarm, Theme, MathDifficultyLevel } from '../types';
 import { MASTER_DATA } from '../constants';
 
@@ -12,9 +12,8 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
   const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [isCreating, setIsCreating] = useState(false);
   
-  // New Alarm State
   const [newTime, setNewTime] = useState("07:00");
-  const [newLabel, setNewLabel] = useState("Wake up");
+  const [newLabel, setNewLabel] = useState("Focus session");
   const [newSound, setNewSound] = useState(MASTER_DATA.ALARM_SOUNDS[0].id);
   const [newDifficulty, setNewDifficulty] = useState<MathDifficultyLevel>('Medium');
 
@@ -56,70 +55,67 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
   const accentColor = theme?.colors.accent || '#3b82f6';
 
   return (
-    <div className="flex flex-col w-full p-6 space-y-6">
-        <header className="flex justify-between items-center shrink-0">
+    <div className="flex flex-col space-y-8">
+        <header className="flex justify-between items-end shrink-0">
              <div>
-                <h2 className="text-3xl font-light tracking-tight">Alarm</h2>
-                <p className="opacity-40 text-sm mt-1">Smart wake-up</p>
+                <h2 className="text-4xl font-light tracking-tight text-white">Alarm</h2>
+                <p className="opacity-40 text-sm mt-2 tracking-widest uppercase">Cognitive-Barrier Wake System</p>
             </div>
             <button 
-                onClick={() => setIsCreating(true)}
-                className="p-3 rounded-full hover:bg-white/10 transition-all border border-white/10 backdrop-blur-md"
+                onClick={() => setIsCreating(!isCreating)}
+                className="flex items-center space-x-3 px-6 py-3 rounded-full transition-all border border-white/10 backdrop-blur-md shadow-xl"
                 style={{ backgroundColor: isCreating ? accentColor : 'rgba(255,255,255,0.05)' }}
             >
-                <Plus className="w-6 h-6 text-white" />
+                <span className="text-xs font-bold uppercase tracking-widest">{isCreating ? 'Cancel' : 'Set Alarm'}</span>
+                <Plus className={`w-4 h-4 transition-transform duration-300 ${isCreating ? 'rotate-45' : ''}`} />
             </button>
         </header>
 
         {isCreating && (
-             <div className="p-6 rounded-2xl animate-in fade-in slide-in-from-top-4 space-y-4 border border-white/10" style={{ background: theme?.colors.glassCard }}>
-                <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-lg font-medium">New Alarm</h3>
-                    <button onClick={() => setIsCreating(false)}><X className="w-5 h-5 opacity-50 hover:opacity-100" /></button>
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label className="block text-xs opacity-50 mb-1">Time</label>
+             <div className="p-8 rounded-[32px] animate-in fade-in slide-in-from-top-6 space-y-6 border border-white/10 glass-panel shadow-2xl relative z-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="flex flex-col justify-center">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-4 block">Select Time</label>
                         <input 
                             type="time" 
                             value={newTime}
                             onChange={(e) => setNewTime(e.target.value)}
-                            className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white text-2xl font-mono focus:outline-none focus:border-white/30"
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-6xl font-mono focus:outline-none focus:border-white/30 text-center tabular-nums"
                         />
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                         <div>
-                            <label className="block text-xs opacity-50 mb-1">Label</label>
+                            <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-2 block">Descriptor</label>
                             <input 
                                 type="text" 
                                 value={newLabel}
                                 onChange={(e) => setNewLabel(e.target.value)}
-                                className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30"
+                                placeholder="e.g. Deep Work Start"
                             />
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-xs opacity-50 mb-1">Sound</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-2 block">Audio Profile</label>
                                 <select 
                                     value={newSound}
                                     onChange={(e) => setNewSound(e.target.value)}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30 appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none appearance-none"
                                 >
                                     {MASTER_DATA.ALARM_SOUNDS.map(s => (
-                                        <option key={s.id} value={s.id}>{s.name}</option>
+                                        <option key={s.id} value={s.id} className="bg-slate-900">{s.name}</option>
                                     ))}
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-xs opacity-50 mb-1">Math Difficulty</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-2 block">Math Barrier</label>
                                 <select 
                                     value={newDifficulty}
                                     onChange={(e) => setNewDifficulty(e.target.value as MathDifficultyLevel)}
-                                    className="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-white/30 appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none appearance-none"
                                 >
                                     {(Object.keys(MASTER_DATA.MATH_DIFFICULTIES) as MathDifficultyLevel[]).map(lvl => (
-                                        <option key={lvl} value={lvl}>{lvl}</option>
+                                        <option key={lvl} value={lvl} className="bg-slate-900">{lvl}</option>
                                     ))}
                                 </select>
                             </div>
@@ -127,47 +123,50 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
                     </div>
                 </div>
 
-                <div className="flex justify-end space-x-2 pt-4 border-t border-white/5 mt-4">
-                    <button onClick={() => setIsCreating(false)} className="px-4 py-2 rounded-lg opacity-60 hover:opacity-100">Cancel</button>
-                    <button onClick={addAlarm} className="px-8 py-2 rounded-lg text-white font-medium shadow-lg hover:brightness-110 transition-all" style={{ backgroundColor: accentColor }}>
-                        Save Alarm
+                <div className="flex justify-end pt-6 border-t border-white/5">
+                    <button onClick={addAlarm} className="px-10 py-4 rounded-2xl text-white font-bold tracking-widest uppercase text-xs shadow-2xl hover:brightness-110 transition-all active:scale-95" style={{ backgroundColor: accentColor }}>
+                        Verify & Activate
                     </button>
                 </div>
              </div>
         )}
 
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {alarms.length === 0 && !isCreating && (
-                <div className="text-center opacity-20 py-10 flex flex-col items-center">
-                    <Bell className="w-16 h-16 mb-4" />
-                    <p className="text-lg">No alarms set</p>
+                <div className="col-span-full py-24 flex flex-col items-center opacity-10">
+                    <Bell className="w-20 h-20 mb-6" />
+                    <p className="text-xl font-light tracking-widest uppercase">No Active Monitors</p>
                 </div>
             )}
             {alarms.map(alarm => (
                 <div 
                     key={alarm.id} 
-                    className={`p-5 rounded-2xl flex items-center justify-between transition-all duration-300 border border-white/5 ${!alarm.enabled ? 'opacity-50 grayscale' : ''}`}
-                    style={{ background: theme?.colors.glassCard }}
+                    className={`p-6 rounded-3xl flex items-center justify-between transition-all duration-500 glass-card ${!alarm.enabled ? 'opacity-30' : 'hover:scale-[1.01]'}`}
                 >
-                    <div className="flex flex-col">
-                        <span className="text-5xl font-light tracking-tighter font-mono">{alarm.time}</span>
-                        <div className="flex items-center space-x-2 mt-1">
-                            <span className="text-sm opacity-50">{alarm.label}</span>
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-white/40 border border-white/5">
-                                {alarm.difficulty}
-                            </span>
+                    <div className="flex items-center space-x-6">
+                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+                            <Clock className="w-5 h-5 opacity-40" />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-4xl font-light tracking-tighter font-mono tabular-nums">{alarm.time}</span>
+                            <div className="flex items-center space-x-2 mt-1">
+                                <span className="text-[10px] font-bold uppercase tracking-widest opacity-40">{alarm.label}</span>
+                                <span className="text-[8px] px-1.5 py-0.5 rounded bg-white/5 text-white/30 border border-white/5 uppercase font-bold tracking-tighter">
+                                    {alarm.difficulty}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div className="flex items-center space-x-6">
                         <div 
                             onClick={() => toggleAlarm(alarm.id)}
-                            className={`w-14 h-8 rounded-full p-1 cursor-pointer transition-colors duration-300`}
-                            style={{ backgroundColor: alarm.enabled ? accentColor : 'rgba(255,255,255,0.1)' }}
+                            className={`w-12 h-7 rounded-full p-1 cursor-pointer transition-all duration-500`}
+                            style={{ backgroundColor: alarm.enabled ? accentColor : 'rgba(255,255,255,0.05)' }}
                         >
-                            <div className={`w-6 h-6 rounded-full bg-white shadow-md transform transition-transform duration-300 ${alarm.enabled ? 'translate-x-6' : 'translate-x-0'}`} />
+                            <div className={`w-5 h-5 rounded-full bg-white shadow-xl transform transition-transform duration-500 ${alarm.enabled ? 'translate-x-5' : 'translate-x-0'}`} />
                         </div>
-                        <button onClick={() => deleteAlarm(alarm.id)} className="opacity-30 hover:opacity-100 hover:text-red-400 transition-colors">
-                            <Trash2 className="w-5 h-5" />
+                        <button onClick={() => deleteAlarm(alarm.id)} className="opacity-20 hover:opacity-100 hover:text-red-400 transition-colors p-2">
+                            <Trash2 className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
@@ -183,7 +182,6 @@ export const MathChallenge: React.FC<{ onSolved: () => void, onSnooze: () => voi
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        // Generate problem based on difficulty
         const generate = () => {
             let num1, num2, num3;
             let qStr = "";
@@ -239,33 +237,35 @@ export const MathChallenge: React.FC<{ onSolved: () => void, onSnooze: () => voi
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-6">
-            <div className="w-full max-w-md bg-[#0f172a] border border-white/10 rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-pulse"></div>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-3xl p-6">
+            <div className="w-full max-w-md glass-panel rounded-[48px] p-12 text-center shadow-2xl relative overflow-hidden border-white/5">
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-pulse"></div>
                 
-                <Brain className="w-12 h-12 text-blue-400 mx-auto mb-6" />
+                <div className="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                  <Brain className="w-10 h-10 text-blue-400" />
+                </div>
                 
-                <h2 className="text-2xl font-bold mb-2 text-white">Wake Up!</h2>
-                <p className="text-white/50 mb-8">Solve this <span className="text-blue-400 font-bold">{difficulty}</span> problem</p>
+                <h2 className="text-3xl font-light mb-2 text-white tracking-tight">System Locked</h2>
+                <p className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-30 mb-10">Solve to Verify Consciousness</p>
                 
-                <div className="text-4xl font-mono font-bold mb-8 text-white">
+                <div className="text-5xl font-mono font-light mb-12 text-white tracking-tighter tabular-nums">
                     {problem.q} = <span className="text-blue-400">?</span>
                 </div>
 
-                <form onSubmit={checkAnswer} className="space-y-4">
+                <form onSubmit={checkAnswer} className="space-y-6">
                     <input 
                         type="number" 
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
-                        placeholder="Answer"
-                        className={`w-full text-center text-3xl font-mono bg-white/5 border-2 rounded-xl py-4 text-white focus:outline-none transition-colors ${error ? 'border-red-500 text-red-500' : 'border-white/10 focus:border-blue-500'}`}
+                        placeholder="0"
+                        className={`w-full text-center text-4xl font-mono bg-white/5 border-2 rounded-2xl py-6 text-white focus:outline-none transition-all ${error ? 'border-red-500 text-red-500 animate-shake' : 'border-white/5 focus:border-blue-500/50'}`}
                         autoFocus
                     />
-                    <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-blue-500/20">
-                        Stop Alarm
+                    <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 rounded-2xl transition-all shadow-2xl shadow-blue-600/30 text-xs uppercase tracking-[0.3em]">
+                        Deactivate Alarm
                     </button>
-                    <button type="button" onClick={onSnooze} className="w-full text-white/40 hover:text-white py-2 text-sm">
-                        Snooze 5m
+                    <button type="button" onClick={onSnooze} className="w-full text-white/20 hover:text-white py-2 text-[10px] font-bold uppercase tracking-widest transition-colors">
+                        Snooze 5 Minutes
                     </button>
                 </form>
             </div>

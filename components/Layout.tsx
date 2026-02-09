@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Palette } from 'lucide-react';
+import { Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Settings } from 'lucide-react';
 import { AppMode, Theme } from '../types';
 import { MASTER_DATA } from '../constants';
 import { Footer } from './Footer';
@@ -26,90 +26,94 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
 
   return (
     <div 
-        className="w-full h-screen text-white overflow-hidden flex flex-col md:flex-row transition-all duration-500"
+        className="w-full h-screen text-white overflow-hidden flex flex-col md:flex-row transition-all duration-700 font-sans"
         style={{ background: activeTheme.colors.bgGradient }}
     >
-      {/* Sidebar Navigation */}
+      {/* Sidebar Navigation - Sticky left or bottom */}
       <nav 
-        className="md:w-20 w-full md:h-full h-16 md:flex-col flex-row flex items-center justify-between md:justify-center md:space-y-8 p-4 shrink-0 z-20"
-        style={{ background: activeTheme.colors.glassPanel }}
+        className="md:w-24 w-full md:h-full h-20 md:flex-col flex-row flex items-center justify-between md:justify-start md:pt-10 p-4 shrink-0 z-50 glass-panel border-r border-white/5"
       >
-         <div className="hidden md:block mb-auto font-bold text-xl tracking-tighter cursor-pointer" onClick={() => setMode(AppMode.CLOCK)}>
-            YC
+         <div className="hidden md:flex flex-col items-center mb-10 font-bold text-2xl tracking-tighter cursor-pointer hover:scale-110 transition-transform" onClick={() => setMode(AppMode.CLOCK)}>
+            <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+              <span className="text-sm">YC</span>
+            </div>
          </div>
          
-         <div className="flex md:flex-col flex-row w-full justify-around md:justify-center md:space-y-4">
+         <div className="flex md:flex-col flex-row w-full justify-around md:justify-center items-center md:space-y-6">
             {navItems.map((item) => {
                 const isActive = currentMode === item.mode;
                 return (
                     <button 
                         key={item.mode}
                         onClick={() => setMode(item.mode)}
-                        className={`p-3 rounded-2xl transition-all duration-300 ${isActive ? 'shadow-lg scale-110' : 'hover:bg-white/5'}`}
-                        style={{ 
-                            backgroundColor: isActive ? activeTheme.colors.accent : 'transparent',
-                            color: isActive ? '#fff' : activeTheme.colors.textDim
-                        }}
+                        className={`group relative p-4 rounded-2xl transition-all duration-300 ${isActive ? 'bg-white/10 shadow-xl scale-110' : 'hover:bg-white/5 opacity-40 hover:opacity-100'}`}
+                        style={{ color: isActive ? activeTheme.colors.accent : '#fff' }}
                         title={item.label}
                     >
                         <item.icon className="w-6 h-6" />
+                        <span className="absolute left-20 bg-slate-900 px-3 py-1 rounded-lg text-[10px] uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-all hidden md:block pointer-events-none border border-white/10 z-50">
+                            {item.label}
+                        </span>
                     </button>
                 )
             })}
          </div>
 
-         <div className="hidden md:flex flex-col mt-auto space-y-4 items-center">
-            <div className="flex flex-col space-y-2">
-                {MASTER_DATA.THEMES.slice(0, 4).map(theme => (
+         <div className="hidden md:flex flex-col mt-auto space-y-8 items-center pb-8">
+            <div className="flex flex-col space-y-4">
+                {MASTER_DATA.THEMES.slice(0, 5).map(theme => (
                     <button
                         key={theme.id}
                         onClick={() => setCurrentThemeId(theme.id)}
-                        className={`w-4 h-4 rounded-full border border-white/20 transition-transform ${currentThemeId === theme.id ? 'scale-125 ring-2 ring-white/50' : 'hover:scale-110'}`}
+                        className={`w-3 h-3 rounded-full border border-white/20 transition-all ${currentThemeId === theme.id ? 'scale-150 ring-4 ring-white/10' : 'hover:scale-125 opacity-30 hover:opacity-100'}`}
                         style={{ background: theme.previewColor }}
                     />
                 ))}
             </div>
-
-            <button onClick={toggleNightMode} className="p-2 opacity-50 hover:opacity-100 transition-opacity">
+            <button onClick={toggleNightMode} className="p-2 opacity-30 hover:opacity-100 transition-opacity">
                 <Moon className="w-5 h-5" />
             </button>
          </div>
       </nav>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative overflow-hidden flex flex-col">
-          {/* Top Bar (Mobile Only / Status) */}
-          <div className="h-16 flex justify-between items-center px-6 shrink-0 md:pt-4">
+      <main className="flex-1 flex flex-col min-w-0 relative h-full overflow-hidden">
+          {/* Global Header / Status Bar */}
+          <div className="h-20 shrink-0 flex justify-between items-center px-8 md:px-12 z-40">
              <div className="flex flex-col">
-                <div className="text-xs font-bold uppercase tracking-widest opacity-40">Precision Sync</div>
-                <div className="text-sm font-medium opacity-80">
-                    {time.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-30 mb-0.5">Precision Chronometry</span>
+                <div className="text-sm font-medium opacity-70">
+                    {time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </div>
              </div>
              
-             <div className="md:hidden flex items-center space-x-4">
-                <button onClick={toggleNightMode} className="p-2 opacity-50">
-                    <Moon className="w-5 h-5" />
+             <div className="flex items-center space-x-6">
+                <div className="hidden lg:block text-right">
+                    <div className="text-xl font-mono font-light tracking-tighter opacity-80">
+                        {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
+                    </div>
+                </div>
+                <button className="p-2 opacity-20 hover:opacity-100 transition-opacity">
+                    <Settings className="w-5 h-5" />
                 </button>
              </div>
           </div>
 
-          {/* Page Content with scrollable Footer */}
-          <div className="flex-1 overflow-hidden relative">
-             <div 
-                className="w-full h-full p-4 md:p-8 overflow-y-auto custom-scrollbar flex flex-col"
-             >
-                <div className="flex-1 min-h-0">
-                    {React.Children.map(children, child => {
-                        if (React.isValidElement(child)) {
-                            return React.cloneElement(child as React.ReactElement<any>, { theme: activeTheme, time });
-                        }
-                        return child;
-                    })}
-                </div>
-                
+          {/* Scrollable View Container */}
+          <div className="flex-1 overflow-y-auto custom-scrollbar px-6 md:px-12">
+            <div className="view-container">
+              {React.Children.map(children, child => {
+                  if (React.isValidElement(child)) {
+                      return React.cloneElement(child as React.ReactElement<any>, { theme: activeTheme, time });
+                  }
+                  return child;
+              })}
+              
+              {/* Distinct Footer Section */}
+              <div className="mt-12">
                 <Footer onNavigate={setMode} />
-             </div>
+              </div>
+            </div>
           </div>
       </main>
     </div>
