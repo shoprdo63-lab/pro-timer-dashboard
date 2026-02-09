@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Bell, Check, X, Calculator, Brain, Clock } from 'lucide-react';
+import { Plus, Trash2, Bell, Check, X, Calculator, Brain, Clock, ChevronRight } from 'lucide-react';
 import { Alarm, Theme, MathDifficultyLevel } from '../types';
 import { MASTER_DATA } from '../constants';
 
@@ -13,7 +13,7 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
   const [isCreating, setIsCreating] = useState(false);
   
   const [newTime, setNewTime] = useState("07:00");
-  const [newLabel, setNewLabel] = useState("Focus session");
+  const [newLabel, setNewLabel] = useState("Deep Focus Session");
   const [newSound, setNewSound] = useState(MASTER_DATA.ALARM_SOUNDS[0].id);
   const [newDifficulty, setNewDifficulty] = useState<MathDifficultyLevel>('Medium');
 
@@ -55,64 +55,64 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
   const accentColor = theme?.colors.accent || '#3b82f6';
 
   return (
-    <div className="flex flex-col space-y-8">
-        <header className="flex justify-between items-end shrink-0">
-             <div>
-                <h2 className="text-4xl font-light tracking-tight text-white">Alarm</h2>
-                <p className="opacity-40 text-sm mt-2 tracking-widest uppercase">Cognitive-Barrier Wake System</p>
+    <div className="flex flex-col space-y-10">
+        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 shrink-0">
+             <div className="space-y-2">
+                <h2 className="text-5xl font-light tracking-tight text-white">Alarm</h2>
+                <p className="opacity-40 text-sm tracking-[0.4em] uppercase font-bold">Cognitive-Barrier Wake System</p>
             </div>
             <button 
                 onClick={() => setIsCreating(!isCreating)}
-                className="flex items-center space-x-3 px-6 py-3 rounded-full transition-all border border-white/10 backdrop-blur-md shadow-xl"
+                className="flex items-center space-x-3 px-8 py-4 rounded-2xl transition-all border border-white/10 backdrop-blur-md shadow-2xl group"
                 style={{ backgroundColor: isCreating ? accentColor : 'rgba(255,255,255,0.05)' }}
             >
-                <span className="text-xs font-bold uppercase tracking-widest">{isCreating ? 'Cancel' : 'Set Alarm'}</span>
-                <Plus className={`w-4 h-4 transition-transform duration-300 ${isCreating ? 'rotate-45' : ''}`} />
+                <span className="text-xs font-bold uppercase tracking-widest">{isCreating ? 'Dismiss Editor' : 'Configure New Alarm'}</span>
+                <Plus className={`w-4 h-4 transition-transform duration-300 ${isCreating ? 'rotate-45' : 'group-hover:rotate-90'}`} />
             </button>
         </header>
 
         {isCreating && (
-             <div className="p-8 rounded-[32px] animate-in fade-in slide-in-from-top-6 space-y-6 border border-white/10 glass-panel shadow-2xl relative z-20">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="flex flex-col justify-center">
-                        <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-4 block">Select Time</label>
+             <div className="p-10 rounded-[40px] animate-in fade-in slide-in-from-top-10 space-y-10 border border-white/10 glass-panel shadow-[0_40px_80px_rgba(0,0,0,0.4)] relative z-20">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div className="flex flex-col justify-center items-center">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-30 mb-8 block text-center">Temporal Target</label>
                         <input 
                             type="time" 
                             value={newTime}
                             onChange={(e) => setNewTime(e.target.value)}
-                            className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-white text-6xl font-mono focus:outline-none focus:border-white/30 text-center tabular-nums"
+                            className="w-full bg-black/40 border border-white/10 rounded-3xl p-10 text-white text-7xl font-mono focus:outline-none focus:border-white/30 text-center tabular-nums shadow-inner"
                         />
                     </div>
-                    <div className="space-y-6">
-                        <div>
-                            <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-2 block">Descriptor</label>
+                    <div className="flex flex-col justify-center space-y-8">
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-30 block">Task Identifier</label>
                             <input 
                                 type="text" 
                                 value={newLabel}
                                 onChange={(e) => setNewLabel(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-white/30"
-                                placeholder="e.g. Deep Work Start"
+                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-white/30 text-lg"
+                                placeholder="e.g. Critical Sync Session"
                             />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-2 block">Audio Profile</label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-30 block">Aural Profile</label>
                                 <select 
                                     value={newSound}
                                     onChange={(e) => setNewSound(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none appearance-none cursor-pointer"
                                 >
                                     {MASTER_DATA.ALARM_SOUNDS.map(s => (
                                         <option key={s.id} value={s.id} className="bg-slate-900">{s.name}</option>
                                     ))}
                                 </select>
                             </div>
-                            <div>
-                                <label className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mb-2 block">Math Barrier</label>
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-30 block">Cognitive Load</label>
                                 <select 
                                     value={newDifficulty}
                                     onChange={(e) => setNewDifficulty(e.target.value as MathDifficultyLevel)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none appearance-none"
+                                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none appearance-none cursor-pointer"
                                 >
                                     {(Object.keys(MASTER_DATA.MATH_DIFFICULTIES) as MathDifficultyLevel[]).map(lvl => (
                                         <option key={lvl} value={lvl} className="bg-slate-900">{lvl}</option>
@@ -123,50 +123,50 @@ export const AlarmView: React.FC<AlarmProps> = ({ onAlarmTrigger, theme }) => {
                     </div>
                 </div>
 
-                <div className="flex justify-end pt-6 border-t border-white/5">
-                    <button onClick={addAlarm} className="px-10 py-4 rounded-2xl text-white font-bold tracking-widest uppercase text-xs shadow-2xl hover:brightness-110 transition-all active:scale-95" style={{ backgroundColor: accentColor }}>
-                        Verify & Activate
+                <div className="flex justify-end pt-8 border-t border-white/5">
+                    <button onClick={addAlarm} className="btn-primary" style={{ backgroundColor: accentColor }}>
+                        Verify & Deploy Alarm
                     </button>
                 </div>
              </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {alarms.length === 0 && !isCreating && (
-                <div className="col-span-full py-24 flex flex-col items-center opacity-10">
-                    <Bell className="w-20 h-20 mb-6" />
-                    <p className="text-xl font-light tracking-widest uppercase">No Active Monitors</p>
+                <div className="col-span-full py-40 flex flex-col items-center justify-center border-2 border-dashed border-white/5 rounded-[40px] opacity-20">
+                    <Bell className="w-16 h-16 mb-6" />
+                    <p className="text-xl uppercase tracking-[0.5em] font-light">No Active Alarms</p>
                 </div>
             )}
             {alarms.map(alarm => (
                 <div 
                     key={alarm.id} 
-                    className={`p-6 rounded-3xl flex items-center justify-between transition-all duration-500 glass-card ${!alarm.enabled ? 'opacity-30' : 'hover:scale-[1.01]'}`}
+                    className={`p-8 rounded-[32px] flex items-center justify-between transition-all duration-700 glass-card ${!alarm.enabled ? 'opacity-30' : 'hover:scale-[1.01] hover:shadow-xl'}`}
                 >
-                    <div className="flex items-center space-x-6">
-                        <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                            <Clock className="w-5 h-5 opacity-40" />
+                    <div className="flex items-center space-x-8">
+                        <div className="p-5 rounded-3xl bg-white/5 border border-white/10 hidden sm:block">
+                            <Clock className="w-6 h-6 opacity-30" />
                         </div>
                         <div className="flex flex-col">
-                            <span className="text-4xl font-light tracking-tighter font-mono tabular-nums">{alarm.time}</span>
-                            <div className="flex items-center space-x-2 mt-1">
-                                <span className="text-[10px] font-bold uppercase tracking-widest opacity-40">{alarm.label}</span>
-                                <span className="text-[8px] px-1.5 py-0.5 rounded bg-white/5 text-white/30 border border-white/5 uppercase font-bold tracking-tighter">
+                            <span className="text-5xl font-light tracking-tighter font-mono tabular-nums">{alarm.time}</span>
+                            <div className="flex items-center space-x-3 mt-2">
+                                <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">{alarm.label}</span>
+                                <span className="text-[8px] px-2 py-1 rounded-md bg-white/5 text-white/40 border border-white/10 uppercase font-black tracking-widest">
                                     {alarm.difficulty}
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div className="flex items-center space-x-6">
+                    <div className="flex items-center space-x-8">
                         <div 
                             onClick={() => toggleAlarm(alarm.id)}
-                            className={`w-12 h-7 rounded-full p-1 cursor-pointer transition-all duration-500`}
+                            className={`w-14 h-8 rounded-full p-1 cursor-pointer transition-all duration-500 shadow-inner`}
                             style={{ backgroundColor: alarm.enabled ? accentColor : 'rgba(255,255,255,0.05)' }}
                         >
-                            <div className={`w-5 h-5 rounded-full bg-white shadow-xl transform transition-transform duration-500 ${alarm.enabled ? 'translate-x-5' : 'translate-x-0'}`} />
+                            <div className={`w-6 h-6 rounded-full bg-white shadow-2xl transform transition-transform duration-500 ${alarm.enabled ? 'translate-x-6' : 'translate-x-0'}`} />
                         </div>
-                        <button onClick={() => deleteAlarm(alarm.id)} className="opacity-20 hover:opacity-100 hover:text-red-400 transition-colors p-2">
-                            <Trash2 className="w-4 h-4" />
+                        <button onClick={() => deleteAlarm(alarm.id)} className="opacity-10 hover:opacity-100 hover:text-red-400 transition-all p-2">
+                            <Trash2 className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
@@ -237,35 +237,35 @@ export const MathChallenge: React.FC<{ onSolved: () => void, onSnooze: () => voi
     };
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-3xl p-6">
-            <div className="w-full max-w-md glass-panel rounded-[48px] p-12 text-center shadow-2xl relative overflow-hidden border-white/5">
-                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-pulse"></div>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/98 backdrop-blur-3xl p-6">
+            <div className="w-full max-w-xl glass-panel rounded-[56px] p-16 text-center shadow-[0_64px_128px_rgba(0,0,0,0.8)] relative overflow-hidden border-white/5 border-2">
+                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-blue-500 to-red-500 animate-pulse"></div>
                 
-                <div className="w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
-                  <Brain className="w-10 h-10 text-blue-400" />
+                <div className="w-24 h-24 bg-blue-500/10 rounded-[32px] flex items-center justify-center mx-auto mb-10 shadow-inner">
+                  <Brain className="w-12 h-12 text-blue-400" />
                 </div>
                 
-                <h2 className="text-3xl font-light mb-2 text-white tracking-tight">System Locked</h2>
-                <p className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-30 mb-10">Solve to Verify Consciousness</p>
+                <h2 className="text-4xl font-light mb-2 text-white tracking-tight">Vigilance Required</h2>
+                <p className="text-[10px] font-bold uppercase tracking-[0.6em] opacity-30 mb-14">Verify Cognitive State to Deactivate</p>
                 
-                <div className="text-5xl font-mono font-light mb-12 text-white tracking-tighter tabular-nums">
-                    {problem.q} = <span className="text-blue-400">?</span>
+                <div className="text-7xl font-mono font-light mb-16 text-white tracking-tighter tabular-nums drop-shadow-lg">
+                    {problem.q} = <span className="text-blue-500">?</span>
                 </div>
 
-                <form onSubmit={checkAnswer} className="space-y-6">
+                <form onSubmit={checkAnswer} className="space-y-8 max-w-sm mx-auto">
                     <input 
                         type="number" 
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
-                        placeholder="0"
-                        className={`w-full text-center text-4xl font-mono bg-white/5 border-2 rounded-2xl py-6 text-white focus:outline-none transition-all ${error ? 'border-red-500 text-red-500 animate-shake' : 'border-white/5 focus:border-blue-500/50'}`}
+                        placeholder="ANSWER"
+                        className={`w-full text-center text-5xl font-mono bg-black/40 border-2 rounded-[32px] py-8 text-white focus:outline-none transition-all placeholder:text-white/5 ${error ? 'border-red-500 text-red-500 animate-shake' : 'border-white/10 focus:border-blue-500/50 shadow-inner'}`}
                         autoFocus
                     />
-                    <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-5 rounded-2xl transition-all shadow-2xl shadow-blue-600/30 text-xs uppercase tracking-[0.3em]">
-                        Deactivate Alarm
+                    <button type="submit" className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-6 rounded-3xl transition-all shadow-[0_20px_40px_rgba(37,99,235,0.4)] text-xs uppercase tracking-[0.4em] active:scale-95">
+                        Deactivate Monitoring
                     </button>
-                    <button type="button" onClick={onSnooze} className="w-full text-white/20 hover:text-white py-2 text-[10px] font-bold uppercase tracking-widest transition-colors">
-                        Snooze 5 Minutes
+                    <button type="button" onClick={onSnooze} className="w-full text-white/20 hover:text-white py-2 text-[10px] font-bold uppercase tracking-[0.4em] transition-colors">
+                        Snooze Synchronization (5m)
                     </button>
                 </form>
             </div>

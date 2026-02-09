@@ -6,10 +6,10 @@
   --accent: #3b82f6;
 }
 
-/* Custom Scrollbar - Minimal & Elegant */
+/* Custom Scrollbar - Minimal & Non-Intrusive */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -32,12 +32,17 @@ body {
   background: #0f172a;
   color: white;
   font-family: 'Inter', sans-serif;
-  overflow: hidden; /* Prevent body bounce */
+  overflow: hidden; /* Critical: Prevent body scroll to stop "double scrollbar" issues */
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-slate-900/40 backdrop-blur-2xl border border-white/10 shadow-2xl;
+    @apply bg-slate-900/60 backdrop-blur-2xl border border-white/10 shadow-2xl;
   }
   
   .glass-card {
@@ -45,7 +50,11 @@ body {
   }
 
   .view-container {
-    @apply w-full max-w-6xl mx-auto flex flex-col gap-8 pb-12;
+    @apply w-full max-w-6xl mx-auto flex flex-col gap-12 py-8;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 rounded-2xl font-bold tracking-widest uppercase text-xs transition-all active:scale-95 shadow-lg;
   }
 }
 
@@ -54,9 +63,13 @@ body {
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
 
-/* Fix for overlapping elements on small screens */
-@media (max-height: 700px) {
-  .utility-circle {
-    @apply scale-75;
-  }
+/* Animation for the Math Challenge */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
 }
