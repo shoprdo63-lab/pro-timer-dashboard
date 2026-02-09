@@ -12,11 +12,11 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
             {/* Navigation Links */}
             {onNavigate && (
                 <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-16 pt-8 text-sm font-medium text-white/50">
-                    <button onClick={() => onNavigate(AppMode.ABOUT)} className="hover:text-white transition-colors">About Us</button>
-                    <button onClick={() => onNavigate(AppMode.HOW_IT_WORKS)} className="hover:text-white transition-colors">How It Works</button>
-                    <button onClick={() => onNavigate(AppMode.PRIVACY)} className="hover:text-white transition-colors">Privacy Policy</button>
-                    <button onClick={() => onNavigate(AppMode.TERMS)} className="hover:text-white transition-colors">Terms of Service</button>
-                    <button onClick={() => onNavigate(AppMode.CONTACT)} className="hover:text-white transition-colors">Contact Support</button>
+                    <button type="button" onClick={() => onNavigate(AppMode.ABOUT)} className="hover:text-white transition-colors cursor-pointer">About Us</button>
+                    <button type="button" onClick={() => onNavigate(AppMode.HOW_IT_WORKS)} className="hover:text-white transition-colors cursor-pointer">How It Works</button>
+                    <button type="button" onClick={() => onNavigate(AppMode.PRIVACY)} className="hover:text-white transition-colors cursor-pointer">Privacy Policy</button>
+                    <button type="button" onClick={() => onNavigate(AppMode.TERMS)} className="hover:text-white transition-colors cursor-pointer">Terms of Service</button>
+                    <button type="button" onClick={() => onNavigate(AppMode.CONTACT)} className="hover:text-white transition-colors cursor-pointer">Contact Support</button>
                 </div>
             )}
 
@@ -47,8 +47,9 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 6 mins</span>
                             <button 
-                                onClick={() => onNavigate?.(AppMode.BLOG_FOCUS)}
-                                className="text-blue-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); onNavigate?.(AppMode.BLOG_FOCUS); }}
+                                className="text-blue-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer relative z-20"
                             >
                                 Explore Analysis →
                             </button>
@@ -70,8 +71,9 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 8 mins</span>
                             <button 
-                                onClick={() => onNavigate?.(AppMode.BLOG_SYNC)}
-                                className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); onNavigate?.(AppMode.BLOG_SYNC); }}
+                                className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer relative z-20"
                             >
                                 Explore Analysis →
                             </button>
@@ -93,8 +95,9 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 5 mins</span>
                             <button 
-                                onClick={() => onNavigate?.(AppMode.BLOG_PRIVACY)}
-                                className="text-amber-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); onNavigate?.(AppMode.BLOG_PRIVACY); }}
+                                className="text-amber-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer relative z-20"
                             >
                                 Explore Analysis →
                             </button>
@@ -116,8 +119,9 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                         <div className="pt-6 border-t border-white/5 flex items-center justify-between">
                             <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 7 mins</span>
                             <button 
-                                onClick={() => onNavigate?.(AppMode.BLOG_AESTHETICS)}
-                                className="text-purple-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer"
+                                type="button"
+                                onClick={(e) => { e.preventDefault(); e.stopPropagation(); onNavigate?.(AppMode.BLOG_AESTHETICS); }}
+                                className="text-purple-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer relative z-20"
                             >
                                 Explore Analysis →
                             </button>
@@ -158,8 +162,9 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                 {/* CTA Button */}
                 {onNavigate && (
                     <button 
+                        type="button"
                         onClick={() => onNavigate(AppMode.POMODORO)}
-                        className="group relative px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-xl transition-all duration-300 transform hover:scale-105 shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:shadow-[0_0_60px_rgba(59,130,246,0.3)] flex flex-col items-center gap-1 overflow-hidden"
+                        className="group relative px-8 py-4 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 backdrop-blur-xl transition-all duration-300 transform hover:scale-105 shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:shadow-[0_0_60px_rgba(59,130,246,0.3)] flex flex-col items-center gap-1 overflow-hidden cursor-pointer"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <div className="flex items-center space-x-2 relative z-10">

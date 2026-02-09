@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy, useRef } from 'react';
 import { Layout } from './components/Layout';
 import { AppMode, Alarm } from './types';
 import { playAlarmSound, stopAudio } from './utils/audioUtils';
@@ -27,11 +27,20 @@ const App: React.FC = () => {
   const [isNightMode, setIsNightMode] = useState(false);
   const [activeAlarm, setActiveAlarm] = useState<Alarm | null>(null);
   const [time, setTime] = useState(new Date());
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Use the 1-second worker to drive the main clock and alarm checks
   useWorkerTimer(true, () => {
     setTime(new Date());
   }, CLOCK_WORKER_CODE);
+
+  // Scroll to top when mode changes
+  useEffect(() => {
+    const scrollable = document.querySelector('.overflow-y-auto');
+    if (scrollable) {
+      scrollable.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [mode]);
 
   // Global Alarm Checker
   useEffect(() => {
