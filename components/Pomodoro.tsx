@@ -57,85 +57,89 @@ export const Pomodoro: React.FC = () => {
     };
 
     const format = (ms: number) => {
-        const safeMs = Math.max(0, ms);
-        const totalSeconds = Math.floor(safeMs / 1000);
+        const totalSeconds = Math.floor(ms / 1000);
         const m = Math.floor(totalSeconds / 60);
         const s = totalSeconds % 60;
-        const msPart = safeMs % 1000;
-
-        return (
-            <div className="flex flex-col items-center">
-                <div className="text-[12vw] md:text-[8vw] font-extralight tracking-tighter tabular-nums leading-none">
-                    {m.toString().padStart(2, '0')}:{s.toString().padStart(2, '0')}
-                </div>
-                <div className="text-xl font-mono text-white/20 mt-4 tracking-widest uppercase">
-                    .{msPart.toString().padStart(3, '0')}
-                </div>
-            </div>
-        );
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     };
 
+    const progress = (timeLeft / (mode === 'work' ? WORK_TIME : BREAK_TIME)) * 100;
+
     return (
-        <div className="flex flex-col h-full items-center p-10 w-full max-w-4xl mx-auto">
+        <div className="flex flex-col h-full items-center p-6">
              <header className="w-full flex justify-between items-center mb-12 shrink-0">
                 <div>
-                    <h2 className="text-4xl font-extralight tracking-tight text-white mb-1">Flow State</h2>
-                    <div className="flex items-center space-x-2 text-[10px] uppercase tracking-[0.4em] text-white/30 font-bold">
-                        <span>Cognitive Synchronization</span>
-                    </div>
-                </div>
-                <div className="flex space-x-2">
-                    <button 
-                        onClick={() => switchMode('work')}
-                        className={`px-5 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all ${mode === 'work' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-white/40 hover:text-white'}`}
-                    >
-                        Focus
-                    </button>
-                    <button 
-                        onClick={() => switchMode('break')}
-                        className={`px-5 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold transition-all ${mode === 'break' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-white/5 text-white/40 hover:text-white'}`}
-                    >
-                        Recovery
-                    </button>
+                    <h2 className="text-3xl font-light tracking-tight text-white">Pomodoro</h2>
+                    <p className="opacity-40 text-sm mt-1">Productivity focus tool</p>
                 </div>
             </header>
 
-            <div className="flex-1 flex flex-col items-center justify-center w-full relative">
-                {/* Flow Visualization */}
-                <div className={`absolute w-[400px] h-[400px] rounded-full transition-all duration-1000 blur-[80px] ${isRunning ? 'opacity-30 scale-125' : 'opacity-10 scale-100'} ${mode === 'work' ? 'bg-blue-600' : 'bg-emerald-600'}`} />
-                
-                <div className="relative z-10 animate-in zoom-in-95 duration-700">
-                    {format(timeLeft)}
+            <div className="flex-1 flex flex-col items-center justify-center w-full">
+                <div className="flex space-x-2 mb-10">
+                    <button 
+                        onClick={() => switchMode('work')}
+                        className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${mode === 'work' ? 'bg-blue-500 text-white' : 'bg-white/5 text-white/40'}`}
+                    >
+                        <div className="flex items-center space-x-2">
+                            <Briefcase className="w-3 h-3" />
+                            <span>FOCUS</span>
+                        </div>
+                    </button>
+                    <button 
+                        onClick={() => switchMode('break')}
+                        className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${mode === 'break' ? 'bg-emerald-500 text-white' : 'bg-white/5 text-white/40'}`}
+                    >
+                        <div className="flex items-center space-x-2">
+                            <Coffee className="w-3 h-3" />
+                            <span>BREAK</span>
+                        </div>
+                    </button>
                 </div>
 
-                <div className="flex items-center space-x-8 mt-16 z-10">
+                <div className="relative w-80 h-80 flex items-center justify-center">
+                    <div className="absolute inset-0 rounded-full border-[10px] border-white/5" />
+                    <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                        <circle
+                            cx="50%"
+                            cy="50%"
+                            r="150"
+                            stroke={mode === 'work' ? '#3b82f6' : '#10b981'}
+                            strokeWidth="10"
+                            fill="transparent"
+                            strokeDasharray="942"
+                            strokeDashoffset={942 - (942 * progress / 100)}
+                            strokeLinecap="round"
+                            className="transition-all duration-300"
+                        />
+                    </svg>
+                    
+                    <div className="text-7xl font-mono font-bold tracking-tighter tabular-nums z-10">
+                        {format(timeLeft)}
+                    </div>
+                </div>
+
+                <div className="flex items-center space-x-6 mt-12">
                     <button 
                         onClick={reset}
-                        className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all active:scale-90"
+                        className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition-all"
                     >
                         <RefreshCcw className="w-5 h-5" />
                     </button>
 
                     <button 
                         onClick={toggle}
-                        className={`w-24 h-24 rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-110 active:scale-95 ${isRunning ? 'bg-white/10 text-white border border-white/20' : 'bg-white text-slate-900'}`}
+                        className={`w-20 h-20 rounded-full flex items-center justify-center shadow-xl transition-all transform active:scale-95 ${isRunning ? 'bg-white/10 text-white' : 'bg-white text-slate-900'}`}
                     >
                         {isRunning ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8 ml-1" />}
                     </button>
 
                     <div className="w-12 h-12 flex items-center justify-center">
-                        <div className="flex space-x-1.5">
+                        <div className="flex space-x-1">
                             {[...Array(4)].map((_, i) => (
-                                <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${i < cycleCount ? 'bg-blue-400 scale-125' : 'bg-white/10'}`} />
+                                <div key={i} className={`w-2 h-2 rounded-full ${i < cycleCount ? 'bg-blue-400' : 'bg-white/10'}`} />
                             ))}
                         </div>
                     </div>
-                </div>
-
-                <div className="mt-12 text-center">
-                    <p className={`text-[10px] uppercase tracking-[0.6em] font-black transition-all duration-1000 ${isRunning ? 'text-white/40 opacity-100' : 'text-white/10 opacity-50'}`}>
-                        {mode === 'work' ? 'Executing Objective' : 'Neural Rejuvenation'}
-                    </p>
                 </div>
             </div>
         </div>
