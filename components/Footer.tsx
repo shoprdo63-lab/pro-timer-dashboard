@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppMode } from '../types';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Zap, Globe2 } from 'lucide-react';
 
 interface FooterProps {
     onNavigate?: (mode: AppMode) => void;
@@ -19,6 +19,92 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                     <button onClick={() => onNavigate(AppMode.CONTACT)} className="hover:text-white transition-colors">Contact Support</button>
                 </div>
             )}
+
+            {/* Professional Blog & Insights Section */}
+            <div className="max-w-6xl mx-auto px-6 mb-24">
+                <div className="flex flex-col items-center mb-16 text-center">
+                    <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
+                        <BookOpen className="w-3 h-3" />
+                        <span>Chronometric Insights & Research</span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-light text-white tracking-tight mb-4">The Science of Time & Focus</h2>
+                    <p className="text-white/40 max-w-2xl text-sm leading-relaxed">Exploring the intersection of temporal precision, cognitive performance, and digital sovereignty in the modern era.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    {/* Blog Post 1 */}
+                    <article className="glass-card p-10 rounded-[40px] border border-white/5 hover:border-white/10 transition-all group">
+                        <div className="flex items-start justify-between mb-8">
+                            <div className="p-4 rounded-2xl bg-white/5 group-hover:bg-blue-500/10 transition-colors">
+                                <Zap className="w-6 h-6 text-blue-400" />
+                            </div>
+                            <span className="text-[10px] font-mono opacity-20 uppercase tracking-widest">Research / Focus</span>
+                        </div>
+                        <h3 className="text-2xl font-medium text-white mb-4 leading-tight">Neural Intervals: Why The Pomodoro Technique Reshapes Focus</h3>
+                        <p className="text-white/50 text-sm leading-relaxed mb-6">
+                            Human cognitive architecture is not designed for indefinite concentration. Recent studies in neurobiology suggest that the "focus muscle" experiences fatigue similar to physical exertion. The structured 25-minute interval—pioneered by productivity scientists—aligns perfectly with the brain's natural alertness cycles. By implementing strict rest periods, users can maintain a high-beta wave state for significantly longer durations, bypassing the typical afternoon cognitive slump.
+                        </p>
+                        <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 6 mins</span>
+                            <span className="text-blue-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                        </div>
+                    </article>
+
+                    {/* Blog Post 2 */}
+                    <article className="glass-card p-10 rounded-[40px] border border-white/5 hover:border-white/10 transition-all group">
+                        <div className="flex items-start justify-between mb-8">
+                            <div className="p-4 rounded-2xl bg-white/5 group-hover:bg-emerald-500/10 transition-colors">
+                                <Globe2 className="w-6 h-6 text-emerald-400" />
+                            </div>
+                            <span className="text-[10px] font-mono opacity-20 uppercase tracking-widest">Global / Dynamics</span>
+                        </div>
+                        <h3 className="text-2xl font-medium text-white mb-4 leading-tight">The Physics of Synchronization in a Decentralized World</h3>
+                        <p className="text-white/50 text-sm leading-relaxed mb-6">
+                            In a globalized economy, time zones are no longer just geographic markers; they are the protocol for international trade. Synchronization across UTC, EST, and JST allows for the seamless execution of high-frequency trading, logistical routing, and distributed software development. Precision at the browser level ensures that every participant in a global network is operating on a unified "source of truth," reducing the risk of temporal drift that can lead to multi-million dollar discrepancies.
+                        </p>
+                        <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 8 mins</span>
+                            <span className="text-emerald-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                        </div>
+                    </article>
+
+                    {/* Blog Post 3 */}
+                    <article className="glass-card p-10 rounded-[40px] border border-white/5 hover:border-white/10 transition-all group">
+                        <div className="flex items-start justify-between mb-8">
+                            <div className="p-4 rounded-2xl bg-white/5 group-hover:bg-amber-500/10 transition-colors">
+                                <ShieldCheck className="w-6 h-6 text-amber-400" />
+                            </div>
+                            <span className="text-[10px] font-mono opacity-20 uppercase tracking-widest">Security / Ethics</span>
+                        </div>
+                        <h3 className="text-2xl font-medium text-white mb-4 leading-tight">The Privacy Imperative: Why Client-Side Utility Matters</h3>
+                        <p className="text-white/50 text-sm leading-relaxed mb-6">
+                            Privacy is often sacrificed for convenience in modern web applications. However, professional utilities do not require centralized tracking to function. By keeping all calculations, alarm triggers, and configuration data strictly within the local environment (Local Storage), we eliminate the vulnerability window associated with server-side data leaks. Sovereignty over one's own data is the fundamental ethical standard for the next generation of web tools.
+                        </p>
+                        <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 5 mins</span>
+                            <span className="text-amber-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                        </div>
+                    </article>
+
+                    {/* Blog Post 4 */}
+                    <article className="glass-card p-10 rounded-[40px] border border-white/5 hover:border-white/10 transition-all group">
+                        <div className="flex items-start justify-between mb-8">
+                            <div className="p-4 rounded-2xl bg-white/5 group-hover:bg-purple-500/10 transition-colors">
+                                <BookOpen className="w-6 h-6 text-purple-400" />
+                            </div>
+                            <span className="text-[10px] font-mono opacity-20 uppercase tracking-widest">Design / UX</span>
+                        </div>
+                        <h3 className="text-2xl font-medium text-white mb-4 leading-tight">Aesthetic Minimalism as a Tool for Cognitive Reduction</h3>
+                        <p className="text-white/50 text-sm leading-relaxed mb-6">
+                            Visual noise directly impacts decision-making speed. Glassmorphism is more than a design trend; it is an exercise in visual hierarchy. By using transparency and depth, we allow the user's focus to rest naturally on the primary temporal data without the interference of heavy borders or solid backgrounds. This design philosophy significantly lowers the "interaction cost" of a utility, making it an invisible yet powerful part of the professional workspace.
+                        </p>
+                        <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Read Time: 7 mins</span>
+                            <span className="text-purple-400 text-[10px] font-bold uppercase tracking-widest group-hover:translate-x-1 transition-transform cursor-pointer">Explore Analysis →</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
 
             {/* SEO & Authority Section */}
             <div className="px-6 md:px-10 max-w-5xl mx-auto text-center flex flex-col items-center">
@@ -46,30 +132,6 @@ export const Footer = React.memo<FooterProps>(({ onNavigate }) => {
                     <div>
                         <h4 className="text-white font-medium mb-2 text-center md:text-left">The Ethical Tech Revolution: Privacy-First Timekeeping</h4>
                         <p>The modern web is unfortunately cluttered with intrusive trackers, third-party cookies, and heavy scripts that compromise your privacy and slow down your device. Yclock is built on a foundation of Ethical Technology: Zero External Dependencies. Our suite runs entirely on your local machine using client-side logic. No Server-Side Calls. Whether you are checking the time in Tokyo, London, or New York, no data ever leaves your browser. Privacy by Design. We do not track your location, your focus cycles, or your habits. Your time is strictly your own.</p>
-                    </div>
-
-                    <div>
-                        <h4 className="text-white font-medium mb-2 text-center md:text-left">Master Your Global Workflow with Yclock Utilities</h4>
-                        <p>Our suite is designed to be the "silent partner" in your daily productivity stack. Professional World Clock: A comprehensive dashboard for digital nomads and global team leaders. Monitor financial markets or international logistics hubs with millisecond-accurate synchronization. High-Resolution Stopwatch: Engineered for those who demand the highest resolution of time measurement for technical calibration or athletic timing. Minimalist Pomodoro Engine: A distraction-free interface designed to induce the "Flow State," stripped of all unnecessary noise to focus purely on your next breakthrough.</p>
-                    </div>
-
-                    <div>
-                        <h4 className="text-white font-medium mb-2 text-center md:text-left">Glassmorphism Design: Where Aesthetic Meets High Performance</h4>
-                        <p>We believe professional tools should be as beautiful as they are functional. Yclock utilizes Glassmorphism design principles—characterized by transparency, multi-layered blur, and subtle borders—to create a light, unobtrusive visual environment. This distraction-free UI ensures your cognitive load is spent on your work, not on navigating the tool.</p>
-                    </div>
-
-                    <div>
-                        <h4 className="text-white font-medium mb-2 text-center md:text-left">Global Connectivity: The Future of Synchronicity in 2026</h4>
-                        <p>As we move through 2026, the boundaries of physical office spaces continue to vanish. With developers in Tel Aviv collaborating in real-time with designers in San Francisco and managers in Dubai, a shared source of truth for time is the only thing keeping global projects on track. Yclock serves as your Global Synchronization Hub, ensuring you are perfectly aligned with the pulse of the world, regardless of your coordinates.</p>
-                    </div>
-
-                    <div>
-                        <h4 className="text-white font-medium mb-2 text-center md:text-left">A Professional Commitment to Excellence</h4>
-                        <p>Yclock is more than just a website; it is a commitment to precision, ethics, and world-class design. We continuously refine our local algorithms to ensure the time displayed is the most accurate representation possible within a browser environment.</p>
-                    </div>
-
-                    <div className="pt-4 mt-4 border-t border-white/5">
-                        <p>Thank you for choosing Yclock as your trusted partner for daily time management and global synchronization. Experience the standard of excellence.</p>
                     </div>
                 </div>
 
