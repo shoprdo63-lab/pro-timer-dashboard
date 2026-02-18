@@ -1,77 +1,86 @@
 import React from 'react';
-import { Clock, Brain, Globe, Shield, Zap, BookOpen, Activity, Target } from 'lucide-react';
 
 export const BlogSection: React.FC = () => {
   return (
-    <section className="w-full py-24 border-t border-white/5 bg-slate-950/20">
+    <section className="w-full py-24 border-t border-white/5 bg-slate-950/40">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="flex flex-col items-center mb-20 text-center">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-[0.3em] mb-6">
-            <BookOpen className="w-4 h-4" />
-            <span>YClockTB Authority Hub</span>
+        {/* Authority Header */}
+        <div className="flex flex-col items-center mb-24 text-center">
+          <div className="inline-flex items-center space-x-2 px-5 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-bold uppercase tracking-[0.4em] mb-8">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <span>The YClockTB Professional Resource Hub</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-light text-white tracking-tight mb-6">Chronometric Intelligence</h2>
-          <p className="text-white/40 max-w-2xl text-lg leading-relaxed">
-            Technical research and neuro-scientific frameworks for global synchronization and professional focus.
+          <h2 className="text-5xl md:text-7xl font-light text-white tracking-tight mb-8">Temporal Mastery</h2>
+          <p className="text-white/40 max-w-3xl text-xl leading-relaxed">
+            Our Knowledge Hub provides authoritative insights into the physics of synchronization, the neurobiology of focus, and the technical architecture of global timekeeping.
           </p>
         </div>
 
-        <div className="space-y-32">
-          {/* Article 1: Science of Timekeeping */}
+        <div className="space-y-40">
+          {/* Article 1: Evolution of Timekeeping */}
           <article className="prose prose-invert max-w-none">
-            <header className="mb-12 border-l-4 border-blue-500 pl-8">
-              <div className="flex items-center space-x-3 mb-4 text-blue-400">
-                <Clock className="w-6 h-6" />
-                <span className="text-sm font-bold uppercase tracking-widest">Physics & Engineering</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-light text-white mb-6">The Science of High-Precision Timekeeping & Atomic Clocks</h2>
-              <p className="text-white/50 text-xl italic font-serif">A deep dive into the quantum infrastructure that synchronizes the modern digital world.</p>
+            <header className="mb-16 border-l-[6px] border-blue-500 pl-10">
+              <span className="text-blue-400 font-bold uppercase tracking-widest text-sm mb-4 block">Article 01 — Chronometric History</span>
+              <h2 className="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">The Evolution of Global Timekeeping: <br/><span className="text-white/60">From Sun Dials to Atomic Precision</span></h2>
+              <p className="text-white/40 text-2xl italic font-serif max-w-4xl">A comprehensive historical analysis of human attempts to measure the infinite progression of entropy.</p>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 text-white/70 leading-relaxed text-lg">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 text-white/70 leading-relaxed text-xl">
+              <div className="lg:col-span-8 space-y-12 text-justify">
                 <section>
-                  <h3 className="text-2xl text-white font-medium mb-4">The Quantum Definition of a Second</h3>
+                  <h3 className="text-3xl text-white font-medium mb-6">The Celestial Genesis</h3>
                   <p>
-                    Precision timekeeping is the silent engine of modern civilization. To understand how YClockTB delivers accuracy, one must look at the transition from astronomical time to quantum time. For centuries, humanity relied on the Earth's rotation to define time. However, the Earth is an irregular timekeeper; its rotation is influenced by tidal friction and atmospheric shifts.
+                    For the majority of human history, time was not an abstract digital constant, but a celestial rhythm. Ancient civilizations in Egypt and Mesopotamia utilized the most reliable "oscillator" available: the rotation of the Earth relative to the sun. The first sundials, or gnomons, were essentially architectural shadows—obelisks that mapped the sun's journey across the sky. While effective for agricultural planning, these tools were inherently flawed, rendered useless by cloud cover or the descent of night.
                   </p>
                   <p>
-                    The breakthrough came in 1967 when the second was redefined via the <strong>Cesium-133 atom</strong>. By exposing these atoms to a specific microwave frequency, they oscillate between energy states. Exactly 9,192,631,770 cycles of this radiation define one SI second. This transition from macro-observation to quantum-precision allowed for the development of Atomic Clocks, which lose less than one second every 300 million years.
+                    By 1500 BCE, the search for "portable time" led to the development of clepsydras, or water clocks. These devices relied on the regulated flow of water from one vessel to another, creating the first independent measure of duration that functioned regardless of celestial visibility. It was during this era that the Babylonians introduced the <strong>sexagesimal system</strong> (base 60), which remains the standard for our seconds and minutes today.
                   </p>
                 </section>
 
                 <section>
-                  <h3 className="text-2xl text-white font-medium mb-4">Network Time Protocol (NTP) and Stratum Layers</h3>
+                  <h3 className="text-3xl text-white font-medium mb-6">The Mechanical Revolution</h3>
                   <p>
-                    Generating time is only half the battle; distributing it across a lag-prone internet is the true engineering challenge. Every device connected to YClockTB participates in a hierarchy of synchronization known as <strong>Stratum Layers</strong>. 
+                    The true turning point in horology occurred in the 14th century with the invention of the <strong>verge escapement</strong>. This mechanical mechanism allowed for the controlled release of energy from a falling weight, translating it into the rhythmic "tick" of a gear train. For the first time, time could be "packaged" into a machine. In 1656, Christiaan Huygens revolutionized precision by applying the mathematics of the pendulum, reducing the daily drift of clocks from 15 minutes to a mere 15 seconds.
                   </p>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Stratum 0:</strong> The physical atomic clock or GPS receiver.</li>
-                    <li><strong>Stratum 1:</strong> Primary servers directly connected to Stratum 0 devices.</li>
-                    <li><strong>Stratum 2:</strong> Secondary servers (like those powering cloud providers) that sync with Stratum 1.</li>
-                  </ul>
                   <p>
-                    When your browser queries time, it uses high-resolution APIs to account for network latency. This ensures that the clock on your screen isn't just a local approximation, but a reflection of <strong>Coordinated Universal Time (UTC)</strong>, the global consensus scale.
+                    As global trade expanded, the "Longitude Problem" became a matter of national security. Sailors required a clock that could keep time accurately on the turbulent seas to calculate their position. John Harrison's marine chronometer, developed in the 18th century, proved that mechanical precision could bridge the gap between continents, laying the groundwork for the modern global economy.
+                  </p>
+                </section>
+
+                <section>
+                  <h3 className="text-3xl text-white font-medium mb-6">The Quantum Leap: Atomic Synchronization</h3>
+                  <p>
+                    In 1927, the discovery of the piezoelectric effect in quartz crystals allowed for a new era of electronic timekeeping. Quartz oscillators, vibrating at 32,768 Hz, provided stability that mechanical gears could never achieve. However, even quartz is subject to environmental drift.
+                  </p>
+                  <p>
+                    The modern standard, and the one that powers the backend of <strong>YClockTB</strong>, is atomic time. By utilizing the hyperfine transition of <strong>Cesium-133 atoms</strong>, we have defined the second as 9,192,631,770 cycles of microwave radiation. Atomic clocks are so precise they will not lose a single second in 100 million years. This is the bedrock of GPS, internet protocols, and the very foundation of our synchronized reality.
                   </p>
                 </section>
               </div>
               
-              <div className="bg-white/5 p-8 rounded-[40px] border border-white/10 h-fit">
-                <h4 className="text-blue-400 font-bold uppercase tracking-widest text-xs mb-6">Technical Impact</h4>
-                <div className="space-y-6">
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Financial Trading</h5>
-                    <p className="text-sm opacity-60">High-frequency trading (HFT) requires microsecond synchronization to prevent "slippage" and ensure order fairness.</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Cryptographic Security</h5>
-                    <p className="text-sm opacity-60">SSL/TLS certificates rely on synchronized timestamps to prevent "replay attacks" and verify server identity.</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Distributed Systems</h5>
-                    <p className="text-sm opacity-60">Database integrity across global clusters depends on the "Happened-Before" relationship defined by NTP sync.</p>
-                  </div>
+              <div className="lg:col-span-4 space-y-8">
+                <div className="bg-white/5 p-10 rounded-[48px] border border-white/10 shadow-2xl">
+                  <h4 className="text-blue-400 font-bold uppercase tracking-widest text-xs mb-8">Horological Milestones</h4>
+                  <ul className="space-y-6">
+                    <li className="flex gap-4">
+                      <span className="text-white font-mono text-xs opacity-30">1500 BC</span>
+                      <p className="text-sm opacity-80">Egyptian Sundials reach peak architectural integration.</p>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-white font-mono text-xs opacity-30">1364 AD</span>
+                      <p className="text-sm opacity-80">Giovanni de' Dondi completes the first astronomical clock.</p>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-white font-mono text-xs opacity-30">1735 AD</span>
+                      <p className="text-sm opacity-80">John Harrison solves the Longitude Problem with the H1.</p>
+                    </li>
+                    <li className="flex gap-4">
+                      <span className="text-white font-mono text-xs opacity-30">1967 AD</span>
+                      <p className="text-sm opacity-80">The SI second is officially defined by atomic transitions.</p>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -79,112 +88,119 @@ export const BlogSection: React.FC = () => {
 
           {/* Article 2: Psychology of Focus */}
           <article className="prose prose-invert max-w-none">
-            <header className="mb-12 border-l-4 border-emerald-500 pl-8">
-              <div className="flex items-center space-x-3 mb-4 text-emerald-400">
-                <Brain className="w-6 h-6" />
-                <span className="text-sm font-bold uppercase tracking-widest">Cognitive Science</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-light text-white mb-6">Mastering Productivity: The Psychology of Timers and Focus</h2>
-              <p className="text-white/50 text-xl italic font-serif">Exploring how temporal constraints trigger neural flow states and sustain peak performance.</p>
+            <header className="mb-16 border-l-[6px] border-emerald-500 pl-10">
+              <span className="text-emerald-400 font-bold uppercase tracking-widest text-sm mb-4 block">Article 02 — Productivity Neurobiology</span>
+              <h2 className="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">Maximizing Productivity: <br/><span className="text-white/60">The Science of Timed Focus</span></h2>
+              <p className="text-white/40 text-2xl italic font-serif max-w-4xl">Exploring why artificial temporal constraints are the most effective antidote to cognitive fatigue.</p>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 text-white/70 leading-relaxed text-lg">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 text-white/70 leading-relaxed text-xl">
+               <div className="lg:col-span-4 hidden lg:block">
+                <div className="sticky top-24 space-y-8">
+                  <div className="bg-emerald-500/10 p-10 rounded-[48px] border border-emerald-500/20 shadow-2xl">
+                    <h4 className="text-emerald-400 font-bold uppercase tracking-widest text-xs mb-8">Focus Mechanics</h4>
+                    <div className="space-y-8">
+                      <div>
+                        <span className="block text-white font-medium mb-2">The 25/5 Cycle</span>
+                        <p className="text-xs opacity-60 leading-relaxed">The optimal window for maintaining high cortical arousal before the 'Concentration Decay' begins.</p>
+                      </div>
+                      <div>
+                        <span className="block text-white font-medium mb-2">Parkinson's Law</span>
+                        <p className="text-xs opacity-60 leading-relaxed">Work expands to fill the time available. Timers create a 'Finish Line' for the brain.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-8 space-y-12 text-justify">
                 <section>
-                  <h3 className="text-2xl text-white font-medium mb-4">The Neurobiology of Parkinson’s Law</h3>
+                  <h3 className="text-3xl text-white font-medium mb-6">The Anatomy of a Flow State</h3>
                   <p>
-                    The most common threat to professional output is the "dilution of effort." Without a defined boundary, tasks naturally expand to fill the time available—a phenomenon known as Parkinson's Law. From a neuro-scientific perspective, this occurs because the <strong>Prefrontal Cortex (PFC)</strong> lacks the "perceptual narrowing" required to filter out distractions.
+                    Productivity is often misunderstood as an act of will, but in reality, it is a biological state. The human brain is not designed for continuous, high-intensity output. We operate on <strong>Ultradian Rhythms</strong>—cycles of energy and focus that typically peak every 90 to 120 minutes. When we attempt to force work past these peaks, we experience "Ego Depletion," where the prefrontal cortex loses its ability to regulate attention and resist distractions.
                   </p>
                   <p>
-                    Digital timers on YClockTB serve as a cognitive "finish line." The presence of a countdown timer triggers a subtle release of <strong>norepinephrine</strong>, which increases cortical arousal and narrows the focus field. This effectively mutes the "background noise" of the limbic system, allowing the brain to enter a state of <strong>Deep Work</strong>.
+                    The <strong>Pomodoro Technique</strong>, popularized by Francesco Cirillo, is a strategic intervention into this rhythm. By setting a countdown timer for exactly 25 minutes, you are creating a "Closed Focus Loop." This temporal constraint triggers a mild release of norepinephrine, which narrows your perceptual field and increases the speed of task processing.
                   </p>
                 </section>
 
                 <section>
-                  <h3 className="text-2xl text-white font-medium mb-4">The Pomodoro Technique: Neural Reset Cycles</h3>
+                  <h3 className="text-3xl text-white font-medium mb-6">Fighting the Zeigarnik Effect</h3>
                   <p>
-                    The 25-minute Pomodoro interval is not arbitrary. Human concentration operates on <strong>Ultradian Rhythms</strong>—cycles of high-frequency brain activity that last approximately 90 minutes. However, "mental fatigue" begins to accumulate long before that. 
+                    One of the greatest drains on cognitive energy is "Attention Residue." This happens when we are interrupted mid-task; a part of our brain remains tethered to the unfinished objective, even as we try to focus on something else. This is known as the <strong>Zeigarnik Effect</strong>. 
                   </p>
                   <p>
-                    By breaking work into 25-minute sprints followed by 5-minute neural breaks, we prevent the buildup of metabolic waste products in the synaptic cleft. These breaks are essential for <strong>Consolidation</strong>, where the brain moves information from working memory into long-term storage, preventing "cognitive overload" and preserving decision-making energy for the entire workday.
+                    Using the high-precision timers on <strong>YClockTB</strong> allows you to "Close the Tab" in your brain. When the bell rings, the task is formally paused. This external signal gives the brain permission to fully disengage during the 5-minute neural break. These breaks are not "wasted time"; they are the periods during which the brain flushes out metabolic waste products like adenosine, preparing the synapses for the next sprint of deep work.
                   </p>
                 </section>
-              </div>
-              
-              <div className="bg-white/5 p-8 rounded-[40px] border border-white/10 h-fit">
-                <div className="flex items-center gap-2 mb-6 text-emerald-400">
-                    <Activity className="w-4 h-4" />
-                    <h4 className="font-bold uppercase tracking-widest text-xs">Focus Framework</h4>
-                </div>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 text-emerald-400 text-xs font-bold">1</div>
-                    <p className="text-sm opacity-60">Set a single, unambiguous objective for the interval.</p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 text-emerald-400 text-xs font-bold">2</div>
-                    <p className="text-sm opacity-60">Eliminate all asynchronous notifications (mute device).</p>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 text-emerald-400 text-xs font-bold">3</div>
-                    <p className="text-sm opacity-60">Respect the break; physically move away from the screen.</p>
-                  </div>
-                </div>
+
+                <section>
+                  <h3 className="text-3xl text-white font-medium mb-6">Neuroplasticity and Habitual Focus</h3>
+                  <p>
+                    Focus is a muscle that can be hypertrophied. By consistently using a productivity timer, you are performing <strong>Neural Strength Training</strong>. Over time, the sight of a countdown timer becomes a "Priming Cue." Your brain learns that a 25-minute window means a total suspension of distractions. This re-wires your dopamine pathways to find pleasure in sustained effort rather than the "cheap dopamine" of notification scrolling. 
+                  </p>
+                </section>
               </div>
             </div>
           </article>
 
-          {/* Article 3: Global Coordination */}
+          {/* Article 3: UTC & Technology */}
           <article className="prose prose-invert max-w-none">
-            <header className="mb-12 border-l-4 border-purple-500 pl-8">
-              <div className="flex items-center space-x-3 mb-4 text-purple-400">
-                <Globe className="w-6 h-6" />
-                <span className="text-sm font-bold uppercase tracking-widest">Global Operations</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-light text-white mb-6">Global Coordination: Navigating Complex Time Zones for Remote Teams</h2>
-              <p className="text-white/50 text-xl italic font-serif">Building temporal empathy and operational excellence in a decentralized work environment.</p>
+            <header className="mb-16 border-l-[6px] border-purple-500 pl-10">
+              <span className="text-purple-400 font-bold uppercase tracking-widest text-sm mb-4 block">Article 03 — Technical Infrastructure</span>
+              <h2 className="text-4xl md:text-6xl font-light text-white mb-8 leading-tight">Universal Time Coordination (UTC): <br/><span className="text-white/60">The Backbone of Modern Technology</span></h2>
+              <p className="text-white/40 text-2xl italic font-serif max-w-4xl">Why the invisible protocol of atomic synchronization is the most critical asset of the digital age.</p>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 text-white/70 leading-relaxed text-lg">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 text-white/70 leading-relaxed text-xl">
+              <div className="lg:col-span-8 space-y-12 text-justify">
                 <section>
-                  <h3 className="text-2xl text-white font-medium mb-4">The Challenge of "Chronocentricity"</h3>
+                  <h3 className="text-3xl text-white font-medium mb-6">The Consensus of the Clock</h3>
                   <p>
-                    In a decentralized labor market, the most significant barrier to collaboration is no longer language, but <strong>Time Zone Misalignment</strong>. "Chronocentricity"—the tendency to assume your home time zone is the primary one—leads to "Meeting Exhaustion" for team members in minority zones. 
+                    In a decentralized world, truth is often subjective—but time cannot be. <strong>Coordinated Universal Time (UTC)</strong> is the primary time standard by which the world regulates clocks and time. Unlike Greenwich Mean Time (GMT), which is based on the Earth's rotation (and thus varies), UTC is based on <strong>International Atomic Time (TAI)</strong>. TAI is a weighted average of over 400 atomic clocks distributed across the globe, providing a level of stability that is functionally absolute.
                   </p>
                   <p>
-                    Strategic managers use tools like World Clocks not just to check the time, but to build <strong>Temporal Empathy</strong>. Knowing that a 2 PM meeting in New York is 7 PM in London and 2 AM in Singapore allows leaders to rotate meeting times equitably, ensuring that the burden of "off-hours" work is shared across the global team.
+                    This synchronization is facilitated by the <strong>Network Time Protocol (NTP)</strong>. Without it, the internet as we know it would collapse. Every server, every database, and every cryptographic certificate relies on the assumption that all parties agree on the current millisecond.
                   </p>
                 </section>
 
                 <section>
-                  <h3 className="text-2xl text-white font-medium mb-4">The "Golden Window" Strategy</h3>
+                  <h3 className="text-3xl text-white font-medium mb-6">Impact on Distributed Computing</h3>
                   <p>
-                    For every cross-continental team, there exists a <strong>Golden Window</strong>: a 1-2 hour period where multiple regions overlap during standard working hours. For New York and London, this is typically 9 AM to 12 PM EST. For San Francisco and Tokyo, the window is almost non-existent.
+                    For developers and system architects, time is a data integrity issue. In distributed databases like Google Spanner or Amazon DynamoDB, the "Happened-Before" relationship is the only way to resolve data conflicts. If two users edit the same document in different parts of the world, the system relies on synchronized UTC timestamps to determine which edit takes precedence. 
                   </p>
                   <p>
-                    Operational excellence requires reserving these Golden Windows exclusively for high-bandwidth synchronous communication (conflict resolution, creative brainstorming). All other work should be moved to <strong>Asynchronous Sovereignty</strong>, where project management is handled via documented hand-offs and UTC-based deadlines.
+                    Even a 10-millisecond drift between servers can lead to "Split-Brain" scenarios, where a database becomes corrupted because it cannot determine the true sequence of events. <strong>YClockTB</strong> provides a window into this high-precision world, allowing professionals to monitor their local drift against the global standard.
+                  </p>
+                </section>
+
+                <section>
+                  <h3 className="text-3xl text-white font-medium mb-6">Aviation, Finance, and Global Security</h3>
+                  <p>
+                    The high-stakes sectors of our society operate exclusively on UTC. In aviation, every air traffic control center and cockpit uses UTC to ensure that "separation minimums" are maintained in the sky. In global finance, regulations like MiFID II require that every trade be logged with microsecond-accurate UTC timestamps to prevent market manipulation. 
+                  </p>
+                  <p>
+                    Time is the invisible ledger of our modern civilization. By mastering the tools of synchronization, we are not just checking a clock; we are participating in the global consensus that keeps the world in motion.
                   </p>
                 </section>
               </div>
-              
-              <div className="bg-white/5 p-8 rounded-[40px] border border-white/10 h-fit">
-                <div className="flex items-center gap-2 mb-6 text-purple-400">
-                    <Target className="w-4 h-4" />
-                    <h4 className="font-bold uppercase tracking-widest text-xs">Operational Best Practices</h4>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Asynchronous Documentation</h5>
-                    <p className="text-sm opacity-60">Assume no one is awake to answer questions. Provide total context in every ticket.</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium mb-2">UTC Standardized Logins</h5>
-                    <p className="text-sm opacity-60">Standardize all server logs and project deadlines on UTC to eliminate "offset math" errors.</p>
-                  </div>
-                  <div>
-                    <h5 className="text-white font-medium mb-2">Temporal Rotation</h5>
-                    <p className="text-sm opacity-60">Alternate who "stays late" or "starts early" for monthly all-hands meetings.</p>
+
+              <div className="lg:col-span-4 space-y-8">
+                <div className="bg-purple-500/10 p-10 rounded-[48px] border border-purple-500/20 shadow-2xl">
+                  <h4 className="text-purple-400 font-bold uppercase tracking-widest text-xs mb-8">NTP Hierarchy</h4>
+                  <div className="space-y-6">
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                      <span className="block text-white font-mono text-[10px] mb-1">STRATUM 0</span>
+                      <p className="text-sm opacity-60">Atomic Clocks / GPS Reference</p>
+                    </div>
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                      <span className="block text-white font-mono text-[10px] mb-1">STRATUM 1</span>
+                      <p className="text-sm opacity-60">Primary Network Servers</p>
+                    </div>
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                      <span className="block text-white font-mono text-[10px] mb-1">STRATUM 2</span>
+                      <p className="text-sm opacity-60">Secondary Distribution Nodes</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -192,13 +208,20 @@ export const BlogSection: React.FC = () => {
           </article>
         </div>
 
-        {/* Closing Authority Statement */}
-        <div className="mt-40 p-12 rounded-[56px] bg-gradient-to-b from-white/5 to-transparent border border-white/10 text-center">
-            <Shield className="w-12 h-12 text-blue-400 mx-auto mb-6 opacity-50" />
-            <h3 className="text-2xl font-light text-white mb-4">Precision is Our Standard</h3>
-            <p className="text-white/40 max-w-3xl mx-auto leading-relaxed">
-              YClockTB is engineered for the high-performance professional who demands absolute fidelity. From atomic synchronization to cognitive focus intervals, we provide the temporal infrastructure required for global excellence.
-            </p>
+        {/* Conclusion / Authority Banner */}
+        <div className="mt-48 p-20 rounded-[80px] bg-gradient-to-br from-blue-600/20 via-slate-900 to-purple-600/10 border border-white/10 text-center relative overflow-hidden group">
+            <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+            <div className="relative z-10">
+              <h3 className="text-3xl md:text-5xl font-light text-white mb-8">The Professional Standard</h3>
+              <p className="text-white/50 max-w-4xl mx-auto text-xl leading-relaxed mb-12">
+                YClockTB isn't just a utility; it's a commitment to professional excellence. Whether you're managing global infrastructure or your personal focus, we provide the precision you need to dominate your time.
+              </p>
+              <div className="flex flex-wrap justify-center gap-6">
+                <span className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-widest">NTP Synced</span>
+                <span className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-widest">Atomic Precision</span>
+                <span className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-widest">Privacy Secured</span>
+              </div>
+            </div>
         </div>
       </div>
     </section>
