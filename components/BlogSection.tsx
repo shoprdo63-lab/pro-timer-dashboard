@@ -213,14 +213,9 @@ export const BlogSection: React.FC = () => {
             <div className="absolute inset-0 bg-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
             <div className="relative z-10">
               <h3 className="text-3xl md:text-5xl font-light text-white mb-8">The Professional Standard</h3>
-              <p className="text-white/50 max-w-4xl mx-auto text-xl leading-relaxed mb-12">
+              <p className="text-white/50 max-w-4xl mx-auto text-xl leading-relaxed">
                 YClockTB isn't just a utility; it's a commitment to professional excellence. Whether you're managing global infrastructure or your personal focus, we provide the precision you need to dominate your time.
               </p>
-              <div className="flex flex-wrap justify-center gap-6">
-                <span className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-widest">NTP Synced</span>
-                <span className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-widest">Atomic Precision</span>
-                <span className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-white/40 uppercase tracking-widest">Privacy Secured</span>
-              </div>
             </div>
         </div>
       </div>
