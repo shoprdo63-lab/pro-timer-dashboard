@@ -3,6 +3,7 @@ import { Clock, AlarmClock, Timer, TimerReset, Monitor, Moon, Settings, Sun } fr
 import { AppMode, Theme } from '../types';
 import { MASTER_DATA } from '../constants';
 import { Footer } from './Footer';
+import { BlogSection } from './BlogSection';
 
 interface LayoutProps {
   currentMode: AppMode;
@@ -112,6 +113,9 @@ export const Layout: React.FC<LayoutProps> = ({ currentMode, setMode, toggleNigh
                   })}
               </div>
               
+              {/* Pillar SEO Content */}
+              <BlogSection />
+
               <Footer onNavigate={setMode} />
             </div>
           </div>
