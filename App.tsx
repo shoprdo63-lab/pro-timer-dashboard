@@ -1,131 +1,72 @@
-import React, { useState, useEffect, Suspense, lazy, useRef } from 'react';
-import { Layout } from './components/Layout';
-import { AppMode, Alarm } from './types';
-import { playAlarmSound, stopAudio } from './utils/audioUtils';
-import { useWorkerTimer } from './hooks/useWorkerTimer';
-import { CLOCK_WORKER_CODE } from './constants';
+export enum AppMode {
+  CLOCK = 'CLOCK',
+  ALARM = 'ALARM',
+  TIMER = 'TIMER',
+  STOPWATCH = 'STOPWATCH',
+  POMODORO = 'POMODORO',
+  BLOG = 'BLOG',
+  // Info Pages
+  ABOUT = 'ABOUT',
+  HOW_IT_WORKS = 'HOW_IT_WORKS',
+  PRIVACY = 'PRIVACY',
+  TERMS = 'TERMS',
+  CONTACT = 'CONTACT',
+  // Research Articles
+  BLOG_FOCUS = 'BLOG_FOCUS',
+  BLOG_SYNC = 'BLOG_SYNC',
+  BLOG_PRIVACY = 'BLOG_PRIVACY',
+  BLOG_AESTHETICS = 'BLOG_AESTHETICS'
+}
 
-// Lazy load components for code splitting
-const WorldClock = lazy(() => import('./components/WorldClock').then(module => ({ default: module.WorldClock })));
-const AlarmView = lazy(() => import('./components/Alarm').then(module => ({ default: module.AlarmView })));
-const MathChallenge = lazy(() => import('./components/Alarm').then(module => ({ default: module.MathChallenge })));
-const Timer = lazy(() => import('./components/Timer').then(module => ({ default: module.Timer })));
-const Stopwatch = lazy(() => import('./components/Stopwatch').then(module => ({ default: module.Stopwatch })));
-const Pomodoro = lazy(() => import('./components/Pomodoro').then(module => ({ default: module.Pomodoro })));
-const NightMode = lazy(() => import('./components/NightMode').then(module => ({ default: module.NightMode })));
-const InfoView = lazy(() => import('./components/InfoPages').then(module => ({ default: module.InfoView })));
+export interface TimeZone {
+  city: string;
+  region: string;
+  zone: string;
+}
 
-// Loading Fallback
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center w-full h-full">
-    <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-  </div>
-);
+export type MathDifficultyLevel = 'Easy' | 'Medium' | 'Hard' | 'Expert';
 
-const App: React.FC = () => {
-  const [mode, setMode] = useState<AppMode>(AppMode.CLOCK);
-  const [isNightMode, setIsNightMode] = useState(false);
-  const [activeAlarm, setActiveAlarm] = useState<Alarm | null>(null);
-  const [time, setTime] = useState(new Date());
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+export interface Alarm {
+  id: string;
+  time: string; // HH:mm format (24h)
+  label: string;
+  enabled: boolean;
+  days: number[]; // 0 = Sunday, 1 = Monday, etc.
+  sound: string;
+  difficulty: MathDifficultyLevel;
+  snoozedUntil?: number | null; // Timestamp
+}
 
-  // Use the 1-second worker to drive the main clock and alarm checks
-  useWorkerTimer(true, () => {
-    setTime(new Date());
-  }, CLOCK_WORKER_CODE);
+export interface SoundPreset {
+  id: string;
+  name: string;
+  type: 'oscillator' | 'custom';
+  params?: any;
+}
 
-  // Scroll to top when mode changes
-  useEffect(() => {
-    const scrollable = document.querySelector('.overflow-y-auto');
-    if (scrollable) {
-      scrollable.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [mode]);
-
-  // Global Alarm Checker
-  useEffect(() => {
-    let currentAlarms: Alarm[] = [];
-    try {
-        currentAlarms = JSON.parse(localStorage.getItem('glass_alarms') || '[]');
-    } catch (e) {}
-
-    const currentTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-    const currentDay = time.getDay(); 
-
-    const triggered = currentAlarms.find(a => 
-        a.enabled && 
-        a.time === currentTime && 
-        a.days.includes(currentDay) && 
-        !a.snoozedUntil &&
-        (!activeAlarm || activeAlarm.id !== a.id)
-    );
-
-    if (triggered && !activeAlarm) {
-        setActiveAlarm(triggered);
-        const soundInterval = setInterval(() => {
-             playAlarmSound(triggered.sound);
-        }, 2000); 
-        (window as any).alarmInterval = soundInterval;
-    }
-  }, [time, activeAlarm]);
-
-  const handleAlarmSolved = () => {
-      stopAudio();
-      clearInterval((window as any).alarmInterval);
-      setActiveAlarm(null);
+export interface Theme {
+  id: string;
+  name: string;
+  previewColor: string; // Color used for the selection button
+  colors: {
+    bgGradient: string;
+    glassPanel: string;
+    glassCard: string;
+    textMain: string;
+    textDim: string;
+    accent: string;
   };
+}
 
-  const handleSnooze = () => {
-      stopAudio();
-      clearInterval((window as any).alarmInterval);
-      if (activeAlarm) {
-          setActiveAlarm(null);
-      }
-  };
+export interface Lap {
+  id: number;
+  time: number; // milliseconds
+  split: number; // milliseconds since last lap
+}
 
-  const isInfoMode = [
-    AppMode.ABOUT, 
-    AppMode.HOW_IT_WORKS, 
-    AppMode.PRIVACY, 
-    AppMode.TERMS, 
-    AppMode.CONTACT,
-    AppMode.BLOG_FOCUS,
-    AppMode.BLOG_SYNC,
-    AppMode.BLOG_PRIVACY,
-    AppMode.BLOG_AESTHETICS
-  ].includes(mode);
-
-  return (
-    <>
-        {isNightMode ? (
-            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
-                <NightMode onExit={() => setIsNightMode(false)} time={time} />
-            </Suspense>
-        ) : (
-            <Layout currentMode={mode} setMode={setMode} toggleNightMode={() => setIsNightMode(true)} time={time}>
-                <Suspense fallback={<LoadingSpinner />}>
-                    {mode === AppMode.CLOCK && <WorldClock time={time} />}
-                    {mode === AppMode.ALARM && <AlarmView onAlarmTrigger={setActiveAlarm} />}
-                    {mode === AppMode.TIMER && <Timer />}
-                    {mode === AppMode.STOPWATCH && <Stopwatch />}
-                    {mode === AppMode.POMODORO && <Pomodoro />}
-                    
-                    {isInfoMode && <InfoView mode={mode} />}
-                </Suspense>
-            </Layout>
-        )}
-
-        {activeAlarm && (
-            <Suspense fallback={null}>
-                <MathChallenge 
-                    onSolved={handleAlarmSolved} 
-                    onSnooze={handleSnooze} 
-                    difficulty={activeAlarm.difficulty}
-                />
-            </Suspense>
-        )}
-    </>
-  );
-};
-
-export default App;
+export interface TimerState {
+  duration: number; // total duration in ms
+  remaining: number; // ms remaining
+  isRunning: boolean;
+  initialDuration: number;
+}

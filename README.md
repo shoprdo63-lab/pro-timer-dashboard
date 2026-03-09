@@ -1,20 +1,80 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+import { MASTER_DATA } from '../constants';
 
-# Run and deploy your AI Studio app
+let audioCtx: AudioContext | null = null;
 
-This contains everything you need to run your app locally.
+const getContext = () => {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  }
+  return audioCtx;
+};
 
-View your app in AI Studio: https://ai.studio/apps/drive/1XLc8qK_SfRQJJIgX8C-WSd5vnJkI7qLO
+export const playAlarmSound = (soundId: string) => {
+  const ctx = getContext();
+  if (ctx.state === 'suspended') {
+    ctx.resume();
+  }
 
-## Run Locally
+  const preset = MASTER_DATA.ALARM_SOUNDS.find(s => s.id === soundId) || MASTER_DATA.ALARM_SOUNDS[0];
+  const params = preset.params || {};
 
-**Prerequisites:**  Node.js
+  if (preset.type === 'oscillator') {
+    const osc = ctx.createOscillator();
+    const gainNode = ctx.createGain();
+    const t = ctx.currentTime;
+    
+    osc.type = params.type || 'sine';
+    osc.frequency.setValueAtTime(params.freq, t);
+    
+    // Modulation
+    if (params.mod) {
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = params.mod;
+      const lfoGain = ctx.createGain();
+      lfoGain.gain.value = params.mod * 50; 
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc.frequency);
+      lfo.start();
+    }
 
+    // Slide/Arpeggio Effects
+    if (params.slide) {
+         osc.frequency.exponentialRampToValueAtTime(params.freq * 2, t + 0.5);
+    }
+    if (params.arpeggio) {
+         osc.frequency.setValueAtTime(params.freq, t);
+         osc.frequency.setValueAtTime(params.freq * 1.25, t + 0.1); // Major 3rd
+         osc.frequency.setValueAtTime(params.freq * 1.5, t + 0.2); // Perfect 5th
+         osc.frequency.setValueAtTime(params.freq * 2, t + 0.3); // Octave
+    }
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+    // Envelopes
+    gainNode.gain.setValueAtTime(0, t);
+    if (params.env === 'sharp' || params.env === 'piercing') {
+        gainNode.gain.linearRampToValueAtTime(0.5, t + 0.05);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, t + 0.5);
+    } else if (params.env === 'soft' || params.env === 'slow') {
+        gainNode.gain.linearRampToValueAtTime(0.4, t + 0.5);
+        gainNode.gain.linearRampToValueAtTime(0, t + 1.0);
+    } else if (params.env === 'pluck') {
+        gainNode.gain.linearRampToValueAtTime(0.5, t + 0.01);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, t + 0.3);
+    } else {
+        gainNode.gain.linearRampToValueAtTime(0.5, t + 0.1);
+        gainNode.gain.linearRampToValueAtTime(0, t + 0.5);
+    }
+
+    osc.connect(gainNode);
+    gainNode.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(t + 2.0);
+  }
+};
+
+export const stopAudio = () => {
+  if (audioCtx) {
+    audioCtx.suspend();
+    audioCtx = null; 
+  }
+};

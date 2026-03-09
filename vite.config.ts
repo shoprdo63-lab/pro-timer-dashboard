@@ -1,15 +1,5 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': '/src',
-    },
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-  },
-});
+{
+  "name": "Yclock",
+  "description": "A premium, glassmorphism-styled utility suite featuring World Clock, Smart Alarm with Math Wake-up, Precision Stopwatch, Timer, and Pomodoro focus tools.",
+  "requestFramePermissions": []
+}

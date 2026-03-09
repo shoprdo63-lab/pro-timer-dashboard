@@ -1,0 +1,372 @@
+import * as React from 'react';
+import { AppMode, Theme } from '../types';
+import { Mail, Shield, FileText, Info, Cpu, CheckCircle, Zap, Globe2, BookOpen, Clock, Activity, Target } from 'lucide-react';
+
+interface InfoViewProps {
+  mode: AppMode;
+  theme?: Theme;
+}
+
+export const InfoView = React.memo<InfoViewProps>(({ mode, theme }) => {
+  const accentColor = theme?.colors.accent || '#3b82f6';
+
+  const renderContent = () => {
+    switch (mode) {
+      case AppMode.ABOUT:
+        return (
+          <>
+            <div className="flex items-center space-x-3 mb-8">
+                <Info className="w-8 h-8" style={{ color: accentColor }} />
+                <h2 className="text-3xl font-light">About Us</h2>
+            </div>
+            <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
+                <p className="text-lg">
+                    Welcome to <strong>Yclocktb</strong>, a premium digital utility suite engineered for precision, focus, and digital ethics.
+                </p>
+                <p>
+                    In a digital landscape often cluttered with distractions and invasive tracking, we sought to build a sanctuary of utility. Our philosophy is grounded in <strong>Calm Technology</strong>: tools that serve you quietly and reliably.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center text-center">
+                        <Shield className="w-8 h-8 mb-3 opacity-80" />
+                        <h3 className="font-bold text-white mb-1">Integrity</h3>
+                        <p className="text-xs opacity-70">Zero tracking. Zero data selling.</p>
+                    </div>
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center text-center">
+                        <CheckCircle className="w-8 h-8 mb-3 opacity-80" />
+                        <h3 className="font-bold text-white mb-1">Quality</h3>
+                        <p className="text-xs opacity-70">Atomic-grade precision using browser APIs.</p>
+                    </div>
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center text-center">
+                        <Info className="w-8 h-8 mb-3 opacity-80" />
+                        <h3 className="font-bold text-white mb-1">Modesty</h3>
+                        <p className="text-xs opacity-70">Clean content, safe for all environments.</p>
+                    </div>
+                </div>
+            </div>
+          </>
+        );
+
+      case AppMode.BLOG_FOCUS:
+        return (
+          <article className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <header className="mb-12">
+              <div className="flex items-center space-x-3 mb-6">
+                  <Zap className="w-8 h-8" style={{ color: accentColor }} />
+                  <span className="text-xs font-bold tracking-[0.4em] uppercase opacity-30">Chronometric Mastery & Cognitive Science</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">The Architecture of Attention: A Neuro-Scientific Deep Dive into Temporal Focus and the Pomodoro Protocol</h1>
+              <p className="text-white/40 text-lg italic">An authoritative analysis of cognitive load, ultradian rhythms, and the mechanics of deep work for high-performance professionals.</p>
+            </header>
+
+            <div className="prose prose-invert max-w-none space-y-10 text-white/70 leading-relaxed text-lg text-justify">
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">I. The Biological Imperative of Time-Boxing: Understanding Ultradian Rhythms</h2>
+                    <p>
+                        The human brain is not a machine designed for linear, continuous output. Instead, it is a biological system governed by complex oscillatory patterns known as <strong>Ultradian Rhythms</strong>. These cycles, typically lasting 90 to 120 minutes, dictate our levels of alertness, cognitive capacity, and metabolic energy. When we attempt to force concentration beyond these natural boundaries, we encounter a phenomenon known as <strong>Cognitive Friction</strong>—a state where the prefrontal cortex becomes saturated with metabolic byproducts like adenosine, leading to a sharp decline in decision-making quality and creative output.
+                    </p>
+                    <p>
+                        The <strong>Pomodoro Technique</strong>, often dismissed as a simple productivity hack, is in reality a sophisticated management system for these biological pulses. By breaking work into 25-minute "sprints" followed by 5-minute "neural resets," we are essentially harvesting the most potent segment of the cortical arousal cycle. This prevents the brain from entering the "Red Zone" of exhaustion, ensuring that every minute spent working is performed at peak cognitive efficiency.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">II. Parkinson’s Law and the Psychology of the Finite: The Power of Deadlines</h2>
+                    <p>
+                        Cyril Northcote Parkinson’s famous observation—that "work expands so as to fill the time available for its completion"—is a fundamental law of human psychology. Without a defined temporal boundary, the brain perceives a task as an infinite horizon. This lack of "edge" leads to <strong>Attention Residue</strong>, where parts of your focus are still lingering on previous stimuli or drifting toward future anxieties.
+                    </p>
+                    <p>
+                        A high-precision countdown timer acts as a psychological "finish line." The visual representation of time slipping away triggers a controlled release of norepinephrine and dopamine. This neuro-chemical cocktail narrows the perceptual field, creating a state of <strong>Hyper-Focus</strong>. In this state, the brain filters out extraneous digital noise—the ping of an email, the flicker of a notification—and dedicates its entire metabolic budget to the task at hand.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">III. The Mechanics of Flow and the Switching Cost: Protecting Your Deep Work</h2>
+                    <p>
+                        Every time you switch your attention from a deep task to a minor distraction, you pay a <strong>Switching Cost</strong>. Research from the University of California, Irvine, suggests it takes an average of 23 minutes and 15 seconds to return to original focus after an interruption. In a standard 8-hour workday, three or four interruptions can effectively destroy half of your productive capacity.
+                    </p>
+                    <p>
+                        By committing to a <strong>Focus Hub</strong> like YClockTB, you are building a digital fortress around your attention. The timer is not just a clock; it is a social and psychological contract. It signals to your brain—and your environment—that you are in a state of <strong>Deep Work</strong>. Over time, this practice rewires your neural pathways through <strong>Neuroplasticity</strong>, making the entry into a "Flow State" faster and more sustainable.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">IV. Neural Recovery: The Science of the Break and Memory Consolidation</h2>
+                    <p>
+                        The 5-minute break is perhaps the most misunderstood component of time management. It is not "wasted time"; it is <strong>Consolidation Time</strong>. During these short intervals, the brain transitions from the "Task-Positive Network" (TPN) to the "Default Mode Network" (DMN). The DMN is responsible for creative problem-solving, memory consolidation, and long-term planning. Many of our most profound "Aha!" moments occur during these brief periods of detachment.
+                    </p>
+                    <p>
+                        Furthermore, these breaks allow for the replenishment of glucose and the flushing of neural waste. By the time the next 25-minute session begins, your prefrontal cortex has been "rebooted," allowing you to maintain a high level of performance across a 10 or 12-hour duty cycle without the catastrophic burnout typical of modern corporate environments.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">V. Conclusion: Reclaiming Cognitive Sovereignty in the Attention Economy</h2>
+                    <p>
+                        In the 21st century, the most valuable currency is not information, but <strong>Focused Attention</strong>. By mastering the nuances of temporal focus and leveraging the science of timed intervals, you move from being a victim of your schedule to being the architect of your destiny. Precision timing is the first step toward a life of high-performance and profound meaning. Reclaim your focus today with the right chronometric tools.
+                    </p>
+                </section>
+            </div>
+          </article>
+        );
+
+      case AppMode.BLOG_SYNC:
+        return (
+          <article className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <header className="mb-12">
+              <div className="flex items-center space-x-3 mb-6">
+                  <Globe2 className="w-8 h-8" style={{ color: accentColor }} />
+                  <span className="text-xs font-bold tracking-[0.4em] uppercase opacity-30">Scientific Authority & Global Infrastructure</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">The Atomic Heartbeat: A Comprehensive Analysis of Coordinated Universal Time (UTC) and the Infrastructure of Modernity</h1>
+              <p className="text-white/40 text-lg italic">Exploring the physics of Cesium-133, the mechanics of NTP, and the global consensus of the second for enterprise-grade synchronization.</p>
+            </header>
+
+            <div className="prose prose-invert max-w-none space-y-10 text-white/70 leading-relaxed text-lg text-justify">
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">I. The Genesis of the Standard Second: From Astronomy to Atomic Physics</h2>
+                    <p>
+                        Time, in its rawest form, is an observation of change. For millennia, humanity relied on the celestial dance of the sun and stars to mark the passage of hours. However, as the industrial revolution gave way to the digital age, the inherent variability of the Earth's rotation—affected by tidal friction and core dynamics—became an unacceptable margin of error. The birth of <strong>Atomic Chronometry</strong> in the mid-20th century transformed time from an astronomical observation into a fundamental constant of physics.
+                    </p>
+                    <p>
+                        Today, the "Standard Second" is defined by the <strong>International System of Units (SI)</strong> as exactly 9,192,631,770 periods of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the <strong>Cesium-133 atom</strong>. This atomic heartbeat is the foundation of <strong>Coordinated Universal Time (UTC)</strong>, a weighted average maintained by over 400 atomic clocks in laboratories across the globe.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">II. The Network Time Protocol (NTP) and Digital Coherence in Distributed Systems</h2>
+                    <p>
+                        In a decentralized digital world, synchronization is the only truly shared ledger. Every financial transaction, every server log, and every encrypted communication packet depends on a shared understanding of "now." This is achieved through the <strong>Network Time Protocol (NTP)</strong>, a hierarchical system of time distribution that ensures global consistency.
+                    </p>
+                    <p>
+                        At the top of this hierarchy are <strong>Stratum 0</strong> devices—atomic clocks or GPS receivers that provide the raw time signal. <strong>Stratum 1</strong> servers are directly connected to these devices, acting as the primary distributors of time to the internet. <strong>YClockTB</strong> is designed to interface with this infrastructure, providing users with a high-fidelity window into the atomic reality that sustains our modern civilization.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">III. The Physics of Drift and the Challenge of Client-Side Precision</h2>
+                    <p>
+                        All digital clocks experience <strong>Clock Drift</strong>. This is caused by environmental factors such as temperature fluctuations, humidity, and the physical aging of the quartz crystals in your hardware. In a standard browser environment, this problem is exacerbated by the operating system's power-saving features, which often throttle JavaScript timers to save battery.
+                    </p>
+                    <p>
+                        To solve this, YClockTB utilizes <strong>Web Workers</strong> and the <strong>High Resolution Time API</strong>. By running our timekeeping logic on a dedicated background thread, we bypass the main-thread congestion that causes visual lag. This ensures that our <strong>World Clock</strong> and <strong>Stopwatch</strong> remain accurate to within milliseconds, providing the precision required for scientific observation and professional operations.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">IV. The Strategic Utility of Precision in High-Frequency Environments</h2>
+                    <p>
+                        Why does a millisecond matter? In <strong>High-Frequency Trading (HFT)</strong>, a single millisecond is the difference between a multi-million dollar profit and a catastrophic loss. In <strong>DevOps and Site Reliability Engineering (SRE)</strong>, millisecond-accurate timestamps are the only way to reconstruct the sequence of events during a distributed system failure. In <strong>Data Science</strong>, precision is required to align datasets from sensors located on different continents.
+                    </p>
+                    <p>
+                        We built YClockTB as a professional-grade instrument. Whether you are monitoring <strong>UTC offsets</strong> for a global server deployment or timing a high-stakes scientific experiment, you are interacting with a tool that respects the fundamental physics of time.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">V. Conclusion: Time as the Universal Language of Global Trust</h2>
+                    <p>
+                        In an era of fragmentation, time remains the only truly universal language. By understanding the science behind the tick, we gain a deeper appreciation for the technical miracles that allow us to collaborate across borders and oceans. Precision is not just about mathematics; it is about the trust that sustains our connected world. Ensure your systems are synchronized with the highest standards of atomic time.
+                    </p>
+                </section>
+            </div>
+          </article>
+        );
+
+      case AppMode.BLOG_PRIVACY:
+        return (
+          <article className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <header className="mb-12">
+              <div className="flex items-center space-x-3 mb-6">
+                  <Shield className="w-8 h-8" style={{ color: accentColor }} />
+                  <span className="text-xs font-bold tracking-[0.4em] uppercase opacity-30">Executive Strategy & Digital Sovereignty</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">Temporal Sovereignty: A Strategic Framework for Global Leadership and Cross-Time-Zone Excellence</h1>
+              <p className="text-white/40 text-lg italic">Navigating the complexities of distributed labor, asynchronous workflows, and the ethics of digital time in a remote-first economy.</p>
+            </header>
+
+            <div className="prose prose-invert max-w-none space-y-10 text-white/70 leading-relaxed text-lg text-justify">
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">I. The Dissolution of the Geographic Office: The New Temporal Frontier</h2>
+                    <p>
+                        The digital revolution has successfully dissolved the physical walls of the office, but it has reinforced a much more formidable barrier: the <strong>Temporal Boundary</strong>. Managing a team that spans twelve time zones is not merely a logistical challenge; it is a psychological and ethical imperative. Without a coherent strategy, the default state of a global team becomes "Always-On," a condition where individuals are forced to sacrifice their biological needs—sleep, family, recovery—for the sake of a status update.
+                    </p>
+                    <p>
+                        True leadership in the 21st century requires <strong>Temporal Empathy</strong>. This means moving beyond simply knowing the time in Singapore or London; it means understanding the biological and social context of your colleagues. A <strong>World Clock</strong> is not just a tool for scheduling; it is a map for human respect and professional integrity.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">II. The "Golden Window" and Synchronous Optimization for Distributed Teams</h2>
+                    <p>
+                        Every global team possesses a <strong>Golden Window</strong>—the brief 1-2 hour period where the maximum number of time zones overlap within standard working hours. For a team spanning San Francisco and Berlin, this window is narrow and precious.
+                    </p>
+                    <p>
+                        <strong>Strategic Directive:</strong> High-bandwidth, synchronous collaboration (strategy sessions, conflict resolution, creative brainstorming) must be reserved exclusively for these windows. All other tasks—status reports, technical documentation, routine updates—must be moved to <strong>Asynchronous Channels</strong>. By visualizing these overlaps on a high-precision dashboard, managers can eliminate the cognitive overhead of scheduling and ensure that meetings are both rare and impactful.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">III. Asynchronous Sovereignty and the UTC Standard: Building Resilient Workflows</h2>
+                    <p>
+                        The hallmark of a mature, global organization is <strong>Asynchronous Sovereignty</strong>. This is the ability for work to progress independently of live interaction. This workflow depends on two pillars: high-fidelity documentation and a shared adherence to <strong>UTC Deadlines</strong>.
+                    </p>
+                    <p>
+                        When a project is handed off at the end of a London workday to a team starting in Los Angeles, the transition must be seamless. Tools like <strong>YClockTB</strong> act as the "Temporal Hub" for this hand-off. By setting global alarms and monitoring precise offsets, teams can maintain a 24-hour production cycle without requiring 24-hour work from any single individual. This is how modern giants are built.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">IV. The Ethics of Digital Time and User Privacy: Local-First Architecture</h2>
+                    <p>
+                        In an era of invasive tracking, the tools we use to manage our time must respect our <strong>Digital Sovereignty</strong>. Many "free" productivity tools are, in reality, data-harvesting engines that track your location, your habits, and your professional network.
+                    </p>
+                    <p>
+                        We believe that professional utilities should be private by design. By keeping all calculations, alarms, and settings strictly in <strong>Local Storage</strong>, YClockTB ensures that your professional schedule remains your own. Privacy is not just a feature; it is a requirement for high-stakes professional work and corporate security.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">V. Conclusion: Leadership is Chronometric and Human-Centric</h2>
+                    <p>
+                        The most respected leaders of the future will be those who master the nuances of time. By fostering a culture of asynchronous excellence and respecting the biological boundaries of their teams, they will build organizations that are not only productive but sustainable. The clock is not a master to be served, but a roadmap to be followed for global success.
+                    </p>
+                </section>
+            </div>
+          </article>
+        );
+
+      case AppMode.BLOG_AESTHETICS:
+        return (
+          <article className="max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <header className="mb-12">
+              <div className="flex items-center space-x-3 mb-6">
+                  <BookOpen className="w-8 h-8" style={{ color: accentColor }} />
+                  <span className="text-xs font-bold tracking-[0.4em] uppercase opacity-30">Design Philosophy & User Experience</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">The Aesthetic of Precision: Minimalism as a Functional Requirement for Professional Chronometry</h1>
+              <p className="text-white/40 text-lg italic">Exploring the intersection of Glassmorphism, Tabular Typography, and Cognitive Load Reduction in high-end utility design.</p>
+            </header>
+
+            <div className="prose prose-invert max-w-none space-y-10 text-white/70 leading-relaxed text-lg text-justify">
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">I. The Cognitive Cost of Visual Noise: Designing for Clarity</h2>
+                    <p>
+                        In the high-stakes environment of professional work—whether it is a developer monitoring server uptime, a trader watching the closing bell, or a scientist timing a chemical reaction—the user interface is not just a surface; it is a <strong>Cognitive Filter</strong>. Every unnecessary shadow, every garish color, and every redundant icon competes for a fraction of the user's <strong>Visual Attention</strong>. This competition creates "Noise," which directly increases the likelihood of error and slows down processing speed.
+                    </p>
+                    <p>
+                        <strong>YClockTB’s Glassmorphism</strong> is a strategic design choice. By utilizing blurred backgrounds and subtle depth, we mimic the human eye's natural focus mechanisms. This allows the primary data—the time—to remain sharp and immediate, while the utility elements (settings, navigation) recede into the peripheral background. This is the essence of <strong>Calm Technology</strong> and minimalist UX.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">II. The Anatomy of Trust: Tabular Numbers and Monospace Stability</h2>
+                    <p>
+                        In chronometry, stability is the foundation of trust. Most standard fonts use "Proportional Spacing," where the width of a '1' is different from the width of an '8'. In a digital clock, this causes the numbers to "jitter" as the seconds tick, creating a subtle but constant source of visual distraction.
+                    </p>
+                    <p>
+                        We utilize <strong>Tabular Numbers</strong> and <strong>Monospace Typography</strong> (specifically JetBrains Mono) to ensure that every character occupies the exact same horizontal space. This eliminates visual jitter, allowing the brain to track the passage of time with zero cognitive overhead. This is the difference between a consumer gadget and a <strong>Scientific Instrument</strong> designed for precision.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">III. The Psychology of Color and Temporal Perception: Circadian Alignment</h2>
+                    <p>
+                        Color is not merely aesthetic; it is functional. Our <strong>Night Mode</strong> and <strong>Dynamic Themes</strong> are designed to align with the user's <strong>Circadian Rhythm</strong>. High-contrast, blue-light-heavy interfaces are appropriate for midday focus but are cognitively jarring during late-night sessions. By providing a palette of muted, sophisticated tones, we reduce eye strain and promote long-term focus and ocular health.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-3xl text-white font-medium mb-6">IV. Conclusion: Design as Digital Sovereignty and Professional Excellence</h2>
+                    <p>
+                        Luxury design is often misunderstood as vanity. In reality, it is the pursuit of <strong>Clarity</strong>. A tool that is beautiful is a tool that you want to use, and a tool you want to use is one that ultimately helps you achieve your goals. Aesthetics are the gateway to professional excellence and cognitive efficiency. Elevate your workflow with a design that respects your vision.
+                    </p>
+                </section>
+            </div>
+          </article>
+        );
+
+      case AppMode.HOW_IT_WORKS:
+        return (
+            <>
+              <div className="flex items-center space-x-3 mb-8">
+                  <Cpu className="w-8 h-8" style={{ color: accentColor }} />
+                  <h2 className="text-3xl font-light">How It Works</h2>
+              </div>
+              <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
+                  <p>Yclocktb leverages modern web capabilities to deliver a native-app-like experience directly in your browser.</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                      <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                          <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">Web Workers</h3>
+                          <p className="text-sm opacity-70">Independent threads that stay accurate even when the tab is hidden or throttled.</p>
+                      </div>
+                      <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+                          <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">Local Storage</h3>
+                          <p className="text-sm opacity-70">Alarms and settings stay on your device, never transmitted to a server for maximum privacy.</p>
+                      </div>
+                  </div>
+              </div>
+            </>
+        );
+
+      case AppMode.PRIVACY:
+        return (
+            <>
+              <div className="flex items-center space-x-3 mb-8">
+                  <Shield className="w-8 h-8" style={{ color: accentColor }} />
+                  <h2 className="text-3xl font-light">Privacy Policy</h2>
+              </div>
+              <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
+                  <p>Your privacy is paramount. Unlike many free tools online, <strong>Yclocktb operates on a strict Zero-Data policy.</strong></p>
+                  <section><h3 className="text-xl font-medium text-white mb-2">1. Data Collection</h3><p>We do not collect, log, or share any personal information. No servers receive your data.</p></section>
+                  <section><h3 className="text-xl font-medium text-white mb-2">2. Cookies</h3><p>We use Local Storage strictly for functional settings, not for tracking.</p></section>
+              </div>
+            </>
+        );
+
+      case AppMode.TERMS:
+        return (
+            <>
+              <div className="flex items-center space-x-3 mb-8">
+                  <FileText className="w-8 h-8" style={{ color: accentColor }} />
+                  <h2 className="text-3xl font-light">Terms of Service</h2>
+              </div>
+              <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
+                  <p>By using Yclocktb, you agree to these terms.</p>
+                  <section><h3 className="text-xl font-medium text-white mb-2">1. Usage</h3><p>Free for personal and commercial use. No attribution required.</p></section>
+                  <section><h3 className="text-xl font-medium text-white mb-2">2. Liability</h3><p>Provided "as is". Not liable for missed alarms or scheduling errors.</p></section>
+              </div>
+            </>
+        );
+
+      case AppMode.CONTACT:
+        return (
+            <>
+              <div className="flex items-center space-x-3 mb-8">
+                  <Mail className="w-8 h-8" style={{ color: accentColor }} />
+                  <h2 className="text-3xl font-light">Contact Support</h2>
+              </div>
+              <div className="space-y-6 text-white/80 leading-relaxed max-w-3xl">
+                  <p className="text-lg">We value your feedback. Our team is dedicated to your productivity.</p>
+                  <div className="p-10 rounded-3xl bg-white/5 border border-white/10 mt-8 flex flex-col items-center text-center shadow-lg relative overflow-hidden group">
+                      <Mail className="w-12 h-12 mb-6 opacity-80" style={{ color: accentColor }} />
+                      <h3 className="text-xl font-medium text-white mb-2">Get in Touch</h3>
+                      <a href="mailto:magic.reviewsite@gmail.com" className="text-xl md:text-3xl font-mono font-bold hover:opacity-80 transition-all select-all break-all" style={{ color: accentColor }}>
+                          magic.reviewsite@gmail.com
+                      </a>
+                  </div>
+              </div>
+            </>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex flex-col w-full p-6 animate-in fade-in duration-500">
+      {renderContent()}
+    </div>
+  );
+});
